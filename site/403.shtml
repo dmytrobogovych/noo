@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>403 Forbidden - 403 Запрещено</title>
+
+	<link rel="stylesheet" type="text/css" href="http://www.rx-name.net/stylesheets/global.css" media="all" />
+
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" href="stylesheets/ie7.css"    media="all" />
+	<script type="text/javascript" src="http://www.rx-name.net/javascripts/iepngfix.js"></script>
+	<![endif]-->
+
+	<script type="text/javascript" src="http://www.rx-name.net/javascripts/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="http://www.rx-name.net/javascripts/facebox.js"></script>
+	<script type="text/javascript" src="http://www.rx-name.net/javascripts/global.js"></script>
+
+	<link rel="Shortcut Icon" type="image/x-icon" href="http://www.rx-name.net/images/favicon.ico" />
+</head>
+
+<body>
+<div id="wrap">
+<div id="page" class="error-404">
+
+	<div id="header">
+		<a href="http://www.rx-name.net/"><img src="http://www.rx-name.net/images/logo.png" alt="RX-Name" title="RX-Name" class="logo" /></a>
+		<p class="support"><a href="http://www.rx-name.net/info/contacts/">Контактный центр: <strong>+380&nbsp;(44)&nbsp;593-74-78</strong></a></p>
+	</div>
+
+	<div id="main">
+
+		<div id="content">
+
+			<h1>Доступ запрещено / 403 / Forbidden </h1>
+			<ul>
+	      <li>Вы не имеете доступа к <!--#echo var="REQUEST_URI" -->  на этом сервере.</li>
+				<li>You don't have permission to access <!--#echo var="REQUEST_URI" -->  on this server. </li>
+			</ul>
+			<p>Вы сможете найти ответ на возникший вопрос на сайте  <a href="http://www.rx-support.net/">www.rx-support.net</a>.</p>
+			<p align="center">Запрашиваемый сайт - 
+		    <!--#echo var="HTTP_HOST" --></p>
+
+		</div>
+
+	</div>
+
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+2015-01-15 - fixed minor UI issues
+2015-01-15 - fixed minor UI issues
+2015-01-15 - fixes in time tree view; fixes for website
+2015-01-15 - better text for "add child task" action
+2015-01-15 - fixed issue with reordering tasks
+2015-01-05 - better icon for os x
+2015-01-05 - fixed UI problem with tray icon
+2015-01-04 - better deployment scheme
+2015-01-04 - add license text
+2015-01-04 - add task.flags field in DB
+2015-01-03 - add show/hide tray icon option
+2015-01-03 - fix minor UI issue for new database dialog
+- add attachments tables in SQL schema
+2015-01-03 - better build script
+2015-01-02 - minor fixes
+2014-12-30 - new application icon
+2014-12-30 - more work on timeline modifications. Remove/add works.
+2014-12-28 - more work on time interval editor
+2014-12-27 - initial work on time interval modifying
+2014-12-27 - improved detection of duplicate time intervals
+2014-12-26 - more work for duplicated intervals detection
+2014-12-23 - more fixes
+2014-12-23 - fixed minor problem in smart time tracking
+2014-12-18 - more work on os x specific features
+2014-12-13 - fixes and migration to qt 5.4.0
+2014-12-12 - Qt4 build
+2014-12-08 - more work to integrate smart tracking
+2014-12-08 - add logger
+2014-11-29 - initial work on intellectual time tracking
+2014-11-29 - fixed problem in time report
+2014-11-24 - add website initial page
+2014-11-24 - add initial time report implementation
+2014-11-21 - few minor fixes in sqlite handling + time tree model
+2014-11-21 - DB journals moved to memory
+2014-11-21 - minor fix to avoid crash on exit
+2014-11-20 - more work on time tree model
+2014-11-20 - UI fixes for OS X build
+2014-11-19 - moving to password dialogs as OS X sheets
+2014-11-18 - minor fixes
+2014-11-15 - fixed problem when storing litt.ini in invalid place
+2014-11-15 - started work on timeline viewer/editor
+2014-11-13 - fixes
+- os x redist script is improved
+2014-11-13 - many minor fixes
+2014-11-12 - more work to support new UI
+2014-11-07 - moving to simpler UI
+2014-11-06 - initial work to support complex view of timeline
+2014-11-05 - initial work on better time tree
+2014-10-29 - fixed few bugs in dnd
+2014-10-27 - more work to support drag-and-drop in task tree
+2014-10-24 - fixed problem in task moving
+2014-10-23 - initial work to support task moving
+2014-10-23 - minor fix
+2014-10-23 - more fixes on preferences handling
+2014-10-19 - work on better settings support
+2014-10-19 - minor fixes
+- work on preferences dialog
+2014-10-19 - minor fixes
+- tray icon
+2014-10-12 - played with time period column width
+2014-10-12 - add todo file
+2014-10-12 - remove QtSql module + fix os x build script
+2014-10-12 - sqlcipher integration works again
+2014-10-09 - migration to standalone sqlcipher distribution to avoid Qt SQLCIPHER
+plugin dependency
+2014-05-25 - work on better time tree
+2014-05-25 - moved to plain text
+- moved to plain db
+2014-02-08 - build script for os x
+2014-02-08 - database encryption
+2014-02-02 - more work on encryption
+2014-02-02 - encryption work
+2014-01-31 - fixes for os x build
+2014-01-31 - fixes in db deployment
+2014-01-30 - preparation to first release
+2014-01-30 - initial import
