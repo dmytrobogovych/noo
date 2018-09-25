@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StopWorkDialog</class>
+ <widget class="QDialog" name="StopWorkDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>386</width>
+    <height>59</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="mInfoLabel">
+   <property name="geometry">
+    <rect>
+     <x>7</x>
+     <y>3</y>
+     <width>241</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Litt discovered idle interval at %TIME%.
+Should app to continue work tracking?</string>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="mYesButton">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>3</y>
+     <width>111</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Yes</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="mNoButton">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>32</y>
+     <width>111</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>No</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mYesButton</sender>
+   <signal>clicked()</signal>
+   <receiver>StopWorkDialog</receiver>
+   <slot>onYesButtonTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>307</x>
+     <y>15</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>182</x>
+     <y>29</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mNoButton</sender>
+   <signal>clicked()</signal>
+   <receiver>StopWorkDialog</receiver>
+   <slot>onNoButtonTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>307</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>182</x>
+     <y>29</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onYesButtonTriggered()</slot>
+  <slot>onNoButtonTriggered()</slot>
+  <slot>onFinishTimerTriggered()</slot>
+ </slots>
+</ui>
