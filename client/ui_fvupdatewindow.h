@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'fvupdatewindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -116,13 +116,13 @@ public:
 
     void retranslateUi(QWidget *FvUpdateWindow)
     {
-        FvUpdateWindow->setWindowTitle(QApplication::translate("FvUpdateWindow", "Software Update", 0));
-        newVersionIsAvailableLabel->setText(QApplication::translate("FvUpdateWindow", "A new version of %1 is available!", 0));
-        wouldYouLikeToDownloadLabel->setText(QApplication::translate("FvUpdateWindow", "%1 %2 is now available - you have %3. Would you like to download it now?", 0));
-        groupBox->setTitle(QApplication::translate("FvUpdateWindow", "Release Notes:", 0));
-        skipThisVersionButton->setText(QApplication::translate("FvUpdateWindow", "Skip This Version", 0));
-        remindMeLaterButton->setText(QApplication::translate("FvUpdateWindow", "Remind Me Later", 0));
-        installUpdateButton->setText(QApplication::translate("FvUpdateWindow", "Install Update", 0));
+        FvUpdateWindow->setWindowTitle(QApplication::translate("FvUpdateWindow", "Software Update", Q_NULLPTR));
+        newVersionIsAvailableLabel->setText(QApplication::translate("FvUpdateWindow", "A new version of %1 is available!", Q_NULLPTR));
+        wouldYouLikeToDownloadLabel->setText(QApplication::translate("FvUpdateWindow", "%1 %2 is now available - you have %3. Would you like to download it now?", Q_NULLPTR));
+        groupBox->setTitle(QApplication::translate("FvUpdateWindow", "Release Notes:", Q_NULLPTR));
+        skipThisVersionButton->setText(QApplication::translate("FvUpdateWindow", "Skip This Version", Q_NULLPTR));
+        remindMeLaterButton->setText(QApplication::translate("FvUpdateWindow", "Remind Me Later", Q_NULLPTR));
+        installUpdateButton->setText(QApplication::translate("FvUpdateWindow", "Install Update", Q_NULLPTR));
     } // retranslateUi
 
 };

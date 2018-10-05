@@ -10,23 +10,25 @@ class PreferencesDlg;
 
 class PreferencesDlg : public QDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit PreferencesDlg(QWidget *parent, Settings& settings);
-  ~PreferencesDlg();
+    explicit PreferencesDlg(QWidget *parent, Settings& settings);
+    ~PreferencesDlg();
 
 private:
-  Ui::PreferencesDlg *ui;
-  Settings& mSettings;
+    Ui::PreferencesDlg *ui;
+    Settings& mSettings;
+
+    void applyTheme();
 
 private slots:
-  void selectDatabase();
-  void accepted();
-  void smartStopSettingChanged(bool v);
-  void smartStartSettingChanged(bool);
-  void smartStopWayChanged();
-  void allowStartAfterIdleControls();
+    void selectDatabase();
+    void accepted();
+    void smartStopSettingChanged(bool v);
+    void smartStartSettingChanged(bool);
+    void smartStopWayChanged();
+    void allowStartAfterIdleControls();
 
 };
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'finddialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -82,9 +82,9 @@ public:
 
     void retranslateUi(QDialog *FindDialog)
     {
-        FindDialog->setWindowTitle(QApplication::translate("FindDialog", "Dialog", 0));
-        label->setText(QApplication::translate("FindDialog", "Text to search:", 0));
-        mSearchButton->setText(QApplication::translate("FindDialog", "Search", 0));
+        FindDialog->setWindowTitle(QApplication::translate("FindDialog", "Dialog", Q_NULLPTR));
+        label->setText(QApplication::translate("FindDialog", "Text to search:", Q_NULLPTR));
+        mSearchButton->setText(QApplication::translate("FindDialog", "Search", Q_NULLPTR));
     } // retranslateUi
 
 };

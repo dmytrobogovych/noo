@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'timereportwizard.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.6.2)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,12 +12,14 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'timereportwizard.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.6.2. It"
+#error "This file was generated using the moc from 5.9.5. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_TaskTreePage_t {
     QByteArrayData data[3];
     char stringdata0[23];
@@ -75,7 +77,7 @@ void TaskTreePage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
 
 const QMetaObject TaskTreePage::staticMetaObject = {
     { &QWizardPage::staticMetaObject, qt_meta_stringdata_TaskTreePage.data,
-      qt_meta_data_TaskTreePage,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+      qt_meta_data_TaskTreePage,  qt_static_metacall, nullptr, nullptr}
 };
 
 
@@ -86,9 +88,9 @@ const QMetaObject *TaskTreePage::metaObject() const
 
 void *TaskTreePage::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_TaskTreePage.stringdata0))
-        return static_cast<void*>(const_cast< TaskTreePage*>(this));
+        return static_cast<void*>(this);
     return QWizardPage::qt_metacast(_clname);
 }
 
@@ -165,7 +167,7 @@ void CumulativeOptionPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
 
 const QMetaObject CumulativeOptionPage::staticMetaObject = {
     { &QWizardPage::staticMetaObject, qt_meta_stringdata_CumulativeOptionPage.data,
-      qt_meta_data_CumulativeOptionPage,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+      qt_meta_data_CumulativeOptionPage,  qt_static_metacall, nullptr, nullptr}
 };
 
 
@@ -176,9 +178,9 @@ const QMetaObject *CumulativeOptionPage::metaObject() const
 
 void *CumulativeOptionPage::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_CumulativeOptionPage.stringdata0))
-        return static_cast<void*>(const_cast< CumulativeOptionPage*>(this));
+        return static_cast<void*>(this);
     return QWizardPage::qt_metacast(_clname);
 }
 
@@ -242,7 +244,7 @@ void DateIntervalPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
 
 const QMetaObject DateIntervalPage::staticMetaObject = {
     { &QWizardPage::staticMetaObject, qt_meta_stringdata_DateIntervalPage.data,
-      qt_meta_data_DateIntervalPage,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+      qt_meta_data_DateIntervalPage,  qt_static_metacall, nullptr, nullptr}
 };
 
 
@@ -253,17 +255,15 @@ const QMetaObject *DateIntervalPage::metaObject() const
 
 void *DateIntervalPage::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_DateIntervalPage.stringdata0))
-        return static_cast<void*>(const_cast< DateIntervalPage*>(this));
+        return static_cast<void*>(this);
     return QWizardPage::qt_metacast(_clname);
 }
 
 int DateIntervalPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWizardPage::qt_metacall(_c, _id, _a);
-    if (_id < 0)
-        return _id;
     return _id;
 }
 struct qt_meta_stringdata_ReportViewPage_t {
@@ -310,7 +310,7 @@ void ReportViewPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
 
 const QMetaObject ReportViewPage::staticMetaObject = {
     { &QWizardPage::staticMetaObject, qt_meta_stringdata_ReportViewPage.data,
-      qt_meta_data_ReportViewPage,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+      qt_meta_data_ReportViewPage,  qt_static_metacall, nullptr, nullptr}
 };
 
 
@@ -321,17 +321,15 @@ const QMetaObject *ReportViewPage::metaObject() const
 
 void *ReportViewPage::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_ReportViewPage.stringdata0))
-        return static_cast<void*>(const_cast< ReportViewPage*>(this));
+        return static_cast<void*>(this);
     return QWizardPage::qt_metacast(_clname);
 }
 
 int ReportViewPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWizardPage::qt_metacall(_c, _id, _a);
-    if (_id < 0)
-        return _id;
     return _id;
 }
 struct qt_meta_stringdata_TimeReportWizard_t {
@@ -396,7 +394,7 @@ void TimeReportWizard::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
 
 const QMetaObject TimeReportWizard::staticMetaObject = {
     { &QWizard::staticMetaObject, qt_meta_stringdata_TimeReportWizard.data,
-      qt_meta_data_TimeReportWizard,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+      qt_meta_data_TimeReportWizard,  qt_static_metacall, nullptr, nullptr}
 };
 
 
@@ -407,9 +405,9 @@ const QMetaObject *TimeReportWizard::metaObject() const
 
 void *TimeReportWizard::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_TimeReportWizard.stringdata0))
-        return static_cast<void*>(const_cast< TimeReportWizard*>(this));
+        return static_cast<void*>(this);
     return QWizard::qt_metacast(_clname);
 }
 
@@ -429,4 +427,5 @@ int TimeReportWizard::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     }
     return _id;
 }
+QT_WARNING_POP
 QT_END_MOC_NAMESPACE

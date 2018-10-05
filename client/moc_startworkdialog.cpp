@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'startworkdialog.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.6.2)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,12 +12,14 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'startworkdialog.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.6.2. It"
+#error "This file was generated using the moc from 5.9.5. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_StartWorkDialog_t {
     QByteArrayData data[7];
     char stringdata0[112];
@@ -93,17 +95,16 @@ void StartWorkDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
-        void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (StartWorkDialog::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&StartWorkDialog::continueTracking)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&StartWorkDialog::continueTracking)) {
                 *result = 0;
                 return;
             }
         }
         {
             typedef void (StartWorkDialog::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&StartWorkDialog::breakTracking)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&StartWorkDialog::breakTracking)) {
                 *result = 1;
                 return;
             }
@@ -114,7 +115,7 @@ void StartWorkDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
 
 const QMetaObject StartWorkDialog::staticMetaObject = {
     { &QDialog::staticMetaObject, qt_meta_stringdata_StartWorkDialog.data,
-      qt_meta_data_StartWorkDialog,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+      qt_meta_data_StartWorkDialog,  qt_static_metacall, nullptr, nullptr}
 };
 
 
@@ -125,9 +126,9 @@ const QMetaObject *StartWorkDialog::metaObject() const
 
 void *StartWorkDialog::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_StartWorkDialog.stringdata0))
-        return static_cast<void*>(const_cast< StartWorkDialog*>(this));
+        return static_cast<void*>(this);
     return QDialog::qt_metacast(_clname);
 }
 
@@ -151,12 +152,13 @@ int StartWorkDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void StartWorkDialog::continueTracking()
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
 void StartWorkDialog::breakTracking()
 {
-    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
+QT_WARNING_POP
 QT_END_MOC_NAMESPACE

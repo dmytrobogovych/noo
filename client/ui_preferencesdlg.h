@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'preferencesdlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -34,6 +34,7 @@ public:
     QCheckBox *mShowSecondsCheckbox;
     QCheckBox *mAutosavePasswordCheckbox;
     QCheckBox *mShowTrayIconCheckbox;
+    QCheckBox *mDarkThemeCheckbox;
     QCheckBox *mCustomDatabaseFileCheckbox;
     QPushButton *mSelectDatabaseButton;
     QLabel *mDatabaseLocation;
@@ -53,7 +54,6 @@ public:
     QLabel *label_2;
     QDialogButtonBox *buttonBox;
     QButtonGroup *buttonGroup;
-    QButtonGroup *buttonGroup_2;
 
     void setupUi(QDialog *PreferencesDlg)
     {
@@ -81,6 +81,11 @@ public:
         mShowTrayIconCheckbox->setObjectName(QStringLiteral("mShowTrayIconCheckbox"));
 
         verticalLayout_3->addWidget(mShowTrayIconCheckbox);
+
+        mDarkThemeCheckbox = new QCheckBox(PreferencesDlg);
+        mDarkThemeCheckbox->setObjectName(QStringLiteral("mDarkThemeCheckbox"));
+
+        verticalLayout_3->addWidget(mDarkThemeCheckbox);
 
         mCustomDatabaseFileCheckbox = new QCheckBox(PreferencesDlg);
         mCustomDatabaseFileCheckbox->setObjectName(QStringLiteral("mCustomDatabaseFileCheckbox"));
@@ -206,19 +211,20 @@ public:
 
     void retranslateUi(QDialog *PreferencesDlg)
     {
-        PreferencesDlg->setWindowTitle(QApplication::translate("PreferencesDlg", "Dialog", 0));
-        mShowSecondsCheckbox->setText(QApplication::translate("PreferencesDlg", "Show seconds", 0));
-        mAutosavePasswordCheckbox->setText(QApplication::translate("PreferencesDlg", "Autosave password (requires app restart)", 0));
-        mShowTrayIconCheckbox->setText(QApplication::translate("PreferencesDlg", "Show tray icon", 0));
-        mCustomDatabaseFileCheckbox->setText(QApplication::translate("PreferencesDlg", "Use database at custom location (requires app restart)", 0));
-        mSelectDatabaseButton->setText(QApplication::translate("PreferencesDlg", "Select file...", 0));
-        mDatabaseLocation->setText(QApplication::translate("PreferencesDlg", "Location of used database", 0));
-        mSmartStopTracking->setText(QApplication::translate("PreferencesDlg", "Stop tracking if idle detected for", 0));
-        label->setText(QApplication::translate("PreferencesDlg", "minutes", 0));
-        mAskQuestionOnStopRadiobutton->setText(QApplication::translate("PreferencesDlg", "Ask question", 0));
-        mAutomaticallyOnStopRadiobutton->setText(QApplication::translate("PreferencesDlg", "Automatically", 0));
+        PreferencesDlg->setWindowTitle(QApplication::translate("PreferencesDlg", "Dialog", Q_NULLPTR));
+        mShowSecondsCheckbox->setText(QApplication::translate("PreferencesDlg", "Show seconds", Q_NULLPTR));
+        mAutosavePasswordCheckbox->setText(QApplication::translate("PreferencesDlg", "Autosave password (requires app restart)", Q_NULLPTR));
+        mShowTrayIconCheckbox->setText(QApplication::translate("PreferencesDlg", "Show tray icon", Q_NULLPTR));
+        mDarkThemeCheckbox->setText(QApplication::translate("PreferencesDlg", "Use dark theme", Q_NULLPTR));
+        mCustomDatabaseFileCheckbox->setText(QApplication::translate("PreferencesDlg", "Use database at custom location (requires app restart)", Q_NULLPTR));
+        mSelectDatabaseButton->setText(QApplication::translate("PreferencesDlg", "Select file...", Q_NULLPTR));
+        mDatabaseLocation->setText(QApplication::translate("PreferencesDlg", "Location of used database", Q_NULLPTR));
+        mSmartStopTracking->setText(QApplication::translate("PreferencesDlg", "Stop tracking if idle detected for", Q_NULLPTR));
+        label->setText(QApplication::translate("PreferencesDlg", "minutes", Q_NULLPTR));
+        mAskQuestionOnStopRadiobutton->setText(QApplication::translate("PreferencesDlg", "Ask question", Q_NULLPTR));
+        mAutomaticallyOnStopRadiobutton->setText(QApplication::translate("PreferencesDlg", "Automatically", Q_NULLPTR));
         mSmartStartTracking->setText(QApplication::translate("PreferencesDlg", "Start tracking after stop on idle when user activity detected. \n"
-"This option requires enabled automatic stop tracking on idle.", 0));
+"This option requires enabled automatic stop tracking on idle.", Q_NULLPTR));
         label_2->setText(QString());
     } // retranslateUi
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'stopworkdialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -58,11 +58,11 @@ public:
 
     void retranslateUi(QDialog *StopWorkDialog)
     {
-        StopWorkDialog->setWindowTitle(QApplication::translate("StopWorkDialog", "Dialog", 0));
+        StopWorkDialog->setWindowTitle(QApplication::translate("StopWorkDialog", "Dialog", Q_NULLPTR));
         mInfoLabel->setText(QApplication::translate("StopWorkDialog", "Litt discovered idle interval at %TIME%.\n"
-"Should app to continue work tracking?", 0));
-        mYesButton->setText(QApplication::translate("StopWorkDialog", "Yes", 0));
-        mNoButton->setText(QApplication::translate("StopWorkDialog", "No", 0));
+"Should app to continue work tracking?", Q_NULLPTR));
+        mYesButton->setText(QApplication::translate("StopWorkDialog", "Yes", Q_NULLPTR));
+        mNoButton->setText(QApplication::translate("StopWorkDialog", "No", Q_NULLPTR));
     } // retranslateUi
 
 };

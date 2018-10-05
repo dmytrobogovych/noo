@@ -41,6 +41,8 @@
 #define KEY_EXPANDED_TASKS "ExpandedTasks"
 #define KEY_RECENT_TASKS "RecentTasks"
 
+#define KEY_DARK_THEME "DarkTheme"
+
 class Settings
 {
 public:

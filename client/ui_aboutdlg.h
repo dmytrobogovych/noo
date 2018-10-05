@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'aboutdlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -67,11 +67,11 @@ public:
 
     void retranslateUi(QDialog *AboutDlg)
     {
-        AboutDlg->setWindowTitle(QApplication::translate("AboutDlg", "Dialog", 0));
+        AboutDlg->setWindowTitle(QApplication::translate("AboutDlg", "Dialog", Q_NULLPTR));
         mTextLabel->setText(QApplication::translate("AboutDlg", "werwre\n"
 "werwer\n"
-"", 0));
-        mLicenseLabel->setText(QApplication::translate("AboutDlg", "TextLabel", 0));
+"", Q_NULLPTR));
+        mLicenseLabel->setText(QApplication::translate("AboutDlg", "TextLabel", Q_NULLPTR));
     } // retranslateUi
 
 };

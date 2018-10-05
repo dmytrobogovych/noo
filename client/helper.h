@@ -4,11 +4,19 @@
 #include <QString>
 #include <QObject>
 
+class Settings;
+class ThemeHelper
+{
+public:
+    static void applyCurrentTheme(Settings& settings);
+};
+
 class TimeHelper
 {
 public:
   static QString secondsToDisplay(int seconds, bool showSeconds);
 };
+
 
 class PathHelper
 {

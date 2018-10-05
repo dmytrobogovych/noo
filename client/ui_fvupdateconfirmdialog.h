@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'fvupdateconfirmdialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -75,11 +75,11 @@ public:
 
     void retranslateUi(QDialog *FvUpdateConfirmDialog)
     {
-        FvUpdateConfirmDialog->setWindowTitle(QApplication::translate("FvUpdateConfirmDialog", "Software Update", 0));
-        updateFileIsLocatedLabel->setText(QApplication::translate("FvUpdateConfirmDialog", "The update file is located at:", 0));
-        updateFileLinkLabel->setText(QApplication::translate("FvUpdateConfirmDialog", "<a href=\"%1\">%1</a>", 0));
-        downloadThisUpdateLabel->setText(QApplication::translate("FvUpdateConfirmDialog", "Download this update, close \"%1\", install it, and then reopen \"%1\".", 0));
-        whenYouClickOkLabel->setText(QApplication::translate("FvUpdateConfirmDialog", "When you click \"OK\", this link will be opened in your browser.", 0));
+        FvUpdateConfirmDialog->setWindowTitle(QApplication::translate("FvUpdateConfirmDialog", "Software Update", Q_NULLPTR));
+        updateFileIsLocatedLabel->setText(QApplication::translate("FvUpdateConfirmDialog", "The update file is located at:", Q_NULLPTR));
+        updateFileLinkLabel->setText(QApplication::translate("FvUpdateConfirmDialog", "<a href=\"%1\">%1</a>", Q_NULLPTR));
+        downloadThisUpdateLabel->setText(QApplication::translate("FvUpdateConfirmDialog", "Download this update, close \"%1\", install it, and then reopen \"%1\".", Q_NULLPTR));
+        whenYouClickOkLabel->setText(QApplication::translate("FvUpdateConfirmDialog", "When you click \"OK\", this link will be opened in your browser.", Q_NULLPTR));
     } // retranslateUi
 
 };

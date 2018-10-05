@@ -42,6 +42,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="mDarkThemeCheckbox">
+     <property name="text">
+      <string>Use dark theme</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QCheckBox" name="mCustomDatabaseFileCheckbox">
      <property name="text">
       <string>Use database at custom location (requires app restart)</string>
@@ -265,6 +272,5 @@ This option requires enabled automatic stop tracking on idle.</string>
  </slots>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

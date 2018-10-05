@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'attachmentsdialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -69,8 +69,8 @@ public:
 
     void retranslateUi(QDialog *AttachmentsDialog)
     {
-        AttachmentsDialog->setWindowTitle(QApplication::translate("AttachmentsDialog", "Dialog", 0));
-        label->setText(QApplication::translate("AttachmentsDialog", "There is list of attachments in document. Use context menu or drag-and-drop to manage it.", 0));
+        AttachmentsDialog->setWindowTitle(QApplication::translate("AttachmentsDialog", "Dialog", Q_NULLPTR));
+        label->setText(QApplication::translate("AttachmentsDialog", "There is list of attachments in document. Use context menu or drag-and-drop to manage it.", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -11,28 +11,28 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += printsupport
 CONFIG += c++11
 TARGET = Litt
 TEMPLATE = app
-VERSION = 0.8.17
+VERSION = 0.9.0
 VERSTR = '\\"$${VERSION}\\"'
 DEFINES += VER=\"$${VERSTR}\"
 
 win32 {
-DEFINES += TARGET_WIN
+    DEFINES += TARGET_WIN
 }
 
 macx {
-QMAKE_MAC_SDK = macosx10.12
-DEFINES += TARGET_OSX
-# DEFINES += USE_LOGGER
-LIBS += ../lib/osx/libssl.a ../lib/osx/libcrypto.a
-LIBS += -framework CoreFoundation
-LIBS += -framework Cocoa
-QMAKE_CXXFLAGS += -std=c++11
-QMAKE_CXXFLAGS += -std=c++0x
-QMAKE_LFLAGS +=  -std=c++11
+    QMAKE_MAC_SDK = macosx10.12
+    DEFINES += TARGET_OSX
+    # DEFINES += USE_LOGGER
+    LIBS += ../lib/osx/libssl.a ../lib/osx/libcrypto.a
+    LIBS += -framework CoreFoundation
+    LIBS += -framework Cocoa
+    QMAKE_CXXFLAGS += -std=c++11
+    QMAKE_CXXFLAGS += -std=c++0x
+    QMAKE_LFLAGS +=  -std=c++11
 
-License.files = License.rtf
-License.path = Contents/Resources
-QMAKE_BUNDLE_DATA += License
+    License.files = License.rtf
+    License.path = Contents/Resources
+    QMAKE_BUNDLE_DATA += License
 }
 
 ICON = icons/appicon-osx.icns
@@ -44,7 +44,7 @@ INCLUDEPATH += ../lib/include
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     storage.cpp \
     task.cpp \
     tasktreemodel.cpp \
@@ -131,7 +131,7 @@ FORMS    += mainwindow.ui \
     stopworkdialog.ui \
     startworkdialog.ui
 
-RESOURCES     = mainwindow.qrc
+RESOURCES = mainwindow.qrc resources/qdarkstyle/style.qrc
 
 OBJECTIVE_SOURCES += \
     platforms/osx/hidtrackerimpl_osx.mm \

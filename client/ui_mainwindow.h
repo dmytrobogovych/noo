@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -488,95 +488,127 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        mSyncAction->setText(QApplication::translate("MainWindow", "S&ync...", 0));
-        mPrintAction->setText(QApplication::translate("MainWindow", "&Print...", 0));
-        mExitAction->setText(QApplication::translate("MainWindow", "E&xit", 0));
-        mPreferencesAction->setText(QApplication::translate("MainWindow", "Pre&ferences...", 0));
-        mSaveAction->setText(QApplication::translate("MainWindow", "&Save", 0));
-        mSaveAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0));
-        mDeleteTaskAction->setText(QApplication::translate("MainWindow", "Delete task", 0));
+        mSyncAction->setText(QApplication::translate("MainWindow", "S&ync...", Q_NULLPTR));
+        mPrintAction->setText(QApplication::translate("MainWindow", "&Print...", Q_NULLPTR));
+        mExitAction->setText(QApplication::translate("MainWindow", "E&xit", Q_NULLPTR));
+        mPreferencesAction->setText(QApplication::translate("MainWindow", "Pre&ferences...", Q_NULLPTR));
+        mSaveAction->setText(QApplication::translate("MainWindow", "&Save", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mSaveAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mDeleteTaskAction->setText(QApplication::translate("MainWindow", "Delete task", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        mDeleteTaskAction->setToolTip(QApplication::translate("MainWindow", "Delete task", 0));
+        mDeleteTaskAction->setToolTip(QApplication::translate("MainWindow", "Delete task", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        mRenameTaskAction->setText(QApplication::translate("MainWindow", "Rename task", 0));
-        mNewTaskAction->setText(QApplication::translate("MainWindow", "New child task", 0));
-        mNewTaskAction->setIconText(QApplication::translate("MainWindow", "New child task", 0));
+        mRenameTaskAction->setText(QApplication::translate("MainWindow", "Rename task", Q_NULLPTR));
+        mNewTaskAction->setText(QApplication::translate("MainWindow", "New child task", Q_NULLPTR));
+        mNewTaskAction->setIconText(QApplication::translate("MainWindow", "New child task", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        mNewTaskAction->setToolTip(QApplication::translate("MainWindow", "New child task", 0));
+        mNewTaskAction->setToolTip(QApplication::translate("MainWindow", "New child task", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        mNewTaskAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+N", 0));
-        mNewRootTaskAction->setText(QApplication::translate("MainWindow", "New root task", 0));
-        mNewRootTaskAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", 0));
-        mStartOrStopTrackingAction->setText(QApplication::translate("MainWindow", "Start tracking", 0));
-        mStartOrStopTrackingAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+T", 0));
-        mUndoEditAction->setText(QApplication::translate("MainWindow", "Undo", 0));
-        mUndoEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0));
-        mRedoEditAction->setText(QApplication::translate("MainWindow", "Redo", 0));
-        mRedoEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0));
-        mCutEditAction->setText(QApplication::translate("MainWindow", "Cut", 0));
-        mCutEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+X", 0));
-        mCopyEditAction->setText(QApplication::translate("MainWindow", "Copy", 0));
-        mCopyEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+C", 0));
-        mPasteEditAction->setText(QApplication::translate("MainWindow", "Paste", 0));
-        mPasteEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+V", 0));
-        mDeleteEditAction->setText(QApplication::translate("MainWindow", "Delete", 0));
-        mSelectAllEditAction->setText(QApplication::translate("MainWindow", "Select all note", 0));
-        mSelectAllEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+A", 0));
-        mAboutAction->setText(QApplication::translate("MainWindow", "About...", 0));
-        mTimelineAction->setText(QApplication::translate("MainWindow", "Timeline...", 0));
-        mTimeReportAction->setText(QApplication::translate("MainWindow", "Time report...", 0));
-        mShowToolbarAction->setText(QApplication::translate("MainWindow", "Show toolbar", 0));
-        mAttachmentsAction->setText(QApplication::translate("MainWindow", "Attachments", 0));
+#ifndef QT_NO_SHORTCUT
+        mNewTaskAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+N", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mNewRootTaskAction->setText(QApplication::translate("MainWindow", "New root task", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mNewRootTaskAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mStartOrStopTrackingAction->setText(QApplication::translate("MainWindow", "Start tracking", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mStartOrStopTrackingAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+T", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mUndoEditAction->setText(QApplication::translate("MainWindow", "Undo", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mUndoEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mRedoEditAction->setText(QApplication::translate("MainWindow", "Redo", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mRedoEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mCutEditAction->setText(QApplication::translate("MainWindow", "Cut", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mCutEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+X", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mCopyEditAction->setText(QApplication::translate("MainWindow", "Copy", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mCopyEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+C", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mPasteEditAction->setText(QApplication::translate("MainWindow", "Paste", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mPasteEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+V", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mDeleteEditAction->setText(QApplication::translate("MainWindow", "Delete", Q_NULLPTR));
+        mSelectAllEditAction->setText(QApplication::translate("MainWindow", "Select all note", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mSelectAllEditAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+A", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mAboutAction->setText(QApplication::translate("MainWindow", "About...", Q_NULLPTR));
+        mTimelineAction->setText(QApplication::translate("MainWindow", "Timeline...", Q_NULLPTR));
+        mTimeReportAction->setText(QApplication::translate("MainWindow", "Time report...", Q_NULLPTR));
+        mShowToolbarAction->setText(QApplication::translate("MainWindow", "Show toolbar", Q_NULLPTR));
+        mAttachmentsAction->setText(QApplication::translate("MainWindow", "Attachments", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        mAttachmentsAction->setToolTip(QApplication::translate("MainWindow", "View&edit attachments", 0));
+        mAttachmentsAction->setToolTip(QApplication::translate("MainWindow", "View&edit attachments", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        mCheckForUpdatesAction->setText(QApplication::translate("MainWindow", "Check for updates...", 0));
-        mTimeTrackableAction->setText(QApplication::translate("MainWindow", "Time trackable", 0));
-        mActionSearchInTasks->setText(QApplication::translate("MainWindow", "Find in tasks...", 0));
-        mActionSearchInTasks->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+F", 0));
-        mActionSearch->setText(QApplication::translate("MainWindow", "Find...", 0));
-        mActionSearch->setShortcut(QApplication::translate("MainWindow", "Ctrl+F", 0));
-        mShowLittAction->setText(QApplication::translate("MainWindow", "Show Litt window", 0));
+        mCheckForUpdatesAction->setText(QApplication::translate("MainWindow", "Check for updates...", Q_NULLPTR));
+        mTimeTrackableAction->setText(QApplication::translate("MainWindow", "Time trackable", Q_NULLPTR));
+        mActionSearchInTasks->setText(QApplication::translate("MainWindow", "Find in tasks...", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mActionSearchInTasks->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+F", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mActionSearch->setText(QApplication::translate("MainWindow", "Find...", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mActionSearch->setShortcut(QApplication::translate("MainWindow", "Ctrl+F", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mShowLittAction->setText(QApplication::translate("MainWindow", "Show Litt window", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        mShowLittAction->setToolTip(QApplication::translate("MainWindow", "Bring Litt window to foreground", 0));
+        mShowLittAction->setToolTip(QApplication::translate("MainWindow", "Bring Litt window to foreground", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        mFocusTaskTreeAction->setText(QApplication::translate("MainWindow", "Switch to task tree", 0));
-        mFocusTaskTreeAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+1", 0));
-        mFocusTaskTextAction->setText(QApplication::translate("MainWindow", "Switch to task text", 0));
-        mFocusTaskTextAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+2", 0));
-        mAddSiblingAction->setText(QApplication::translate("MainWindow", "Add sibling", 0));
+        mFocusTaskTreeAction->setText(QApplication::translate("MainWindow", "Switch to task tree", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mFocusTaskTreeAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+1", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mFocusTaskTextAction->setText(QApplication::translate("MainWindow", "Switch to task text", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        mFocusTaskTextAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+2", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mAddSiblingAction->setText(QApplication::translate("MainWindow", "Add sibling", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        mAddSiblingAction->setToolTip(QApplication::translate("MainWindow", "Add sibling document", 0));
+        mAddSiblingAction->setToolTip(QApplication::translate("MainWindow", "Add sibling document", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        mDecreaseLevelAction->setText(QApplication::translate("MainWindow", "Decrease level", 0));
+        mDecreaseLevelAction->setText(QApplication::translate("MainWindow", "Decrease level", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        mDecreaseLevelAction->setToolTip(QApplication::translate("MainWindow", "Decrease document level", 0));
+        mDecreaseLevelAction->setToolTip(QApplication::translate("MainWindow", "Decrease document level", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        mIncreaseLevelAction->setText(QApplication::translate("MainWindow", "Increase level", 0));
+        mIncreaseLevelAction->setText(QApplication::translate("MainWindow", "Increase level", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        mIncreaseLevelAction->setToolTip(QApplication::translate("MainWindow", "Increase document level", 0));
+        mIncreaseLevelAction->setToolTip(QApplication::translate("MainWindow", "Increase document level", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        mMoveUpAction->setText(QApplication::translate("MainWindow", "Move up", 0));
+        mMoveUpAction->setText(QApplication::translate("MainWindow", "Move up", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        mMoveUpAction->setToolTip(QApplication::translate("MainWindow", "Move document up", 0));
+        mMoveUpAction->setToolTip(QApplication::translate("MainWindow", "Move document up", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        mMoveUpAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Up", 0));
-        mMoveDownAction->setText(QApplication::translate("MainWindow", "Move down", 0));
+#ifndef QT_NO_SHORTCUT
+        mMoveUpAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Up", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        mMoveDownAction->setText(QApplication::translate("MainWindow", "Move down", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
-        mMoveDownAction->setToolTip(QApplication::translate("MainWindow", "Move document down", 0));
+        mMoveDownAction->setToolTip(QApplication::translate("MainWindow", "Move document down", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
-        mMoveDownAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Down", 0));
-        label->setText(QApplication::translate("MainWindow", "Find:", 0));
-        mTodayTextLabel->setText(QApplication::translate("MainWindow", "Today:", 0));
-        mTodaySpentTimeLabel->setText(QApplication::translate("MainWindow", "0 hours 0 minutes", 0));
-        mThisMonthTextLabel->setText(QApplication::translate("MainWindow", "This month:", 0));
-        mThisMonthSpentTimeLabel->setText(QApplication::translate("MainWindow", "0 hours 0 minutes", 0));
-        mFileMenu->setTitle(QApplication::translate("MainWindow", "&File", 0));
-        mEditMenu->setTitle(QApplication::translate("MainWindow", "Edit", 0));
-        mToolsMenu->setTitle(QApplication::translate("MainWindow", "&Tools", 0));
-        mStartRecentTaskMenu->setTitle(QApplication::translate("MainWindow", "Track recent task", 0));
-        mViewMenu->setTitle(QApplication::translate("MainWindow", "View", 0));
-        mMainToolbar->setWindowTitle(QApplication::translate("MainWindow", "Toolbar", 0));
+#ifndef QT_NO_SHORTCUT
+        mMoveDownAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Down", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        label->setText(QApplication::translate("MainWindow", "Find:", Q_NULLPTR));
+        mTodayTextLabel->setText(QApplication::translate("MainWindow", "Today:", Q_NULLPTR));
+        mTodaySpentTimeLabel->setText(QApplication::translate("MainWindow", "0 hours 0 minutes", Q_NULLPTR));
+        mThisMonthTextLabel->setText(QApplication::translate("MainWindow", "This month:", Q_NULLPTR));
+        mThisMonthSpentTimeLabel->setText(QApplication::translate("MainWindow", "0 hours 0 minutes", Q_NULLPTR));
+        mFileMenu->setTitle(QApplication::translate("MainWindow", "&File", Q_NULLPTR));
+        mEditMenu->setTitle(QApplication::translate("MainWindow", "Edit", Q_NULLPTR));
+        mToolsMenu->setTitle(QApplication::translate("MainWindow", "&Tools", Q_NULLPTR));
+        mStartRecentTaskMenu->setTitle(QApplication::translate("MainWindow", "Track recent task", Q_NULLPTR));
+        mViewMenu->setTitle(QApplication::translate("MainWindow", "View", Q_NULLPTR));
+        mMainToolbar->setWindowTitle(QApplication::translate("MainWindow", "Toolbar", Q_NULLPTR));
         Q_UNUSED(MainWindow);
     } // retranslateUi
 

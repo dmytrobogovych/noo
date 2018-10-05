@@ -1,3 +1,0 @@
-1) Save & load columns width  in time table
-2) Make hierarchical time table
-3) Add tray icon

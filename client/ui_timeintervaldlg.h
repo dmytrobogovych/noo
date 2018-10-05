@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'timeintervaldlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -88,9 +88,9 @@ public:
 
     void retranslateUi(QDialog *TimeIntervalDlg)
     {
-        TimeIntervalDlg->setWindowTitle(QApplication::translate("TimeIntervalDlg", "Time interval", 0));
-        mStartTimeLabel->setText(QApplication::translate("TimeIntervalDlg", "Start time:", 0));
-        mFinishTimeLabel->setText(QApplication::translate("TimeIntervalDlg", "Finish time:", 0));
+        TimeIntervalDlg->setWindowTitle(QApplication::translate("TimeIntervalDlg", "Time interval", Q_NULLPTR));
+        mStartTimeLabel->setText(QApplication::translate("TimeIntervalDlg", "Start time:", Q_NULLPTR));
+        mFinishTimeLabel->setText(QApplication::translate("TimeIntervalDlg", "Finish time:", Q_NULLPTR));
     } // retranslateUi
 
 };

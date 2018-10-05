@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'passworddlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -77,8 +77,8 @@ public:
 
     void retranslateUi(QDialog *PasswordDlg)
     {
-        PasswordDlg->setWindowTitle(QApplication::translate("PasswordDlg", "Password required", 0));
-        mPasswordLabel->setText(QApplication::translate("PasswordDlg", "Password:", 0));
+        PasswordDlg->setWindowTitle(QApplication::translate("PasswordDlg", "Password required", Q_NULLPTR));
+        mPasswordLabel->setText(QApplication::translate("PasswordDlg", "Password:", Q_NULLPTR));
     } // retranslateUi
 
 };

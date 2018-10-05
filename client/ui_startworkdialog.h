@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'startworkdialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -71,11 +71,11 @@ public:
 
     void retranslateUi(QDialog *StartWorkDialog)
     {
-        StartWorkDialog->setWindowTitle(QApplication::translate("StartWorkDialog", "Dialog", 0));
+        StartWorkDialog->setWindowTitle(QApplication::translate("StartWorkDialog", "Dialog", Q_NULLPTR));
         mInfoLabel->setText(QApplication::translate("StartWorkDialog", "Litt discovered user activity after idle interval. \n"
-"Should Litt start tracking on %TASK%?", 0));
-        mYesButton->setText(QApplication::translate("StartWorkDialog", "Yes", 0));
-        mNoButton->setText(QApplication::translate("StartWorkDialog", "No", 0));
+"Should Litt start tracking on %TASK%?", Q_NULLPTR));
+        mYesButton->setText(QApplication::translate("StartWorkDialog", "Yes", Q_NULLPTR));
+        mNoButton->setText(QApplication::translate("StartWorkDialog", "No", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'timetreedlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -88,12 +88,12 @@ public:
 
     void retranslateUi(QDialog *TimeTreeDlg)
     {
-        TimeTreeDlg->setWindowTitle(QApplication::translate("TimeTreeDlg", "Timeline", 0));
-        mAddIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Add...", 0));
-        mRemoveIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Remove", 0));
-        mChangeIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Change...", 0));
-        mAddIntervalButton->setText(QApplication::translate("TimeTreeDlg", "Add...", 0));
-        mRemoveIntervalButton->setText(QApplication::translate("TimeTreeDlg", "Remove", 0));
+        TimeTreeDlg->setWindowTitle(QApplication::translate("TimeTreeDlg", "Timeline", Q_NULLPTR));
+        mAddIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Add...", Q_NULLPTR));
+        mRemoveIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Remove", Q_NULLPTR));
+        mChangeIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Change...", Q_NULLPTR));
+        mAddIntervalButton->setText(QApplication::translate("TimeTreeDlg", "Add...", Q_NULLPTR));
+        mRemoveIntervalButton->setText(QApplication::translate("TimeTreeDlg", "Remove", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -4,6 +4,7 @@
 #include <QAbstractItemModel>
 #include <QStyleOptionViewItem>
 #include <QItemDelegate>
+#include <QStyledItemDelegate>
 #include <QTreeView>
 #include <QMenu>
 

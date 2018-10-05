@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newpassworddlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -94,10 +94,10 @@ public:
 
     void retranslateUi(QDialog *NewPasswordDlg)
     {
-        NewPasswordDlg->setWindowTitle(QApplication::translate("NewPasswordDlg", "Password for new database", 0));
-        mNewPasswordLabel1->setText(QApplication::translate("NewPasswordDlg", "Password:", 0));
-        mNewPasswordLabel2->setText(QApplication::translate("NewPasswordDlg", "Repeat password:", 0));
-        mPasswordHintLabel->setText(QApplication::translate("NewPasswordDlg", "<html><head/><body><p>Please enter new password twice to complete database creation.</p> <p>Please be aware - there is no way to recover lost password.</p></body></html>", 0));
+        NewPasswordDlg->setWindowTitle(QApplication::translate("NewPasswordDlg", "Password for new database", Q_NULLPTR));
+        mNewPasswordLabel1->setText(QApplication::translate("NewPasswordDlg", "Password:", Q_NULLPTR));
+        mNewPasswordLabel2->setText(QApplication::translate("NewPasswordDlg", "Repeat password:", Q_NULLPTR));
+        mPasswordHintLabel->setText(QApplication::translate("NewPasswordDlg", "<html><head/><body><p>Please enter new password twice to complete database creation.</p> <p>Please be aware - there is no way to recover lost password.</p></body></html>", Q_NULLPTR));
     } // retranslateUi
 
 };

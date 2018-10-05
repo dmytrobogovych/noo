@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'fvupdatewindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.6.2)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,12 +12,14 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'fvupdatewindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.6.2. It"
+#error "This file was generated using the moc from 5.9.5. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_FvUpdateWindow_t {
     QByteArrayData data[5];
     char stringdata0[54];
@@ -77,7 +79,7 @@ void FvUpdateWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
 
 const QMetaObject FvUpdateWindow::staticMetaObject = {
     { &QWidget::staticMetaObject, qt_meta_stringdata_FvUpdateWindow.data,
-      qt_meta_data_FvUpdateWindow,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+      qt_meta_data_FvUpdateWindow,  qt_static_metacall, nullptr, nullptr}
 };
 
 
@@ -88,9 +90,9 @@ const QMetaObject *FvUpdateWindow::metaObject() const
 
 void *FvUpdateWindow::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_FvUpdateWindow.stringdata0))
-        return static_cast<void*>(const_cast< FvUpdateWindow*>(this));
+        return static_cast<void*>(this);
     return QWidget::qt_metacast(_clname);
 }
 
@@ -110,4 +112,5 @@ int FvUpdateWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     }
     return _id;
 }
+QT_WARNING_POP
 QT_END_MOC_NAMESPACE
