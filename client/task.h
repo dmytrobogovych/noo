@@ -12,55 +12,55 @@
 #include <map>
 #include "SQLiteCpp/Database.h"
 
-typedef qulonglong Id;
+typedef uint64_t Id;
 
 class WorldId
 {
 public:
-  WorldId();
-  WorldId(const WorldId& src);
-  WorldId(const QString& s);
-  ~WorldId();
-  WorldId& operator = (const WorldId& src);
-  bool operator == (const WorldId& src);
-  bool operator < (const WorldId& src);
+    WorldId();
+    WorldId(const WorldId& src);
+    WorldId(const std::string& s);
+    ~WorldId();
+    WorldId& operator = (const WorldId& src);
+    bool operator == (const WorldId& src);
+    bool operator < (const WorldId& src);
 
-  QString asString() const;
-  static WorldId create();
+    std::string asString() const;
+    static WorldId create();
 protected:
-  QUuid mId;
+    std::string mId;
 };
 
 class TimeRecord
 {
 public:
-  TimeRecord();
-  TimeRecord(const QDateTime& startTime, const QDateTime& endTime, Id taskId);
-  ~TimeRecord();
+    TimeRecord();
+    TimeRecord(const time_t& startTime, const time_t& endTime, Id taskId);
+    ~TimeRecord();
 
-  QDateTime startTime() const;
-  void setStartTime(const QDateTime& startTime);
-  QDateTime endTime() const;
-  void setEndTime(const QDateTime& endTime);
-  int length();
-  Id id() const;
-  void setId(Id id);
-  Id taskId() const;
-  void setTaskId(Id id);
-  WorldId worldId() const;
-  void setWorldId(const WorldId& id);
+    time_t startTime() const;
+    void setStartTime(const time_t& startTime);
+    time_t endTime() const;
+    void setEndTime(const time_t& endTime);
+    int length();
+    Id id() const;
+    void setId(Id id);
+    Id taskId() const;
+    void setTaskId(Id id);
+    WorldId worldId() const;
+    void setWorldId(const WorldId& id);
 
-  // Save record to DB. If record is new - id() property will be set after this call.
-  void save();
+    // Save record to DB. If record is new - id() property will be set after this call.
+    void save();
 
-  // Remove record from DB.
-  void deleteRecord();
+    // Remove record from DB.
+    void deleteRecord();
 
 protected:
-  Id mId, mTaskId;
-  WorldId mWorldId;
-  QDateTime mStartTime, mEndTime;
-  bool mSaved;
+    Id mId, mTaskId;
+    WorldId mWorldId;
+    time_t mStartTime, mEndTime;
+    bool mSaved;
 };
 
 typedef QVector<TimeRecord> TimeArray;
@@ -73,73 +73,73 @@ typedef std::map<int, QSharedPointer<MonthesMap> > YearsMap;
 class TimeLine
 {
 public:
-  TimeLine();
-  ~TimeLine();
+    TimeLine();
+    ~TimeLine();
 
-  TimeArray& data();
+    TimeArray& data();
 
-  // Returns total time in seconds
-  int totalTime();
-  bool active();
-  void start();
-  void stop(bool updateTimeline = true);
-  void flush(bool saveToDb, const QDateTime& currentUtc);
+    // Returns total time in seconds
+    int totalTime();
+    bool active();
+    void start();
+    void stop(bool updateTimeline = true);
+    void flush(bool saveToDb, time_t currentUtc);
 
-  void load();
-  void save();
+    void load();
+    void save();
 
-  Id taskId();
-  void setTaskId(Id id);
+    Id taskId();
+    void setTaskId(Id id);
 
-  // These methods work with local time
-  void getYears(std::set<int>& result);
-  void getMonthes(int year, std::set<int>& result);
-  void getDays(int year, int month, std::set<int>& result);
-  int  getTime(int year, int month, int day, std::vector<TimeRecord>* intervals);
+    // These methods work with local time
+    void getYears(std::set<int>& result);
+    void getMonthes(int year, std::set<int>& result);
+    void getDays(int year, int month, std::set<int>& result);
+    int  getTime(int year, int month, int day, std::vector<TimeRecord>* intervals);
 
-  int today();
-  int month();
-  int getSum(const QDate& start, const QDate& finish);
-  bool duplicateDetected() const;
+    int today();
+    int month();
+    int getSum(const QDate& start, const QDate& finish);
+    bool duplicateDetected() const;
 
-  // Checks if specified interval has intersection
-  bool hasIntersection(const TimeRecord& interval);
+    // Checks if specified interval has intersection
+    bool hasIntersection(const TimeRecord& interval);
 
-  // Inserts new interval to timeline. Saves new interval to DB.
-  void insertInterval(const TimeRecord& interval);
+    // Inserts new interval to timeline. Saves new interval to DB.
+    void insertInterval(const TimeRecord& interval);
 
-  // Attempts to find & remove from timeline specified interval. Returns true if succeeded. Removes interval from DB too.
-  // Search is made using start/finish time interval value - not id() value. Only whole TimeRecord can be deleted.
-  bool removeInterval(const TimeRecord& interval);
+    // Attempts to find & remove from timeline specified interval. Returns true if succeeded. Removes interval from DB too.
+    // Search is made using start/finish time interval value - not id() value. Only whole TimeRecord can be deleted.
+    bool removeInterval(const TimeRecord& interval);
 
-  // Attempts to find & cut interval from timeline.
-  // It does not mean whole TimeRecord will be removed. Depending on interval bounds existing TimeRecord can be removed/modified/add new records even.
-  void cutInterval(const TimeRecord& interval);
+    // Attempts to find & cut interval from timeline.
+    // It does not mean whole TimeRecord will be removed. Depending on interval bounds existing TimeRecord can be removed/modified/add new records even.
+    void cutInterval(const TimeRecord& interval);
 
-  // Searches time interval by its id. Can return NULL if search failed.
-  TimeRecord* findIntervalById(Id id);
+    // Searches time interval by its id. Can return NULL if search failed.
+    TimeRecord* findIntervalById(Id id);
 
-  // Adds 10 minutes interval starting from current time. For debug/test purposes.
-  void putDebugRecord();
+    // Adds 10 minutes interval starting from current time. For debug/test purposes.
+    void putDebugRecord();
 
 protected:
-  TimeArray mData;
-  Id mTaskId;
-  bool mActive;
-  TimeRecord* mActiveTimeRecord;
-  int mTotalTime;
+    TimeArray mData;
+    Id mTaskId;
+    bool mActive;
+    TimeRecord* mActiveTimeRecord;
+    int mTotalTime;
 
-  // Sums total time in timeline
-  int findTotalTime();
+    // Sums total time in timeline
+    int findTotalTime();
 
-  // Builds new time interval record with specified start/finish time
-  TimeRecord* makeNewRecord(const QDateTime& begin, const QDateTime& end);
+    // Builds new time interval record with specified start/finish time
+    TimeRecord* makeNewRecord(time_t begin, time_t end);
 
-  // Looks for time record that includes specified time point
-  TimeRecord* hasTimePoint(const QDateTime& t);
+    // Looks for time record that includes specified time point
+    TimeRecord* hasTimePoint(time_t t);
 
-  // Sorts records in mData by startTime() value
-  void sortData();
+    // Sorts records in mData by startTime() value
+    void sortData();
 
 };
 
@@ -151,139 +151,139 @@ typedef QVector<PTask> TaskArray;
 
 class Task: public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  typedef qulonglong Id;
-  typedef quint32 ModelId;
-  enum Flag
-  {
-    Flag_NoTimeTracking = 1
-  };
+    typedef uint64_t Id;
+    typedef uint32_t ModelId;
+    enum Flag
+    {
+        Flag_NoTimeTracking = 1
+    };
 
-  Task();
-  ~Task();
-  
-  void load(SQLite::Statement& q);
+    Task();
+    ~Task();
 
-  Id id() const;
-  void setId(Id id);
+    void load(SQLite::Statement& q);
 
-  Id parentId() const;
-  void setParentId(Id id);
+    Id id() const;
+    void setId(Id id);
 
-  WorldId worldId() const;
-  void setWorldId(const WorldId& id);
+    Id parentId() const;
+    void setParentId(Id id);
 
-  ModelId modelId() const;
-  void setModelId(ModelId id);
+    WorldId worldId() const;
+    void setWorldId(const WorldId& id);
 
-  int index() const;
-  void setIndex(int index, bool modified = true);
+    ModelId modelId() const;
+    void setModelId(ModelId id);
 
-  enum SaveOptions
-  {
-    Save_Automatic,
-    Save_Forced
-  };
+    int index() const;
+    void setIndex(int index, bool modified = true);
 
-  void save(SaveOptions options = Save_Automatic);
+    enum SaveOptions
+    {
+        Save_Automatic,
+        Save_Forced
+    };
 
-  QString html() const;
-  void setHtml(const QString& html);
-  QString title() const;
-  void setTitle(const QString& title, bool modified = true);
+    void save(SaveOptions options = Save_Automatic);
 
-  QString path() const;
+    QString html() const;
+    void setHtml(const QString& html);
+    QString title() const;
+    void setTitle(const QString& title, bool modified = true);
 
-  PTask parent() const;
-  void setParent(PTask task, bool modified = true);
+    QString path() const;
 
-  TaskArray& children();
-  
-  // Loads html and timeline
-  void loadContent();
-  bool isContentLoaded() const;
+    PTask parent() const;
+    void setParent(PTask task, bool modified = true);
 
-  // Unloads html and timeline
-  void unloadContent(bool includeTimeline = true);
+    TaskArray& children();
 
-  PTimeLine timeline();
+    // Loads html and timeline
+    void loadContent();
+    bool isContentLoaded() const;
 
-  // Returns true if task has attachments
-  int getAttachmentCount();
-  void setAttachmentCount(int count);
-  int checkAttachments();
+    // Unloads html and timeline
+    void unloadContent(bool includeTimeline = true);
 
-  // Service properties used in time reporting
-  bool isChecked() const;
-  void setChecked(bool checked);
+    PTimeLine timeline();
 
-  int getReportedTime() const;
-  void setReportedTime(int t);
+    // Returns true if task has attachments
+    int getAttachmentCount();
+    void setAttachmentCount(int count);
+    int checkAttachments();
 
-  int getChildrenReportedTime() const;
-  void setChildrenReportedTime(int t);
+    // Service properties used in time reporting
+    bool isChecked() const;
+    void setChecked(bool checked);
 
-  int flags() const;
-  void setFlags(int value);
+    int getReportedTime() const;
+    void setReportedTime(int t);
 
-  int cursorPosition() const;
-  void setCursorPosition(int position);
+    int getChildrenReportedTime() const;
+    void setChildrenReportedTime(int t);
 
-  /*
+    int flags() const;
+    void setFlags(int value);
+
+    int cursorPosition() const;
+    void setCursorPosition(int position);
+
+    /*
   QUndoStack* getUndoStack() const;
   void setUndoStack(QUndoStack* doc);
   */
 
 protected:
-  QString mHtml, mTitle;
-  PTimeLine mTimeLine;
-  Id mId, mParentId;
-  WorldId mWorldId;
-  ModelId mModelId;
-  bool mTitleModified, mHtmlModified, mHtmlLoaded, mIndexModified, mParentModified;
-  PTask mParent;
-  TaskArray mChildren;
-  int mIndex;
-  bool mChecked;
-  int mReportedTime, mChildrenReportedTime;
-  int mAttachmentCount;
-  int mFlags;
-  QTextDocument* mDocument;
-  int mCursorPosition;
+    QString mHtml, mTitle;
+    PTimeLine mTimeLine;
+    Id mId, mParentId;
+    WorldId mWorldId;
+    ModelId mModelId;
+    bool mTitleModified, mHtmlModified, mHtmlLoaded, mIndexModified, mParentModified;
+    PTask mParent;
+    TaskArray mChildren;
+    int mIndex;
+    bool mChecked;
+    int mReportedTime, mChildrenReportedTime;
+    int mAttachmentCount;
+    int mFlags;
+    QTextDocument* mDocument;
+    int mCursorPosition;
 };
 
 class Attachment
 {
 public:
-  Attachment();
-  ~Attachment();
+    Attachment();
+    ~Attachment();
 
-  Task::Id id();
-  void setId(Task::Id id);
+    Task::Id id();
+    void setId(Task::Id id);
 
-  Task::Id taskId();
-  void setTaskId(Task::Id id);
+    Task::Id taskId();
+    void setTaskId(Task::Id id);
 
-  WorldId worldId() const;
-  void setWorldId(const WorldId& id);
+    WorldId worldId() const;
+    void setWorldId(const WorldId& id);
 
-  int index();
-  void setIndex(int index);
+    int index();
+    void setIndex(int index);
 
-  QByteArray loadContent();
-  void saveContent(const QByteArray& content);
+    QByteArray loadContent();
+    void saveContent(const QByteArray& content);
 
-  void setFilename(const QString& filename);
-  QString filename();
+    void setFilename(const QString& filename);
+    QString filename();
 
-  void save();
-  void load();
+    void save();
+    void load();
 protected:
-  Id mId, mTaskId;
-  WorldId mWorldId;
-  QString mFilename;
-  int mIndex;
+    Id mId, mTaskId;
+    WorldId mWorldId;
+    QString mFilename;
+    int mIndex;
 };
 
 typedef QSharedPointer<Attachment> PAttachment;

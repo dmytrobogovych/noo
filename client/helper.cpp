@@ -24,7 +24,10 @@ char* __strlcat_chk (char* dest, const char* src, int len, int destcapacity)
 #endif
 
 #include "settings.h"
-void ThemeHelper::applyCurrentTheme(Settings& settings)
+
+using namespace helper;
+
+void theme::applyCurrent(Settings& settings)
 {
     // Dark theme
     if (settings.data()[KEY_DARK_THEME].toBool())
@@ -42,18 +45,36 @@ void ThemeHelper::applyCurrentTheme(Settings& settings)
 }
 
 
-QString TimeHelper::secondsToDisplay(int seconds, bool showSeconds)
+std::string chrono::secondsToDisplay(int seconds, bool showSeconds)
 {
     int hours = seconds / 3600;
     int minutes = (seconds % 3600) / 60;
     int secs = seconds % 60;
+    char r[32];
     if (showSeconds)
-        return QString("%1:%2:%3").arg(hours, 2, 10, QLatin1Char('0')).arg(minutes, 2, 10, QLatin1Char('0')).arg(secs, 2, 10, QLatin1Char('0'));
+        sprintf(r, "%2d:%2d:%2d", hours, minutes, secs);
     else
-        return QString("%1:%2").arg(hours, 2, 10, QLatin1Char('0')).arg(minutes, 2, 10, QLatin1Char('0'));
+        sprintf(r, "%2d:%2d", hours, minutes);
+
+    return r;
 }
 
-QString PathHelper::pathToSettings()
+std::string chrono::timeToStr(time_t timestamp)
+{
+    char buf[128];
+    strftime(buf, sizeof buf, "%FT%TZ", gmtime(&timestamp));
+    return buf;
+}
+
+time_t chrono::strToTime(const std::string& s)
+{
+    struct tm t;
+    memset(&t, 0, sizeof t);
+    strptime(s.c_str(), "%FT%TZ", &t);
+    return timegm(&t);
+}
+
+QString path::pathToSettings()
 {
 #if QT_VERSION >= 0x050000
     QString folder = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
@@ -64,7 +85,7 @@ QString PathHelper::pathToSettings()
     return path;
 }
 
-QString PathHelper::pathToDatabase()
+QString path::pathToDatabase()
 {
 #if QT_VERSION >= 0x050000
     QString folder = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
@@ -75,7 +96,7 @@ QString PathHelper::pathToDatabase()
     return path;
 }
 
-QString PathHelper::pathToDesktop()
+QString path::pathToDesktop()
 {
 #if QT_VERSION >= 0x050000
     QString folder = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
@@ -85,7 +106,7 @@ QString PathHelper::pathToDesktop()
     return folder;
 }
 
-QString PathHelper::pathToDatabaseTemplate()
+QString path::pathToDatabaseTemplate()
 {
 #ifdef TARGET_WIN
     return QCoreApplication::applicationDirPath() + "/" + DATABASENAME;
@@ -96,7 +117,7 @@ QString PathHelper::pathToDatabaseTemplate()
 #endif
 }
 
-QString PathHelper::pathToLog()
+QString path::pathToLog()
 {
 #if QT_VERSION >= 0x050000
     QString folder = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
@@ -106,7 +127,7 @@ QString PathHelper::pathToLog()
     return folder + "/" + LOGNAME;
 }
 
-bool ActivityTrackerHelper::ensureSmartTrackingIsPossible()
+bool activityTracker::ensureSmartTrackingIsPossible()
 {
     bool result = false;
     HIDActivityTracker tracker;

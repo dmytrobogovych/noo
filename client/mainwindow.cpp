@@ -74,7 +74,7 @@ MainWindow::~MainWindow()
 void MainWindow::attachDatabase()
 {
     // Open database
-    QString path = PathHelper::pathToDatabase();
+    QString path = helper::path::pathToDatabase();
     if (mSettings->data()[KEY_DB_FILENAME_SPECIFIED].toBool())
         path = mSettings->data()[KEY_DB_FILENAME].toString();
 

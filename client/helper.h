@@ -5,46 +5,59 @@
 #include <QObject>
 
 class Settings;
-class ThemeHelper
+namespace helper
 {
-public:
-    static void applyCurrentTheme(Settings& settings);
-};
+    class theme
+    {
+    public:
+        static void applyCurrent(Settings& settings);
+    };
 
-class TimeHelper
-{
-public:
-  static QString secondsToDisplay(int seconds, bool showSeconds);
-};
+    struct date
+    {
+        int mYear = -1, mMonth = -1, mDay = -1;
+
+        time_t toTimestamp();
+        static date fromTimestamp();
+    };
+
+    class chrono
+    {
+    public:
+        static std::string secondsToDisplay(int seconds, bool showSeconds);
+        static std::string timeToStr(time_t timestamp);
+        static time_t strToTime(const std::string& s);
+    };
 
 
-class PathHelper
-{
-public:
-  static QString pathToDatabase();
-  static QString pathToDesktop();
-  static QString pathToSettings();
-  static QString pathToDatabaseTemplate();
-  static QString pathToLog();
-};
+    class path
+    {
+    public:
+      static QString pathToDatabase();
+      static QString pathToDesktop();
+      static QString pathToSettings();
+      static QString pathToDatabaseTemplate();
+      static QString pathToLog();
+    };
 
-class ActivityTrackerHelper
-{
-public:
-  static bool ensureSmartTrackingIsPossible();
-};
+    class activityTracker
+    {
+    public:
+      static bool ensureSmartTrackingIsPossible();
+    };
 
-class EscapeKeyEventFilter: public QObject
-{
-  Q_OBJECT
+    class EscapeKeyEventFilter: public QObject
+    {
+      Q_OBJECT
 
-public:
-  explicit EscapeKeyEventFilter(QObject* parent = 0);
-  bool eventFilter(QObject  *obj, QEvent * event);
+    public:
+      explicit EscapeKeyEventFilter(QObject* parent = 0);
+      bool eventFilter(QObject  *obj, QEvent * event);
 
-signals:
-  void escapePressed(QObject* obj);
+    signals:
+      void escapePressed(QObject* obj);
 
-};
+    };
+}
 
 #endif
