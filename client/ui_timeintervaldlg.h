@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'timeintervaldlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,14 +10,11 @@
 #define UI_TIMEINTERVALDLG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QFormLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QVBoxLayout>
 
@@ -37,32 +34,32 @@ public:
     void setupUi(QDialog *TimeIntervalDlg)
     {
         if (TimeIntervalDlg->objectName().isEmpty())
-            TimeIntervalDlg->setObjectName(QStringLiteral("TimeIntervalDlg"));
+            TimeIntervalDlg->setObjectName(QString::fromUtf8("TimeIntervalDlg"));
         TimeIntervalDlg->resize(400, 134);
         TimeIntervalDlg->setModal(false);
         verticalLayout = new QVBoxLayout(TimeIntervalDlg);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         formLayout = new QFormLayout();
-        formLayout->setObjectName(QStringLiteral("formLayout"));
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
         mStartTimeLabel = new QLabel(TimeIntervalDlg);
-        mStartTimeLabel->setObjectName(QStringLiteral("mStartTimeLabel"));
+        mStartTimeLabel->setObjectName(QString::fromUtf8("mStartTimeLabel"));
 
         formLayout->setWidget(0, QFormLayout::LabelRole, mStartTimeLabel);
 
         mStartTimeEdit = new QDateTimeEdit(TimeIntervalDlg);
-        mStartTimeEdit->setObjectName(QStringLiteral("mStartTimeEdit"));
+        mStartTimeEdit->setObjectName(QString::fromUtf8("mStartTimeEdit"));
         mStartTimeEdit->setTime(QTime(1, 0, 0));
         mStartTimeEdit->setCalendarPopup(true);
 
         formLayout->setWidget(0, QFormLayout::FieldRole, mStartTimeEdit);
 
         mFinishTimeLabel = new QLabel(TimeIntervalDlg);
-        mFinishTimeLabel->setObjectName(QStringLiteral("mFinishTimeLabel"));
+        mFinishTimeLabel->setObjectName(QString::fromUtf8("mFinishTimeLabel"));
 
         formLayout->setWidget(1, QFormLayout::LabelRole, mFinishTimeLabel);
 
         mFinishTimeEdit = new QDateTimeEdit(TimeIntervalDlg);
-        mFinishTimeEdit->setObjectName(QStringLiteral("mFinishTimeEdit"));
+        mFinishTimeEdit->setObjectName(QString::fromUtf8("mFinishTimeEdit"));
         mFinishTimeEdit->setCalendarPopup(true);
 
         formLayout->setWidget(1, QFormLayout::FieldRole, mFinishTimeEdit);
@@ -71,7 +68,7 @@ public:
         verticalLayout->addLayout(formLayout);
 
         buttonBox = new QDialogButtonBox(TimeIntervalDlg);
-        buttonBox->setObjectName(QStringLiteral("buttonBox"));
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         buttonBox->setCenterButtons(true);
@@ -88,9 +85,9 @@ public:
 
     void retranslateUi(QDialog *TimeIntervalDlg)
     {
-        TimeIntervalDlg->setWindowTitle(QApplication::translate("TimeIntervalDlg", "Time interval", Q_NULLPTR));
-        mStartTimeLabel->setText(QApplication::translate("TimeIntervalDlg", "Start time:", Q_NULLPTR));
-        mFinishTimeLabel->setText(QApplication::translate("TimeIntervalDlg", "Finish time:", Q_NULLPTR));
+        TimeIntervalDlg->setWindowTitle(QApplication::translate("TimeIntervalDlg", "Time interval", nullptr));
+        mStartTimeLabel->setText(QApplication::translate("TimeIntervalDlg", "Start time:", nullptr));
+        mFinishTimeLabel->setText(QApplication::translate("TimeIntervalDlg", "Finish time:", nullptr));
     } // retranslateUi
 
 };

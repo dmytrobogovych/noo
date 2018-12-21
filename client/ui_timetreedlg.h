@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'timetreedlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QGridLayout>
@@ -39,31 +38,31 @@ public:
     void setupUi(QDialog *TimeTreeDlg)
     {
         if (TimeTreeDlg->objectName().isEmpty())
-            TimeTreeDlg->setObjectName(QStringLiteral("TimeTreeDlg"));
+            TimeTreeDlg->setObjectName(QString::fromUtf8("TimeTreeDlg"));
         TimeTreeDlg->resize(400, 300);
         TimeTreeDlg->setModal(true);
         mAddIntervalAction = new QAction(TimeTreeDlg);
-        mAddIntervalAction->setObjectName(QStringLiteral("mAddIntervalAction"));
+        mAddIntervalAction->setObjectName(QString::fromUtf8("mAddIntervalAction"));
         mRemoveIntervalAction = new QAction(TimeTreeDlg);
-        mRemoveIntervalAction->setObjectName(QStringLiteral("mRemoveIntervalAction"));
+        mRemoveIntervalAction->setObjectName(QString::fromUtf8("mRemoveIntervalAction"));
         mChangeIntervalAction = new QAction(TimeTreeDlg);
-        mChangeIntervalAction->setObjectName(QStringLiteral("mChangeIntervalAction"));
+        mChangeIntervalAction->setObjectName(QString::fromUtf8("mChangeIntervalAction"));
         gridLayout = new QGridLayout(TimeTreeDlg);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         mTimeTree = new QTreeView(TimeTreeDlg);
-        mTimeTree->setObjectName(QStringLiteral("mTimeTree"));
+        mTimeTree->setObjectName(QString::fromUtf8("mTimeTree"));
 
         gridLayout->addWidget(mTimeTree, 0, 0, 1, 1);
 
         verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         mAddIntervalButton = new QPushButton(TimeTreeDlg);
-        mAddIntervalButton->setObjectName(QStringLiteral("mAddIntervalButton"));
+        mAddIntervalButton->setObjectName(QString::fromUtf8("mAddIntervalButton"));
 
         verticalLayout->addWidget(mAddIntervalButton);
 
         mRemoveIntervalButton = new QPushButton(TimeTreeDlg);
-        mRemoveIntervalButton->setObjectName(QStringLiteral("mRemoveIntervalButton"));
+        mRemoveIntervalButton->setObjectName(QString::fromUtf8("mRemoveIntervalButton"));
 
         verticalLayout->addWidget(mRemoveIntervalButton);
 
@@ -71,7 +70,7 @@ public:
         gridLayout->addLayout(verticalLayout, 0, 1, 1, 1);
 
         mButtonBox = new QDialogButtonBox(TimeTreeDlg);
-        mButtonBox->setObjectName(QStringLiteral("mButtonBox"));
+        mButtonBox->setObjectName(QString::fromUtf8("mButtonBox"));
         mButtonBox->setOrientation(Qt::Horizontal);
         mButtonBox->setStandardButtons(QDialogButtonBox::Ok);
         mButtonBox->setCenterButtons(true);
@@ -88,12 +87,12 @@ public:
 
     void retranslateUi(QDialog *TimeTreeDlg)
     {
-        TimeTreeDlg->setWindowTitle(QApplication::translate("TimeTreeDlg", "Timeline", Q_NULLPTR));
-        mAddIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Add...", Q_NULLPTR));
-        mRemoveIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Remove", Q_NULLPTR));
-        mChangeIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Change...", Q_NULLPTR));
-        mAddIntervalButton->setText(QApplication::translate("TimeTreeDlg", "Add...", Q_NULLPTR));
-        mRemoveIntervalButton->setText(QApplication::translate("TimeTreeDlg", "Remove", Q_NULLPTR));
+        TimeTreeDlg->setWindowTitle(QApplication::translate("TimeTreeDlg", "Timeline", nullptr));
+        mAddIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Add...", nullptr));
+        mRemoveIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Remove", nullptr));
+        mChangeIntervalAction->setText(QApplication::translate("TimeTreeDlg", "Change...", nullptr));
+        mAddIntervalButton->setText(QApplication::translate("TimeTreeDlg", "Add...", nullptr));
+        mRemoveIntervalButton->setText(QApplication::translate("TimeTreeDlg", "Remove", nullptr));
     } // retranslateUi
 
 };

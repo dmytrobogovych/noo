@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'finddialog.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'finddialog.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.5. It"
+#error "This file was generated using the moc from 5.12.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_FindInTasksDialog_t {
-    QByteArrayData data[9];
-    char stringdata0[99];
+    QByteArrayData data[10];
+    char stringdata0[111];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,23 +35,25 @@ QT_MOC_LITERAL(0, 0, 17), // "FindInTasksDialog"
 QT_MOC_LITERAL(1, 18, 11), // "startSearch"
 QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 14), // "resultSelected"
-QT_MOC_LITERAL(4, 46, 5), // "index"
-QT_MOC_LITERAL(5, 52, 14), // "searchComplete"
-QT_MOC_LITERAL(6, 67, 11), // "onNewResult"
-QT_MOC_LITERAL(7, 79, 14), // "FindResultItem"
-QT_MOC_LITERAL(8, 94, 4) // "item"
+QT_MOC_LITERAL(4, 46, 11), // "QModelIndex"
+QT_MOC_LITERAL(5, 58, 5), // "index"
+QT_MOC_LITERAL(6, 64, 14), // "searchComplete"
+QT_MOC_LITERAL(7, 79, 11), // "onNewResult"
+QT_MOC_LITERAL(8, 91, 14), // "FindResultItem"
+QT_MOC_LITERAL(9, 106, 4) // "item"
 
     },
     "FindInTasksDialog\0startSearch\0\0"
-    "resultSelected\0index\0searchComplete\0"
-    "onNewResult\0FindResultItem\0item"
+    "resultSelected\0QModelIndex\0index\0"
+    "searchComplete\0onNewResult\0FindResultItem\0"
+    "item"
 };
 #undef QT_MOC_LITERAL
 
 static const uint qt_meta_data_FindInTasksDialog[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        4,   14, // methods
@@ -64,14 +66,14 @@ static const uint qt_meta_data_FindInTasksDialog[] = {
  // slots: name, argc, parameters, tag, flags
        1,    0,   34,    2, 0x0a /* Public */,
        3,    1,   35,    2, 0x0a /* Public */,
-       5,    0,   38,    2, 0x0a /* Public */,
-       6,    1,   39,    2, 0x0a /* Public */,
+       6,    0,   38,    2, 0x0a /* Public */,
+       7,    1,   39,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QModelIndex,    4,
+    QMetaType::Void, 0x80000000 | 4,    5,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 7,    8,
+    QMetaType::Void, 0x80000000 | 8,    9,
 
        0        // eod
 };
@@ -102,10 +104,14 @@ void FindInTasksDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
     }
 }
 
-const QMetaObject FindInTasksDialog::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_FindInTasksDialog.data,
-      qt_meta_data_FindInTasksDialog,  qt_static_metacall, nullptr, nullptr}
-};
+QT_INIT_METAOBJECT const QMetaObject FindInTasksDialog::staticMetaObject = { {
+    &QDialog::staticMetaObject,
+    qt_meta_stringdata_FindInTasksDialog.data,
+    qt_meta_data_FindInTasksDialog,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *FindInTasksDialog::metaObject() const

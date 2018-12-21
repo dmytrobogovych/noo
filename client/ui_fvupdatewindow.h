@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'fvupdatewindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,12 +10,9 @@
 #define UI_FVUPDATEWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
@@ -44,14 +41,14 @@ public:
     void setupUi(QWidget *FvUpdateWindow)
     {
         if (FvUpdateWindow->objectName().isEmpty())
-            FvUpdateWindow->setObjectName(QStringLiteral("FvUpdateWindow"));
+            FvUpdateWindow->setObjectName(QString::fromUtf8("FvUpdateWindow"));
         FvUpdateWindow->resize(640, 480);
         horizontalLayout_6 = new QHBoxLayout(FvUpdateWindow);
-        horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
+        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         newVersionIsAvailableLabel = new QLabel(FvUpdateWindow);
-        newVersionIsAvailableLabel->setObjectName(QStringLiteral("newVersionIsAvailableLabel"));
+        newVersionIsAvailableLabel->setObjectName(QString::fromUtf8("newVersionIsAvailableLabel"));
         QFont font;
         font.setBold(true);
         font.setWeight(75);
@@ -60,17 +57,17 @@ public:
         verticalLayout->addWidget(newVersionIsAvailableLabel);
 
         wouldYouLikeToDownloadLabel = new QLabel(FvUpdateWindow);
-        wouldYouLikeToDownloadLabel->setObjectName(QStringLiteral("wouldYouLikeToDownloadLabel"));
+        wouldYouLikeToDownloadLabel->setObjectName(QString::fromUtf8("wouldYouLikeToDownloadLabel"));
 
         verticalLayout->addWidget(wouldYouLikeToDownloadLabel);
 
         groupBox = new QGroupBox(FvUpdateWindow);
-        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setFont(font);
         horizontalLayout_7 = new QHBoxLayout(groupBox);
-        horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
         releaseNotes = new QTextBrowser(groupBox);
-        releaseNotes->setObjectName(QStringLiteral("releaseNotes"));
+        releaseNotes->setObjectName(QString::fromUtf8("releaseNotes"));
 
         horizontalLayout_7->addWidget(releaseNotes);
 
@@ -78,9 +75,9 @@ public:
         verticalLayout->addWidget(groupBox);
 
         horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         skipThisVersionButton = new QPushButton(FvUpdateWindow);
-        skipThisVersionButton->setObjectName(QStringLiteral("skipThisVersionButton"));
+        skipThisVersionButton->setObjectName(QString::fromUtf8("skipThisVersionButton"));
 
         horizontalLayout_3->addWidget(skipThisVersionButton);
 
@@ -89,12 +86,12 @@ public:
         horizontalLayout_3->addItem(horizontalSpacer);
 
         remindMeLaterButton = new QPushButton(FvUpdateWindow);
-        remindMeLaterButton->setObjectName(QStringLiteral("remindMeLaterButton"));
+        remindMeLaterButton->setObjectName(QString::fromUtf8("remindMeLaterButton"));
 
         horizontalLayout_3->addWidget(remindMeLaterButton);
 
         installUpdateButton = new QPushButton(FvUpdateWindow);
-        installUpdateButton->setObjectName(QStringLiteral("installUpdateButton"));
+        installUpdateButton->setObjectName(QString::fromUtf8("installUpdateButton"));
         installUpdateButton->setAutoDefault(true);
 
         horizontalLayout_3->addWidget(installUpdateButton);
@@ -116,13 +113,13 @@ public:
 
     void retranslateUi(QWidget *FvUpdateWindow)
     {
-        FvUpdateWindow->setWindowTitle(QApplication::translate("FvUpdateWindow", "Software Update", Q_NULLPTR));
-        newVersionIsAvailableLabel->setText(QApplication::translate("FvUpdateWindow", "A new version of %1 is available!", Q_NULLPTR));
-        wouldYouLikeToDownloadLabel->setText(QApplication::translate("FvUpdateWindow", "%1 %2 is now available - you have %3. Would you like to download it now?", Q_NULLPTR));
-        groupBox->setTitle(QApplication::translate("FvUpdateWindow", "Release Notes:", Q_NULLPTR));
-        skipThisVersionButton->setText(QApplication::translate("FvUpdateWindow", "Skip This Version", Q_NULLPTR));
-        remindMeLaterButton->setText(QApplication::translate("FvUpdateWindow", "Remind Me Later", Q_NULLPTR));
-        installUpdateButton->setText(QApplication::translate("FvUpdateWindow", "Install Update", Q_NULLPTR));
+        FvUpdateWindow->setWindowTitle(QApplication::translate("FvUpdateWindow", "Software Update", nullptr));
+        newVersionIsAvailableLabel->setText(QApplication::translate("FvUpdateWindow", "A new version of %1 is available!", nullptr));
+        wouldYouLikeToDownloadLabel->setText(QApplication::translate("FvUpdateWindow", "%1 %2 is now available - you have %3. Would you like to download it now?", nullptr));
+        groupBox->setTitle(QApplication::translate("FvUpdateWindow", "Release Notes:", nullptr));
+        skipThisVersionButton->setText(QApplication::translate("FvUpdateWindow", "Skip This Version", nullptr));
+        remindMeLaterButton->setText(QApplication::translate("FvUpdateWindow", "Remind Me Later", nullptr));
+        installUpdateButton->setText(QApplication::translate("FvUpdateWindow", "Install Update", nullptr));
     } // retranslateUi
 
 };

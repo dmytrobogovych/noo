@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'stopworkdialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,8 @@
 #define UI_STOPWORKDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QToolButton>
 
@@ -30,10 +27,10 @@ public:
     void setupUi(QDialog *StopWorkDialog)
     {
         if (StopWorkDialog->objectName().isEmpty())
-            StopWorkDialog->setObjectName(QStringLiteral("StopWorkDialog"));
+            StopWorkDialog->setObjectName(QString::fromUtf8("StopWorkDialog"));
         StopWorkDialog->resize(386, 59);
         mInfoLabel = new QLabel(StopWorkDialog);
-        mInfoLabel->setObjectName(QStringLiteral("mInfoLabel"));
+        mInfoLabel->setObjectName(QString::fromUtf8("mInfoLabel"));
         mInfoLabel->setGeometry(QRect(7, 3, 241, 41));
         QFont font;
         font.setPointSize(12);
@@ -41,11 +38,11 @@ public:
         mInfoLabel->setScaledContents(false);
         mInfoLabel->setWordWrap(true);
         mYesButton = new QToolButton(StopWorkDialog);
-        mYesButton->setObjectName(QStringLiteral("mYesButton"));
+        mYesButton->setObjectName(QString::fromUtf8("mYesButton"));
         mYesButton->setGeometry(QRect(270, 3, 111, 25));
         mYesButton->setFont(font);
         mNoButton = new QToolButton(StopWorkDialog);
-        mNoButton->setObjectName(QStringLiteral("mNoButton"));
+        mNoButton->setObjectName(QString::fromUtf8("mNoButton"));
         mNoButton->setGeometry(QRect(270, 32, 111, 25));
         mNoButton->setFont(font);
 
@@ -58,11 +55,11 @@ public:
 
     void retranslateUi(QDialog *StopWorkDialog)
     {
-        StopWorkDialog->setWindowTitle(QApplication::translate("StopWorkDialog", "Dialog", Q_NULLPTR));
+        StopWorkDialog->setWindowTitle(QApplication::translate("StopWorkDialog", "Dialog", nullptr));
         mInfoLabel->setText(QApplication::translate("StopWorkDialog", "Litt discovered idle interval at %TIME%.\n"
-"Should app to continue work tracking?", Q_NULLPTR));
-        mYesButton->setText(QApplication::translate("StopWorkDialog", "Yes", Q_NULLPTR));
-        mNoButton->setText(QApplication::translate("StopWorkDialog", "No", Q_NULLPTR));
+"Should app to continue work tracking?", nullptr));
+        mYesButton->setText(QApplication::translate("StopWorkDialog", "Yes", nullptr));
+        mNoButton->setText(QApplication::translate("StopWorkDialog", "No", nullptr));
     } // retranslateUi
 
 };

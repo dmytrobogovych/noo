@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newpassworddlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,13 +10,10 @@
 #define UI_NEWPASSWORDDLG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QFormLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QVBoxLayout>
@@ -38,32 +35,32 @@ public:
     void setupUi(QDialog *NewPasswordDlg)
     {
         if (NewPasswordDlg->objectName().isEmpty())
-            NewPasswordDlg->setObjectName(QStringLiteral("NewPasswordDlg"));
+            NewPasswordDlg->setObjectName(QString::fromUtf8("NewPasswordDlg"));
         NewPasswordDlg->resize(416, 200);
         NewPasswordDlg->setMinimumSize(QSize(400, 188));
         verticalLayout = new QVBoxLayout(NewPasswordDlg);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         formLayout = new QFormLayout();
-        formLayout->setObjectName(QStringLiteral("formLayout"));
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
         mNewPasswordLabel1 = new QLabel(NewPasswordDlg);
-        mNewPasswordLabel1->setObjectName(QStringLiteral("mNewPasswordLabel1"));
+        mNewPasswordLabel1->setObjectName(QString::fromUtf8("mNewPasswordLabel1"));
 
         formLayout->setWidget(0, QFormLayout::LabelRole, mNewPasswordLabel1);
 
         mNewPasswordEdit1 = new QLineEdit(NewPasswordDlg);
-        mNewPasswordEdit1->setObjectName(QStringLiteral("mNewPasswordEdit1"));
+        mNewPasswordEdit1->setObjectName(QString::fromUtf8("mNewPasswordEdit1"));
         mNewPasswordEdit1->setInputMethodHints(Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData);
         mNewPasswordEdit1->setEchoMode(QLineEdit::Password);
 
         formLayout->setWidget(0, QFormLayout::FieldRole, mNewPasswordEdit1);
 
         mNewPasswordLabel2 = new QLabel(NewPasswordDlg);
-        mNewPasswordLabel2->setObjectName(QStringLiteral("mNewPasswordLabel2"));
+        mNewPasswordLabel2->setObjectName(QString::fromUtf8("mNewPasswordLabel2"));
 
         formLayout->setWidget(1, QFormLayout::LabelRole, mNewPasswordLabel2);
 
         mNewPasswordEdit2 = new QLineEdit(NewPasswordDlg);
-        mNewPasswordEdit2->setObjectName(QStringLiteral("mNewPasswordEdit2"));
+        mNewPasswordEdit2->setObjectName(QString::fromUtf8("mNewPasswordEdit2"));
         mNewPasswordEdit2->setEchoMode(QLineEdit::Password);
 
         formLayout->setWidget(1, QFormLayout::FieldRole, mNewPasswordEdit2);
@@ -72,13 +69,13 @@ public:
         verticalLayout->addLayout(formLayout);
 
         mPasswordHintLabel = new QLabel(NewPasswordDlg);
-        mPasswordHintLabel->setObjectName(QStringLiteral("mPasswordHintLabel"));
+        mPasswordHintLabel->setObjectName(QString::fromUtf8("mPasswordHintLabel"));
         mPasswordHintLabel->setWordWrap(true);
 
         verticalLayout->addWidget(mPasswordHintLabel);
 
         mDialogButtonBox = new QDialogButtonBox(NewPasswordDlg);
-        mDialogButtonBox->setObjectName(QStringLiteral("mDialogButtonBox"));
+        mDialogButtonBox->setObjectName(QString::fromUtf8("mDialogButtonBox"));
         mDialogButtonBox->setOrientation(Qt::Horizontal);
         mDialogButtonBox->setStandardButtons(QDialogButtonBox::Ok);
         mDialogButtonBox->setCenterButtons(true);
@@ -94,10 +91,10 @@ public:
 
     void retranslateUi(QDialog *NewPasswordDlg)
     {
-        NewPasswordDlg->setWindowTitle(QApplication::translate("NewPasswordDlg", "Password for new database", Q_NULLPTR));
-        mNewPasswordLabel1->setText(QApplication::translate("NewPasswordDlg", "Password:", Q_NULLPTR));
-        mNewPasswordLabel2->setText(QApplication::translate("NewPasswordDlg", "Repeat password:", Q_NULLPTR));
-        mPasswordHintLabel->setText(QApplication::translate("NewPasswordDlg", "<html><head/><body><p>Please enter new password twice to complete database creation.</p> <p>Please be aware - there is no way to recover lost password.</p></body></html>", Q_NULLPTR));
+        NewPasswordDlg->setWindowTitle(QApplication::translate("NewPasswordDlg", "Password for new database", nullptr));
+        mNewPasswordLabel1->setText(QApplication::translate("NewPasswordDlg", "Password:", nullptr));
+        mNewPasswordLabel2->setText(QApplication::translate("NewPasswordDlg", "Repeat password:", nullptr));
+        mPasswordHintLabel->setText(QApplication::translate("NewPasswordDlg", "<html><head/><body><p>Please enter new password twice to complete database creation.</p> <p>Please be aware - there is no way to recover lost password.</p></body></html>", nullptr));
     } // retranslateUi
 
 };

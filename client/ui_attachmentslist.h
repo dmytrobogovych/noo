@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'attachmentslist.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,9 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QWidget>
 
@@ -33,21 +31,21 @@ public:
     void setupUi(QWidget *AttachmentsList)
     {
         if (AttachmentsList->objectName().isEmpty())
-            AttachmentsList->setObjectName(QStringLiteral("AttachmentsList"));
+            AttachmentsList->setObjectName(QString::fromUtf8("AttachmentsList"));
         AttachmentsList->resize(425, 300);
         mRenameAction = new QAction(AttachmentsList);
-        mRenameAction->setObjectName(QStringLiteral("mRenameAction"));
+        mRenameAction->setObjectName(QString::fromUtf8("mRenameAction"));
         mDeleteAction = new QAction(AttachmentsList);
-        mDeleteAction->setObjectName(QStringLiteral("mDeleteAction"));
+        mDeleteAction->setObjectName(QString::fromUtf8("mDeleteAction"));
         mExportAction = new QAction(AttachmentsList);
-        mExportAction->setObjectName(QStringLiteral("mExportAction"));
+        mExportAction->setObjectName(QString::fromUtf8("mExportAction"));
         mImportAction = new QAction(AttachmentsList);
-        mImportAction->setObjectName(QStringLiteral("mImportAction"));
+        mImportAction->setObjectName(QString::fromUtf8("mImportAction"));
         horizontalLayout = new QHBoxLayout(AttachmentsList);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(4, 4, 4, 4);
         mListView = new QListView(AttachmentsList);
-        mListView->setObjectName(QStringLiteral("mListView"));
+        mListView->setObjectName(QString::fromUtf8("mListView"));
         mListView->setContextMenuPolicy(Qt::CustomContextMenu);
         mListView->setViewMode(QListView::IconMode);
 
@@ -66,19 +64,19 @@ public:
 
     void retranslateUi(QWidget *AttachmentsList)
     {
-        AttachmentsList->setWindowTitle(QApplication::translate("AttachmentsList", "Form", Q_NULLPTR));
-        mRenameAction->setText(QApplication::translate("AttachmentsList", "Rename", Q_NULLPTR));
+        AttachmentsList->setWindowTitle(QApplication::translate("AttachmentsList", "Form", nullptr));
+        mRenameAction->setText(QApplication::translate("AttachmentsList", "Rename", nullptr));
 #ifndef QT_NO_TOOLTIP
-        mRenameAction->setToolTip(QApplication::translate("AttachmentsList", "Rename", Q_NULLPTR));
+        mRenameAction->setToolTip(QApplication::translate("AttachmentsList", "Rename", nullptr));
 #endif // QT_NO_TOOLTIP
-        mDeleteAction->setText(QApplication::translate("AttachmentsList", "Delete", Q_NULLPTR));
-        mExportAction->setText(QApplication::translate("AttachmentsList", "Export...", Q_NULLPTR));
+        mDeleteAction->setText(QApplication::translate("AttachmentsList", "Delete", nullptr));
+        mExportAction->setText(QApplication::translate("AttachmentsList", "Export...", nullptr));
 #ifndef QT_NO_TOOLTIP
-        mExportAction->setToolTip(QApplication::translate("AttachmentsList", "Export", Q_NULLPTR));
+        mExportAction->setToolTip(QApplication::translate("AttachmentsList", "Export", nullptr));
 #endif // QT_NO_TOOLTIP
-        mImportAction->setText(QApplication::translate("AttachmentsList", "Import new...", Q_NULLPTR));
+        mImportAction->setText(QApplication::translate("AttachmentsList", "Import new...", nullptr));
 #ifndef QT_NO_TOOLTIP
-        mImportAction->setToolTip(QApplication::translate("AttachmentsList", "Import", Q_NULLPTR));
+        mImportAction->setToolTip(QApplication::translate("AttachmentsList", "Import", nullptr));
 #endif // QT_NO_TOOLTIP
     } // retranslateUi
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'finddialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,7 @@
 #define UI_FINDDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -37,24 +35,24 @@ public:
     void setupUi(QDialog *FindDialog)
     {
         if (FindDialog->objectName().isEmpty())
-            FindDialog->setObjectName(QStringLiteral("FindDialog"));
+            FindDialog->setObjectName(QString::fromUtf8("FindDialog"));
         FindDialog->resize(611, 392);
         verticalLayout = new QVBoxLayout(FindDialog);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         label = new QLabel(FindDialog);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
 
         horizontalLayout->addWidget(label);
 
         mQueryText = new QLineEdit(FindDialog);
-        mQueryText->setObjectName(QStringLiteral("mQueryText"));
+        mQueryText->setObjectName(QString::fromUtf8("mQueryText"));
 
         horizontalLayout->addWidget(mQueryText);
 
         mSearchButton = new QPushButton(FindDialog);
-        mSearchButton->setObjectName(QStringLiteral("mSearchButton"));
+        mSearchButton->setObjectName(QString::fromUtf8("mSearchButton"));
         mSearchButton->setAutoDefault(false);
 
         horizontalLayout->addWidget(mSearchButton);
@@ -63,7 +61,7 @@ public:
         verticalLayout->addLayout(horizontalLayout);
 
         mResultList = new QTableView(FindDialog);
-        mResultList->setObjectName(QStringLiteral("mResultList"));
+        mResultList->setObjectName(QString::fromUtf8("mResultList"));
         mResultList->setSelectionBehavior(QAbstractItemView::SelectRows);
         mResultList->setShowGrid(false);
         mResultList->horizontalHeader()->setDefaultSectionSize(293);
@@ -82,9 +80,9 @@ public:
 
     void retranslateUi(QDialog *FindDialog)
     {
-        FindDialog->setWindowTitle(QApplication::translate("FindDialog", "Dialog", Q_NULLPTR));
-        label->setText(QApplication::translate("FindDialog", "Text to search:", Q_NULLPTR));
-        mSearchButton->setText(QApplication::translate("FindDialog", "Search", Q_NULLPTR));
+        FindDialog->setWindowTitle(QApplication::translate("FindDialog", "Dialog", nullptr));
+        label->setText(QApplication::translate("FindDialog", "Text to search:", nullptr));
+        mSearchButton->setText(QApplication::translate("FindDialog", "Search", nullptr));
     } // retranslateUi
 
 };

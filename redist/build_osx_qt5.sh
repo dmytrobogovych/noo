@@ -26,7 +26,7 @@ if [ "$MAKEBUILD" = "YES" ]; then
 	rm -rf Makefile
 
 	echo Running qmake                        
-	QT_BINARY_DIR=/Users/anand/Qt/5.9.5/clang_64/bin
+	QT_BINARY_DIR=/Users/anand/Qt5.12.0/5.12.0/clang_64/bin
 	$QT_BINARY_DIR/qmake chooka.pro
 
 	echo Building

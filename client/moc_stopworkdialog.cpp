@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'stopworkdialog.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'stopworkdialog.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.5. It"
+#error "This file was generated using the moc from 5.12.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -50,7 +50,7 @@ QT_MOC_LITERAL(7, 97, 22) // "onFinishTimerTriggered"
 static const uint qt_meta_data_StopWorkDialog[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        5,   14, // methods
@@ -97,14 +97,14 @@ void StopWorkDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            typedef void (StopWorkDialog::*_t)();
+            using _t = void (StopWorkDialog::*)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&StopWorkDialog::continueTracking)) {
                 *result = 0;
                 return;
             }
         }
         {
-            typedef void (StopWorkDialog::*_t)(const QDateTime & );
+            using _t = void (StopWorkDialog::*)(const QDateTime & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&StopWorkDialog::breakTracking)) {
                 *result = 1;
                 return;
@@ -113,10 +113,14 @@ void StopWorkDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     }
 }
 
-const QMetaObject StopWorkDialog::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_StopWorkDialog.data,
-      qt_meta_data_StopWorkDialog,  qt_static_metacall, nullptr, nullptr}
-};
+QT_INIT_METAOBJECT const QMetaObject StopWorkDialog::staticMetaObject = { {
+    &QDialog::staticMetaObject,
+    qt_meta_stringdata_StopWorkDialog.data,
+    qt_meta_data_StopWorkDialog,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *StopWorkDialog::metaObject() const

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'timereportwizard.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'timereportwizard.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.5. It"
+#error "This file was generated using the moc from 5.12.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -43,7 +43,7 @@ QT_MOC_LITERAL(2, 22, 0) // ""
 static const uint qt_meta_data_TaskTreePage[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        1,   14, // methods
@@ -75,10 +75,14 @@ void TaskTreePage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
     Q_UNUSED(_a);
 }
 
-const QMetaObject TaskTreePage::staticMetaObject = {
-    { &QWizardPage::staticMetaObject, qt_meta_stringdata_TaskTreePage.data,
-      qt_meta_data_TaskTreePage,  qt_static_metacall, nullptr, nullptr}
-};
+QT_INIT_METAOBJECT const QMetaObject TaskTreePage::staticMetaObject = { {
+    &QWizardPage::staticMetaObject,
+    qt_meta_stringdata_TaskTreePage.data,
+    qt_meta_data_TaskTreePage,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *TaskTreePage::metaObject() const
@@ -134,7 +138,7 @@ QT_MOC_LITERAL(3, 32, 5) // "value"
 static const uint qt_meta_data_CumulativeOptionPage[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        1,   14, // methods
@@ -165,10 +169,14 @@ void CumulativeOptionPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
     }
 }
 
-const QMetaObject CumulativeOptionPage::staticMetaObject = {
-    { &QWizardPage::staticMetaObject, qt_meta_stringdata_CumulativeOptionPage.data,
-      qt_meta_data_CumulativeOptionPage,  qt_static_metacall, nullptr, nullptr}
-};
+QT_INIT_METAOBJECT const QMetaObject CumulativeOptionPage::staticMetaObject = { {
+    &QWizardPage::staticMetaObject,
+    qt_meta_stringdata_CumulativeOptionPage.data,
+    qt_meta_data_CumulativeOptionPage,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *CumulativeOptionPage::metaObject() const
@@ -221,7 +229,7 @@ QT_MOC_LITERAL(0, 0, 16) // "DateIntervalPage"
 static const uint qt_meta_data_DateIntervalPage[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        0,    0, // methods
@@ -242,10 +250,14 @@ void DateIntervalPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
     Q_UNUSED(_a);
 }
 
-const QMetaObject DateIntervalPage::staticMetaObject = {
-    { &QWizardPage::staticMetaObject, qt_meta_stringdata_DateIntervalPage.data,
-      qt_meta_data_DateIntervalPage,  qt_static_metacall, nullptr, nullptr}
-};
+QT_INIT_METAOBJECT const QMetaObject DateIntervalPage::staticMetaObject = { {
+    &QWizardPage::staticMetaObject,
+    qt_meta_stringdata_DateIntervalPage.data,
+    qt_meta_data_DateIntervalPage,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *DateIntervalPage::metaObject() const
@@ -287,7 +299,7 @@ QT_MOC_LITERAL(0, 0, 14) // "ReportViewPage"
 static const uint qt_meta_data_ReportViewPage[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        0,    0, // methods
@@ -308,10 +320,14 @@ void ReportViewPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     Q_UNUSED(_a);
 }
 
-const QMetaObject ReportViewPage::staticMetaObject = {
-    { &QWizardPage::staticMetaObject, qt_meta_stringdata_ReportViewPage.data,
-      qt_meta_data_ReportViewPage,  qt_static_metacall, nullptr, nullptr}
-};
+QT_INIT_METAOBJECT const QMetaObject ReportViewPage::staticMetaObject = { {
+    &QWizardPage::staticMetaObject,
+    qt_meta_stringdata_ReportViewPage.data,
+    qt_meta_data_ReportViewPage,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *ReportViewPage::metaObject() const
@@ -358,7 +374,7 @@ QT_MOC_LITERAL(4, 51, 6) // "pageId"
 static const uint qt_meta_data_TimeReportWizard[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        2,   14, // methods
@@ -392,10 +408,14 @@ void TimeReportWizard::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
     }
 }
 
-const QMetaObject TimeReportWizard::staticMetaObject = {
-    { &QWizard::staticMetaObject, qt_meta_stringdata_TimeReportWizard.data,
-      qt_meta_data_TimeReportWizard,  qt_static_metacall, nullptr, nullptr}
-};
+QT_INIT_METAOBJECT const QMetaObject TimeReportWizard::staticMetaObject = { {
+    &QWizard::staticMetaObject,
+    qt_meta_stringdata_TimeReportWizard.data,
+    qt_meta_data_TimeReportWizard,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *TimeReportWizard::metaObject() const

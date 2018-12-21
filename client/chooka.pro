@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += printsupport
 CONFIG += c++11
 TARGET = Litt
 TEMPLATE = app
-VERSION = 0.9.0
+VERSION = 0.9.1
 VERSTR = '\\"$${VERSION}\\"'
 DEFINES += VER=\"$${VERSTR}\"
 
@@ -20,7 +20,7 @@ win32 {
 }
 
 macx {
-    QMAKE_MAC_SDK = macosx10.12
+    QMAKE_MAC_SDK = macosx10.14
     DEFINES += TARGET_OSX
     # DEFINES += USE_LOGGER
     LIBS += ../lib/osx/libssl.a ../lib/osx/libcrypto.a

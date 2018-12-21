@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'preferencesdlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,14 +10,12 @@
 #define UI_PREFERENCESDLG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -58,7 +56,7 @@ public:
     void setupUi(QDialog *PreferencesDlg)
     {
         if (PreferencesDlg->objectName().isEmpty())
-            PreferencesDlg->setObjectName(QStringLiteral("PreferencesDlg"));
+            PreferencesDlg->setObjectName(QString::fromUtf8("PreferencesDlg"));
         PreferencesDlg->resize(444, 353);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
@@ -66,39 +64,39 @@ public:
         sizePolicy.setHeightForWidth(PreferencesDlg->sizePolicy().hasHeightForWidth());
         PreferencesDlg->setSizePolicy(sizePolicy);
         verticalLayout_3 = new QVBoxLayout(PreferencesDlg);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         mShowSecondsCheckbox = new QCheckBox(PreferencesDlg);
-        mShowSecondsCheckbox->setObjectName(QStringLiteral("mShowSecondsCheckbox"));
+        mShowSecondsCheckbox->setObjectName(QString::fromUtf8("mShowSecondsCheckbox"));
 
         verticalLayout_3->addWidget(mShowSecondsCheckbox);
 
         mAutosavePasswordCheckbox = new QCheckBox(PreferencesDlg);
-        mAutosavePasswordCheckbox->setObjectName(QStringLiteral("mAutosavePasswordCheckbox"));
+        mAutosavePasswordCheckbox->setObjectName(QString::fromUtf8("mAutosavePasswordCheckbox"));
 
         verticalLayout_3->addWidget(mAutosavePasswordCheckbox);
 
         mShowTrayIconCheckbox = new QCheckBox(PreferencesDlg);
-        mShowTrayIconCheckbox->setObjectName(QStringLiteral("mShowTrayIconCheckbox"));
+        mShowTrayIconCheckbox->setObjectName(QString::fromUtf8("mShowTrayIconCheckbox"));
 
         verticalLayout_3->addWidget(mShowTrayIconCheckbox);
 
         mDarkThemeCheckbox = new QCheckBox(PreferencesDlg);
-        mDarkThemeCheckbox->setObjectName(QStringLiteral("mDarkThemeCheckbox"));
+        mDarkThemeCheckbox->setObjectName(QString::fromUtf8("mDarkThemeCheckbox"));
 
         verticalLayout_3->addWidget(mDarkThemeCheckbox);
 
         mCustomDatabaseFileCheckbox = new QCheckBox(PreferencesDlg);
-        mCustomDatabaseFileCheckbox->setObjectName(QStringLiteral("mCustomDatabaseFileCheckbox"));
+        mCustomDatabaseFileCheckbox->setObjectName(QString::fromUtf8("mCustomDatabaseFileCheckbox"));
 
         verticalLayout_3->addWidget(mCustomDatabaseFileCheckbox);
 
         mSelectDatabaseButton = new QPushButton(PreferencesDlg);
-        mSelectDatabaseButton->setObjectName(QStringLiteral("mSelectDatabaseButton"));
+        mSelectDatabaseButton->setObjectName(QString::fromUtf8("mSelectDatabaseButton"));
 
         verticalLayout_3->addWidget(mSelectDatabaseButton);
 
         mDatabaseLocation = new QLabel(PreferencesDlg);
-        mDatabaseLocation->setObjectName(QStringLiteral("mDatabaseLocation"));
+        mDatabaseLocation->setObjectName(QString::fromUtf8("mDatabaseLocation"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -109,12 +107,12 @@ public:
 
         stopTrackingRuleLayout = new QVBoxLayout();
         stopTrackingRuleLayout->setSpacing(0);
-        stopTrackingRuleLayout->setObjectName(QStringLiteral("stopTrackingRuleLayout"));
+        stopTrackingRuleLayout->setObjectName(QString::fromUtf8("stopTrackingRuleLayout"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(0);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         mSmartStopTracking = new QCheckBox(PreferencesDlg);
-        mSmartStopTracking->setObjectName(QStringLiteral("mSmartStopTracking"));
+        mSmartStopTracking->setObjectName(QString::fromUtf8("mSmartStopTracking"));
         QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy2.setHorizontalStretch(20);
         sizePolicy2.setVerticalStretch(0);
@@ -125,13 +123,13 @@ public:
         horizontalLayout->addWidget(mSmartStopTracking);
 
         mSmartStopIntervalInMinutes = new QLineEdit(PreferencesDlg);
-        mSmartStopIntervalInMinutes->setObjectName(QStringLiteral("mSmartStopIntervalInMinutes"));
+        mSmartStopIntervalInMinutes->setObjectName(QString::fromUtf8("mSmartStopIntervalInMinutes"));
         mSmartStopIntervalInMinutes->setMaximumSize(QSize(50, 16777215));
 
         horizontalLayout->addWidget(mSmartStopIntervalInMinutes);
 
         label = new QLabel(PreferencesDlg);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
         label->setMargin(3);
 
         horizontalLayout->addWidget(label);
@@ -140,25 +138,25 @@ public:
         stopTrackingRuleLayout->addLayout(horizontalLayout);
 
         horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         horizontalSpacer_2 = new QSpacerItem(20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
         horizontalLayout_3->addItem(horizontalSpacer_2);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(10);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         mAskQuestionOnStopRadiobutton = new QRadioButton(PreferencesDlg);
         buttonGroup = new QButtonGroup(PreferencesDlg);
-        buttonGroup->setObjectName(QStringLiteral("buttonGroup"));
+        buttonGroup->setObjectName(QString::fromUtf8("buttonGroup"));
         buttonGroup->addButton(mAskQuestionOnStopRadiobutton);
-        mAskQuestionOnStopRadiobutton->setObjectName(QStringLiteral("mAskQuestionOnStopRadiobutton"));
+        mAskQuestionOnStopRadiobutton->setObjectName(QString::fromUtf8("mAskQuestionOnStopRadiobutton"));
 
         verticalLayout_2->addWidget(mAskQuestionOnStopRadiobutton);
 
         mAutomaticallyOnStopRadiobutton = new QRadioButton(PreferencesDlg);
         buttonGroup->addButton(mAutomaticallyOnStopRadiobutton);
-        mAutomaticallyOnStopRadiobutton->setObjectName(QStringLiteral("mAutomaticallyOnStopRadiobutton"));
+        mAutomaticallyOnStopRadiobutton->setObjectName(QString::fromUtf8("mAutomaticallyOnStopRadiobutton"));
 
         verticalLayout_2->addWidget(mAutomaticallyOnStopRadiobutton);
 
@@ -173,16 +171,16 @@ public:
 
         startTrackingRuleLayout = new QVBoxLayout();
         startTrackingRuleLayout->setSpacing(0);
-        startTrackingRuleLayout->setObjectName(QStringLiteral("startTrackingRuleLayout"));
+        startTrackingRuleLayout->setObjectName(QString::fromUtf8("startTrackingRuleLayout"));
         horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         mSmartStartTracking = new QCheckBox(PreferencesDlg);
-        mSmartStartTracking->setObjectName(QStringLiteral("mSmartStartTracking"));
+        mSmartStartTracking->setObjectName(QString::fromUtf8("mSmartStartTracking"));
 
         horizontalLayout_4->addWidget(mSmartStartTracking);
 
         label_2 = new QLabel(PreferencesDlg);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setObjectName(QString::fromUtf8("label_2"));
 
         horizontalLayout_4->addWidget(label_2);
 
@@ -193,7 +191,7 @@ public:
         verticalLayout_3->addLayout(startTrackingRuleLayout);
 
         buttonBox = new QDialogButtonBox(PreferencesDlg);
-        buttonBox->setObjectName(QStringLiteral("buttonBox"));
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         buttonBox->setCenterButtons(true);
@@ -211,20 +209,20 @@ public:
 
     void retranslateUi(QDialog *PreferencesDlg)
     {
-        PreferencesDlg->setWindowTitle(QApplication::translate("PreferencesDlg", "Dialog", Q_NULLPTR));
-        mShowSecondsCheckbox->setText(QApplication::translate("PreferencesDlg", "Show seconds", Q_NULLPTR));
-        mAutosavePasswordCheckbox->setText(QApplication::translate("PreferencesDlg", "Autosave password (requires app restart)", Q_NULLPTR));
-        mShowTrayIconCheckbox->setText(QApplication::translate("PreferencesDlg", "Show tray icon", Q_NULLPTR));
-        mDarkThemeCheckbox->setText(QApplication::translate("PreferencesDlg", "Use dark theme", Q_NULLPTR));
-        mCustomDatabaseFileCheckbox->setText(QApplication::translate("PreferencesDlg", "Use database at custom location (requires app restart)", Q_NULLPTR));
-        mSelectDatabaseButton->setText(QApplication::translate("PreferencesDlg", "Select file...", Q_NULLPTR));
-        mDatabaseLocation->setText(QApplication::translate("PreferencesDlg", "Location of used database", Q_NULLPTR));
-        mSmartStopTracking->setText(QApplication::translate("PreferencesDlg", "Stop tracking if idle detected for", Q_NULLPTR));
-        label->setText(QApplication::translate("PreferencesDlg", "minutes", Q_NULLPTR));
-        mAskQuestionOnStopRadiobutton->setText(QApplication::translate("PreferencesDlg", "Ask question", Q_NULLPTR));
-        mAutomaticallyOnStopRadiobutton->setText(QApplication::translate("PreferencesDlg", "Automatically", Q_NULLPTR));
+        PreferencesDlg->setWindowTitle(QApplication::translate("PreferencesDlg", "Dialog", nullptr));
+        mShowSecondsCheckbox->setText(QApplication::translate("PreferencesDlg", "Show seconds", nullptr));
+        mAutosavePasswordCheckbox->setText(QApplication::translate("PreferencesDlg", "Autosave password (requires app restart)", nullptr));
+        mShowTrayIconCheckbox->setText(QApplication::translate("PreferencesDlg", "Show tray icon", nullptr));
+        mDarkThemeCheckbox->setText(QApplication::translate("PreferencesDlg", "Use dark theme", nullptr));
+        mCustomDatabaseFileCheckbox->setText(QApplication::translate("PreferencesDlg", "Use database at custom location (requires app restart)", nullptr));
+        mSelectDatabaseButton->setText(QApplication::translate("PreferencesDlg", "Select file...", nullptr));
+        mDatabaseLocation->setText(QApplication::translate("PreferencesDlg", "Location of used database", nullptr));
+        mSmartStopTracking->setText(QApplication::translate("PreferencesDlg", "Stop tracking if idle detected for", nullptr));
+        label->setText(QApplication::translate("PreferencesDlg", "minutes", nullptr));
+        mAskQuestionOnStopRadiobutton->setText(QApplication::translate("PreferencesDlg", "Ask question", nullptr));
+        mAutomaticallyOnStopRadiobutton->setText(QApplication::translate("PreferencesDlg", "Automatically", nullptr));
         mSmartStartTracking->setText(QApplication::translate("PreferencesDlg", "Start tracking after stop on idle when user activity detected. \n"
-"This option requires enabled automatic stop tracking on idle.", Q_NULLPTR));
+"This option requires enabled automatic stop tracking on idle.", nullptr));
         label_2->setText(QString());
     } // retranslateUi
 

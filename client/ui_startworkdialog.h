@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'startworkdialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,8 @@
 #define UI_STARTWORKDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QToolButton>
 
@@ -30,11 +27,11 @@ public:
     void setupUi(QDialog *StartWorkDialog)
     {
         if (StartWorkDialog->objectName().isEmpty())
-            StartWorkDialog->setObjectName(QStringLiteral("StartWorkDialog"));
+            StartWorkDialog->setObjectName(QString::fromUtf8("StartWorkDialog"));
         StartWorkDialog->resize(394, 61);
         StartWorkDialog->setSizeGripEnabled(false);
         mInfoLabel = new QLabel(StartWorkDialog);
-        mInfoLabel->setObjectName(QStringLiteral("mInfoLabel"));
+        mInfoLabel->setObjectName(QString::fromUtf8("mInfoLabel"));
         mInfoLabel->setGeometry(QRect(2, 2, 276, 51));
         QFont font;
         font.setPointSize(12);
@@ -43,7 +40,7 @@ public:
         mInfoLabel->setWordWrap(true);
         mInfoLabel->setMargin(4);
         mYesButton = new QToolButton(StartWorkDialog);
-        mYesButton->setObjectName(QStringLiteral("mYesButton"));
+        mYesButton->setObjectName(QString::fromUtf8("mYesButton"));
         mYesButton->setGeometry(QRect(280, 4, 111, 25));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
@@ -55,7 +52,7 @@ public:
         mYesButton->setToolButtonStyle(Qt::ToolButtonTextOnly);
         mYesButton->setAutoRaise(true);
         mNoButton = new QToolButton(StartWorkDialog);
-        mNoButton->setObjectName(QStringLiteral("mNoButton"));
+        mNoButton->setObjectName(QString::fromUtf8("mNoButton"));
         mNoButton->setGeometry(QRect(280, 34, 111, 25));
         sizePolicy.setHeightForWidth(mNoButton->sizePolicy().hasHeightForWidth());
         mNoButton->setSizePolicy(sizePolicy);
@@ -71,11 +68,11 @@ public:
 
     void retranslateUi(QDialog *StartWorkDialog)
     {
-        StartWorkDialog->setWindowTitle(QApplication::translate("StartWorkDialog", "Dialog", Q_NULLPTR));
+        StartWorkDialog->setWindowTitle(QApplication::translate("StartWorkDialog", "Dialog", nullptr));
         mInfoLabel->setText(QApplication::translate("StartWorkDialog", "Litt discovered user activity after idle interval. \n"
-"Should Litt start tracking on %TASK%?", Q_NULLPTR));
-        mYesButton->setText(QApplication::translate("StartWorkDialog", "Yes", Q_NULLPTR));
-        mNoButton->setText(QApplication::translate("StartWorkDialog", "No", Q_NULLPTR));
+"Should Litt start tracking on %TASK%?", nullptr));
+        mYesButton->setText(QApplication::translate("StartWorkDialog", "Yes", nullptr));
+        mNoButton->setText(QApplication::translate("StartWorkDialog", "No", nullptr));
     } // retranslateUi
 
 };

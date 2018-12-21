@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'passworddlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,13 +10,10 @@
 #define UI_PASSWORDDLG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QFormLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QVBoxLayout>
@@ -35,22 +32,22 @@ public:
     void setupUi(QDialog *PasswordDlg)
     {
         if (PasswordDlg->objectName().isEmpty())
-            PasswordDlg->setObjectName(QStringLiteral("PasswordDlg"));
+            PasswordDlg->setObjectName(QString::fromUtf8("PasswordDlg"));
         PasswordDlg->resize(285, 113);
         PasswordDlg->setMinimumSize(QSize(285, 113));
         verticalLayout = new QVBoxLayout(PasswordDlg);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(-1, 24, -1, 12);
         mPasswordFormLayout = new QFormLayout();
-        mPasswordFormLayout->setObjectName(QStringLiteral("mPasswordFormLayout"));
+        mPasswordFormLayout->setObjectName(QString::fromUtf8("mPasswordFormLayout"));
         mPasswordFormLayout->setFieldGrowthPolicy(QFormLayout::FieldsStayAtSizeHint);
         mPasswordLabel = new QLabel(PasswordDlg);
-        mPasswordLabel->setObjectName(QStringLiteral("mPasswordLabel"));
+        mPasswordLabel->setObjectName(QString::fromUtf8("mPasswordLabel"));
 
         mPasswordFormLayout->setWidget(0, QFormLayout::LabelRole, mPasswordLabel);
 
         mPasswordEdit = new QLineEdit(PasswordDlg);
-        mPasswordEdit->setObjectName(QStringLiteral("mPasswordEdit"));
+        mPasswordEdit->setObjectName(QString::fromUtf8("mPasswordEdit"));
         mPasswordEdit->setInputMethodHints(Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData);
         mPasswordEdit->setEchoMode(QLineEdit::Password);
 
@@ -60,7 +57,7 @@ public:
         verticalLayout->addLayout(mPasswordFormLayout);
 
         mButtonBox = new QDialogButtonBox(PasswordDlg);
-        mButtonBox->setObjectName(QStringLiteral("mButtonBox"));
+        mButtonBox->setObjectName(QString::fromUtf8("mButtonBox"));
         mButtonBox->setMaximumSize(QSize(16777215, 50));
         mButtonBox->setOrientation(Qt::Horizontal);
         mButtonBox->setStandardButtons(QDialogButtonBox::Ok);
@@ -77,8 +74,8 @@ public:
 
     void retranslateUi(QDialog *PasswordDlg)
     {
-        PasswordDlg->setWindowTitle(QApplication::translate("PasswordDlg", "Password required", Q_NULLPTR));
-        mPasswordLabel->setText(QApplication::translate("PasswordDlg", "Password:", Q_NULLPTR));
+        PasswordDlg->setWindowTitle(QApplication::translate("PasswordDlg", "Password required", nullptr));
+        mPasswordLabel->setText(QApplication::translate("PasswordDlg", "Password:", nullptr));
     } // retranslateUi
 
 };
