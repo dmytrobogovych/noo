@@ -63,7 +63,7 @@ protected:
     bool mSaved;
 };
 
-typedef QVector<TimeRecord> TimeArray;
+typedef std::vector<TimeRecord> TimeArray;
 
 typedef std::set<int> HoursSet;
 typedef std::map<int, QSharedPointer<HoursSet> > DaysMap;

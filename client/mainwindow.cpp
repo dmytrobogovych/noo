@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mSettings = QSharedPointer<Settings>(new Settings());
 
-    ThemeHelper::applyCurrentTheme(*mSettings);
+    helper::theme::applyCurrent(*mSettings);
 
     mAttachmentsAction = nullptr;
     mAttachmentsLabel = nullptr;
@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Hide Find line edit for now
     ui->mFindFrame->setVisible(false);
-    EscapeKeyEventFilter* eventFilter = new EscapeKeyEventFilter(ui->mFindEdit);
+    helper::EscapeKeyEventFilter* eventFilter = new helper::EscapeKeyEventFilter(ui->mFindEdit);
     connect(eventFilter, SIGNAL(escapePressed(QObject*)), this, SLOT(findRejected(QObject*)));
     ui->mFindEdit->installEventFilter(eventFilter);
 
@@ -854,7 +854,7 @@ void MainWindow::startTracking()
     // Trigger permission dialog if needed
     if (mSettings->data()[KEY_SMART_STOP].toBool())
     {
-        if (!ActivityTrackerHelper::ensureSmartTrackingIsPossible())
+        if (!helper::activityTracker::ensureSmartTrackingIsPossible())
             mTrayIcon->showMessage(tr("No smart tracking stop/start"), tr("Problem with obtaining permissions"), QSystemTrayIcon::Warning);
     }
 
@@ -992,7 +992,7 @@ void MainWindow::updateData()
 
         if (saveToDb)
             mLogger->log("Flushing timeline to DB start");
-        mCurrentTask->timeline()->flush(saveToDb, QDateTime::currentDateTimeUtc());
+        mCurrentTask->timeline()->flush(saveToDb, QDateTime::currentDateTimeUtc().toTime_t());
         if (saveToDb)
         {
             mLastTimelineFlush = QDateTime::currentDateTimeUtc();
@@ -1236,8 +1236,8 @@ void MainWindow::showTimeForSelectedTask()
 
         int spentSecondsToday = t->timeline()->today();
         int spentSecondsMonth = t->timeline()->month();
-        ui->mTodaySpentTimeLabel->setText(TimeHelper::secondsToDisplay(spentSecondsToday, showSeconds));
-        ui->mThisMonthSpentTimeLabel->setText(TimeHelper::secondsToDisplay(spentSecondsMonth, showSeconds));
+        ui->mTodaySpentTimeLabel->setText(QString::fromStdString(helper::chrono::secondsToDisplay(spentSecondsToday, showSeconds)));
+        ui->mThisMonthSpentTimeLabel->setText(QString::fromStdString(helper::chrono::secondsToDisplay(spentSecondsMonth, showSeconds)));
     }
 }
 
@@ -1256,7 +1256,7 @@ void MainWindow::showTimeForTrackingTask()
             t = t->parent();
         }
         int spentSecondsToday = mCurrentTask->timeline()->today();
-        QString timeString = TimeHelper::secondsToDisplay(spentSecondsToday, showSeconds);
+        QString timeString = QString::fromStdString(helper::chrono::secondsToDisplay(spentSecondsToday, showSeconds));
         path += " : " + timeString;
         mCurrentIntervalLabel->setText(path);
 
@@ -1301,7 +1301,7 @@ void MainWindow::updateTrayIcon(TrayShowMessage flag)
     {
         bool showSeconds = mSettings->data()[KEY_SHOW_SECONDS].toBool();
         int spentSecondsToday = mCurrentTask->timeline()->today();
-        QString timeString = TimeHelper::secondsToDisplay(spentSecondsToday, showSeconds);
+        QString timeString = helper::chrono::secondsToDisplay(spentSecondsToday, showSeconds);
         tooltip = tr("Litt is tracking ") + mCurrentTask->title() + ".\n" +
                 tr("Time spent today for this task is ") + timeString;
     }

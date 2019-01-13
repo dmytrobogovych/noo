@@ -35,7 +35,7 @@ PreferencesDlg::PreferencesDlg(QWidget *parent, Settings& settings) :
     if (settings.data().value(KEY_DB_FILENAME_SPECIFIED).toBool())
         ui->mDatabaseLocation->setText(settings.data().value(KEY_DB_FILENAME).toString());
     else
-        ui->mDatabaseLocation->setText(PathHelper::pathToDatabase());
+        ui->mDatabaseLocation->setText(helper::path::pathToDatabase());
 
     // Use stop on idle ?
     ui->mSmartStopTracking->setChecked(GET_BOOL(KEY_SMART_STOP));
@@ -61,7 +61,7 @@ PreferencesDlg::~PreferencesDlg()
 
 void PreferencesDlg::selectDatabase()
 {
-    QFileDialog dlg(this, tr("Select database to use"), PathHelper::pathToDesktop());
+    QFileDialog dlg(this, tr("Select database to use"), helper::path::pathToDesktop());
     dlg.setAcceptMode(QFileDialog::AcceptSave);
     dlg.setFileMode(QFileDialog::AnyFile);
     if (dlg.exec() == QDialog::Accepted)
@@ -95,7 +95,7 @@ void PreferencesDlg::smartStopSettingChanged(bool v)
 {
     if (v)
     {
-        if (!ActivityTrackerHelper::ensureSmartTrackingIsPossible())
+        if (!helper::activityTracker::ensureSmartTrackingIsPossible())
             ui->mSmartStopTracking->setChecked(false);
     }
     allowStartAfterIdleControls();
@@ -127,5 +127,5 @@ void PreferencesDlg::allowStartAfterIdleControls()
 
 void PreferencesDlg::applyTheme()
 {
-    ThemeHelper::applyCurrentTheme(mSettings);
+    helper::theme::applyCurrent(mSettings);
 }

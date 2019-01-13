@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    ThemeHelper::applyCurrentTheme(Settings::instance());
+    helper::theme::applyCurrent(Settings::instance());
 
     MainWindow w;
     w.layout()->invalidate();

@@ -305,7 +305,7 @@ QVariant TimeTreeModel::data(const QModelIndex &index, int role) const
         tr = intervals[index.row()];
 
         // Intervals are in local time already
-        return QString("%1 - %2").arg(tr.startTime().time().toString(mTimeFormat), tr.endTime().time().toString(mTimeFormat));
+        return QString("%1 - %2").arg(helper::chronotr.startTime().time().toString(mTimeFormat), tr.endTime().time().toString(mTimeFormat));
 
     default:
         return QVariant();

@@ -20,7 +20,7 @@ QVariantMap& Settings::data()
 
 void Settings::save()
 {
-    QSettings settings(PathHelper::pathToSettings(), QSettings::IniFormat);
+    QSettings settings(helper::path::pathToSettings(), QSettings::IniFormat);
     settings.clear();
     for (const QString& e: data().keys())
     {
@@ -30,7 +30,7 @@ void Settings::save()
 
 void Settings::load()
 {
-    QSettings settings(PathHelper::pathToSettings(), QSettings::IniFormat);
+    QSettings settings(helper::path::pathToSettings(), QSettings::IniFormat);
     mData.clear();
     const QStringList keys = settings.allKeys();
     for (const QString& k: keys)

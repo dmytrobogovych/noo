@@ -44,6 +44,35 @@ void theme::applyCurrent(Settings& settings)
         qApp->setStyleSheet("");
 }
 
+date::date()
+{}
+
+date::date(int y, int m, int d)
+    :mYear(y), mMonth(m), mDay(d)
+{
+}
+
+time_t date::toTimestamp() const
+{
+    struct tm t;
+    memset(&t, 0, sizeof t);
+    t.tm_year = mYear - 1900;
+    t.tm_mon = mMonth - 1;
+    t.tm_mday = mDay;
+    return mktime(&t);
+}
+
+date date::fromTimestamp(time_t timestamp)
+{
+    struct tm t;
+    memset(&t, 0, sizeof t);
+    t = *localtime(&timestamp);
+    date r;
+    r.mDay = t.tm_mday;
+    r.mMonth = t.tm_mon + 1;
+    r.mYear = t.tm_year + 1900;
+    return r;
+}
 
 std::string chrono::secondsToDisplay(int seconds, bool showSeconds)
 {
@@ -63,6 +92,13 @@ std::string chrono::timeToStr(time_t timestamp)
 {
     char buf[128];
     strftime(buf, sizeof buf, "%FT%TZ", gmtime(&timestamp));
+    return buf;
+}
+
+std::string chrono::timeToLocalStr(time_t timestamp)
+{
+    char buf[128];
+    strftime(buf, sizeof buf, "%FT%TZ", localtime(&timestamp));
     return buf;
 }
 

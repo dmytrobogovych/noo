@@ -140,14 +140,14 @@ void ReportViewPage::generateReport()
   {
     int individualTime = t->getReportedTime();
     bool showSeconds = mSettings.data()[KEY_SHOW_SECONDS].toBool();
-    QString l1 = TimeHelper::secondsToDisplay(individualTime, showSeconds);
+    QString l1 = helper::chrono::secondsToDisplay(individualTime, showSeconds);
     report += t->path() + " : " + l1;
     //if (mSettings.data()[KEY_CUMULATIVE_REPORT].toBool())
     {
       int childrenTime = t->getChildrenReportedTime();
       if (childrenTime)
       {
-        QString l2 = TimeHelper::secondsToDisplay(individualTime + childrenTime, showSeconds);
+        QString l2 = helper::chrono::secondsToDisplay(individualTime + childrenTime, showSeconds);
         report += ". Including subtasks time: " + l2;
       }
     }
