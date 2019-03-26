@@ -13,12 +13,12 @@
 
 char* __strlcpy_chk (char* dest, const char* src, int len, int destcapacity)
 {
-    return NULL;
+    return nullptr;
 }
 
 char* __strlcat_chk (char* dest, const char* src, int len, int destcapacity)
 {
-    return NULL;
+    return nullptr;
 }
 
 #endif
@@ -62,17 +62,47 @@ time_t date::toTimestamp() const
     return mktime(&t);
 }
 
-date date::fromTimestamp(time_t timestamp)
+date date::fromTimestamp(time_t timestamp, int options)
 {
     struct tm t;
     memset(&t, 0, sizeof t);
-    t = *localtime(&timestamp);
+    switch (options)
+    {
+    case To_GmtTime:       t = *gmtime(&timestamp); break;
+    case To_LocalTime:     t = *localtime(&timestamp); break;
+    }
+
     date r;
     r.mDay = t.tm_mday;
     r.mMonth = t.tm_mon + 1;
     r.mYear = t.tm_year + 1900;
     return r;
 }
+
+int date::daysInMonth(int y, int m)
+{
+    switch (m)
+    {
+     case 2:
+        if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0))
+            return 29;
+        else
+            return 28;
+
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+    case 12:
+        return 31;
+
+    default:
+        return 30;
+    }
+}
+
 
 std::string chrono::secondsToDisplay(int seconds, bool showSeconds)
 {
@@ -98,7 +128,8 @@ std::string chrono::timeToStr(time_t timestamp)
 std::string chrono::timeToLocalStr(time_t timestamp)
 {
     char buf[128];
-    strftime(buf, sizeof buf, "%FT%TZ", localtime(&timestamp));
+    struct tm t = localtime(timestamp);
+    strftime(buf, sizeof buf, "%FT%TZ", &t);
     return buf;
 }
 

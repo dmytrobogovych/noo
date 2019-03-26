@@ -12,7 +12,7 @@
 #include <map>
 #include "SQLiteCpp/Database.h"
 
-typedef uint64_t Id;
+typedef int64_t Id;
 
 class WorldId
 {
@@ -92,14 +92,27 @@ public:
     void setTaskId(Id id);
 
     // These methods work with local time
-    void getYears(std::set<int>& result);
-    void getMonthes(int year, std::set<int>& result);
-    void getDays(int year, int month, std::set<int>& result);
+    // Returns set of available years in timeline
+    std::set<int> getYears();
+
+    // Returns set of availables monthes in timeline for specified year
+    std::set<int> getMonthes(int year);
+
+    // Returns set of available days in timeline for specified year & month
+    std::set<int> getDays(int year, int month);
+
     int  getTime(int year, int month, int day, std::vector<TimeRecord>* intervals);
 
+    // Returns number of seconds spent today
     int today();
+
+    // Returns number of seconds spent in current month
     int month();
+
+    // Returns number of seconds spent in interval
     int getSum(const QDate& start, const QDate& finish);
+
+    // Checks if there duplicate & overllaping time intervals
     bool duplicateDetected() const;
 
     // Checks if specified interval has intersection

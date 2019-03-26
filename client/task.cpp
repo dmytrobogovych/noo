@@ -9,6 +9,8 @@
 # include <uuid/uuid.h>
 #endif
 
+using namespace helper;
+
 // -------- WorldId ------
 WorldId::WorldId()
 {
@@ -72,7 +74,7 @@ TimeRecord::TimeRecord()
 {}
 
 TimeRecord::TimeRecord(const time_t &startTime, const time_t &endTime, Id taskId)
-    :mId(0), mTaskId(taskId), mSaved(false), mStartTime(startTime), mEndTime(endTime)
+    :mId(0), mTaskId(taskId), mStartTime(startTime), mEndTime(endTime), mSaved(false)
 {
 }
 
@@ -168,7 +170,7 @@ void TimeRecord::deleteRecord()
 
 // -------------------- TimeLine --------------------
 TimeLine::TimeLine()
-    :mTaskId(0), mActiveTimeRecord(nullptr), mTotalTime(0), mActive(false)
+    :mTaskId(0), mActive(false), mActiveTimeRecord(nullptr), mTotalTime(0)
 {}
 
 TimeLine::~TimeLine()
@@ -457,7 +459,7 @@ void TimeLine::flush(bool saveToDb, time_t currentUtc)
 
     if (mActiveTimeRecord)
     {
-        int delta = currentUtc - mActiveTimeRecord->endTime();
+        long delta = currentUtc - mActiveTimeRecord->endTime();
         mActiveTimeRecord->setEndTime(currentUtc);
 
         TimeRecord* tr = hasTimePoint(currentUtc);
@@ -485,7 +487,7 @@ void TimeLine::flush(bool saveToDb, time_t currentUtc)
 void TimeLine::load()
 {
     SQLite::Statement q(Storage::instance().database(), "select id, starttime, endtime from timeline where (taskid = :taskid) and ((removed is null) or (removed != 1)) order by id asc");
-    q.bind(":taskid", (sqlite3_int64)mTaskId);
+    q.bind(":taskid", mTaskId);
     while (q.executeStep())
     {
         time_t start = helper::chrono::strToTime(q.getColumn(1).getText());
@@ -526,82 +528,93 @@ TimeArray& TimeLine::data()
     return mData;
 }
 
-void TimeLine::getYears(std::set<int>& years)
+std::set<int> TimeLine::getYears()
 {
+    std::set<int> r;
     if (mData.empty())
-        return;
+        return r;
 
-    time_t starttime_1 = mData.front().startTime(), starttime_2 = mData.back().startTime();
-    struct tm t1 = *localtime(&starttime_1), t2 = *localtime(&starttime_2);
+    date t1 = date::fromTimestamp(mData.front().startTime(), date::To_LocalTime),
+         t2 = date::fromTimestamp(mData.back().startTime(), date::To_LocalTime);
 
-    // Find lower bound of years - it is first time record
-    int year1 = t1.tm_year + 1900;
-    years.insert(year1);
+    r.insert(t1.mYear);
 
     // Find higher bound of years - it is last time record
-    int year2 = t2.tm_year + 1900;
-
-    if (year1 == year2)
-        return;
+    if (t1.mYear == t2.mYear)
+        return r;
 
     // Try to find next year by binary search
-    for (int year = year1+1; year <= year2; year++)
+    for (int year = t1.mYear + 1; year <= t2.mYear; year++)
     {
-        QDate yearStart(year, 1, 1);
+        date yearStart(year, 1, 1);
         TimeArray::iterator iter = std::lower_bound(mData.begin(), mData.end(), yearStart,
-                                                    [&](const TimeRecord& lhs, time_t rhs)
-                                                    { return lhs.endTime() < rhs; });
+                                                    [&](const TimeRecord& lhs, date rhs)
+        {
+            return date::fromTimestamp(lhs.endTime(), date::To_LocalTime) < rhs;
+        });
+
         if (iter != mData.end())
         {
-            // Get current year
-            struct tm ct = helper::chrono::localtime(iter->startTime());
-            if (ct.tm_year + 1900 <= year)
-                years.insert(year);
+            // Get found year
+            date found_date = date::fromTimestamp(iter->startTime(), date::To_LocalTime);
+            if (found_date.mYear <= year)
+                r.insert(year);
         }
     }
+
+    return r;
 }
 
-void TimeLine::getMonthes(int year, std::set<int>& result)
+std::set<int> TimeLine::getMonthes(int year)
 {
+    std::set<int> r;
+
     for (int month = 1; month <= 12; month++)
     {
-        QDate monthBegin(year, month, 1);
-        QDate monthEnd(year, month, monthBegin.daysInMonth());
+        date monthBegin(year, month, 1);
+        date monthEnd(year, month, date::daysInMonth(year, month));
 
         // Find range for every month in year [lowest, higher)
         TimeArray::iterator lowest = std::lower_bound(mData.begin(), mData.end(), monthBegin,
-                                                      [] (const TimeRecord& tr, const QDate& d)
-                                                      { return tr.endTime() < QDateTime(d).toTime_t();});
+                                                      [] (const TimeRecord& tr, const date& d)
+
+        {
+            return date::fromTimestamp(tr.endTime(), date::To_LocalTime) < d;
+        });
+
         //TimeArray::iterator higher = std::upper_bound(mData.begin(), mData.end(), monthEnd, [] (const TimeRecord& tr, const QDate& d) { return tr.startTime().toLocalTime().date() < d;});
         if (lowest != mData.end())
         {
             // Current date is local time!
-            helper::date currentDate = helper::date::fromTimestamp(lowest->startTime());
+            helper::date currentDate = helper::date::fromTimestamp(lowest->startTime(), helper::date::To_LocalTime);
             if (currentDate.mYear > year)
                 continue;
             if (currentDate.mYear == year && currentDate.mMonth > month)
                 continue;
 
-            result.insert(month);
+            r.insert(month);
         }
     }
+
+    return r;
 }
 
-void TimeLine::getDays(int year, int month, std::set<int>& result)
+std::set<int> TimeLine::getDays(int year, int month)
 {
-    QDate monthBegin(year, month, 1);
-    for (int day = 1; day <= monthBegin.daysInMonth(); day++)
+    std::set<int> r;
+    date monthBegin(year, month, 1);
+    for (int day = 1; day <= date::daysInMonth(year, month); day++)
     {
-        QDate currentDay(year, month, day);
+        date currentDay(year, month, day);
 
         TimeArray::iterator lowest = std::lower_bound(mData.begin(), mData.end(), currentDay,
-                                                      [] (const TimeRecord& tr, const QDate& d)
+                                                      [] (const TimeRecord& tr, const date& d)
                                                       {
-                                                          return tr.endTime() < QDateTime(d).toTime_t();
+                                                          return date::fromTimestamp(tr.endTime(), date::To_LocalTime) < d;
                                                       });
         if (lowest != mData.end())
         {
-            helper::date startDate = helper::date::fromTimestamp(lowest->startTime());
+            helper::date startDate = helper::date::fromTimestamp(lowest->startTime(), helper::date::To_LocalTime);
             if (startDate.mYear > year)
                 continue;
             if (startDate.mYear == year && startDate.mMonth > month)
@@ -609,9 +622,10 @@ void TimeLine::getDays(int year, int month, std::set<int>& result)
             if (startDate.mYear == year && startDate.mMonth == month && startDate.mDay > day)
                 continue;
 
-            result.insert(day);
+            r.insert(day);
         }
     }
+    return r;
 }
 
 int TimeLine::getTime(int year, int month, int day, std::vector<TimeRecord>* intervals)
@@ -630,7 +644,7 @@ int TimeLine::getTime(int year, int month, int day, std::vector<TimeRecord>* int
     {
         TimeRecord& tr = *lowest;
 
-        helper::date startDate = helper::date::fromTimestamp(tr.startTime());
+        helper::date startDate = helper::date::fromTimestamp(tr.startTime(), date::To_LocalTime);
 
         if (startDate.mYear > year)
             break;
@@ -670,31 +684,36 @@ int TimeLine::today()
 {
     int result = 0;
 
-    TimeArray::iterator lowIter = std::lower_bound(mData.begin(), mData.end(), QDate::currentDate(),
-                                                   [] (const TimeRecord& lhs, const QDate& rhs)
+    // Find starting record related to today
+    // Today is local time!
+    date today = date::today();
+
+    TimeArray::iterator lowIter = std::lower_bound(mData.begin(), mData.end(), today,
+                                                   [] (const TimeRecord& lhs, const date& rhs)
     {
-        return lhs.endTime().toLocalTime().date() < rhs;
+        return date::fromTimestamp(lhs.endTime(), date::To_LocalTime) < rhs;
     });
 
     for (;lowIter != mData.end(); lowIter++)
     {
-        if (lowIter->startTime().toLocalTime().date() > QDate::currentDate())
+        if (date::fromTimestamp(lowIter->startTime(), date::To_LocalTime) > today)
             break; // quit the loop
 
-        if (lowIter->endTime().toLocalTime().date() >= QDate::currentDate())
+        if (date::fromTimestamp(lowIter->endTime(), date::To_LocalTime) >= today)
         {
-            QDateTime dayBegin(QDate::currentDate(), QTime(0,0));
-            QDateTime dayEnd(QDate::currentDate(), QTime(23, 59, 59));
+            // Both are GMT time
+            time_t dayBegin = date::today().toTimestamp();
+            time_t dayEnd = dayBegin + 86359;
 
-            int secondsTo = dayBegin.secsTo(lowIter->startTime().toLocalTime());
+            int64_t secondsTo = lowIter->startTime() - dayBegin;
             if (secondsTo > 0)
                 dayBegin = lowIter->startTime();
 
-            int secondsFrom = dayEnd.secsTo(lowIter->endTime().toLocalTime());
+            int64_t secondsFrom = lowIter->endTime() - dayEnd;
             if (secondsFrom < 0)
-                dayEnd = lowIter->endTime().toLocalTime();
+                dayEnd = lowIter->endTime();
 
-            int secondsSpent = dayBegin.secsTo(dayEnd);
+            int secondsSpent = dayEnd - dayBegin;
             result += secondsSpent;
         }
     }

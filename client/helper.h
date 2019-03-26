@@ -23,8 +23,22 @@ namespace helper
 
         // Timestamp is always UTC! But date is always local!
         time_t toTimestamp() const;
-        static date fromTimestamp(time_t timestamp);
+
+        enum
+        {
+            To_LocalTime,
+            To_GmtTime
+        };
+        static date fromTimestamp(time_t timestamp, int options);
+        static date today();
+        static date fromTm(struct tm& t);
+        static int daysInMonth(int y, int m);
     };
+
+    bool operator < (const date& lhs, const date& rhs);
+    bool operator > (const date& lhs, const date& rhs);
+    bool operator == (const date& lhs, const date& rhs);
+    bool operator >= (const date& lhs, const date& rhs);
 
     class chrono
     {
@@ -34,6 +48,7 @@ namespace helper
         static std::string timeToLocalStr(time_t timestamp);
         static time_t strToTime(const std::string& s);
         static struct tm localtime(time_t timestamp);
+        static int daysInMonth(int m, int y);
     };
 
 
