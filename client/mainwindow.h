@@ -160,7 +160,7 @@ public slots:
   void startTracking();
   void startTrackingRecent();
 
-  void stopTracking(TrackingStopReason reason, const QDateTime& currentUtc = QDateTime::currentDateTimeUtc());
+  void stopTracking(TrackingStopReason reason, time_t current_utc = time(nullptr));
   void updateData();
   void add10Mins();
 

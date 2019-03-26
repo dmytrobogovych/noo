@@ -33,19 +33,19 @@ namespace helper
         static date today();
         static date fromTm(struct tm& t);
         static int daysInMonth(int y, int m);
+
+        bool operator < (const date& rhs);
+        bool operator > (const date& rhs);
+        bool operator == (const date& rhs);
+        bool operator >= (const date& rhs);
     };
 
-    bool operator < (const date& lhs, const date& rhs);
-    bool operator > (const date& lhs, const date& rhs);
-    bool operator == (const date& lhs, const date& rhs);
-    bool operator >= (const date& lhs, const date& rhs);
 
     class chrono
     {
     public:
         static std::string secondsToDisplay(int seconds, bool showSeconds);
         static std::string timeToStr(time_t timestamp);
-        static std::string timeToLocalStr(time_t timestamp);
         static time_t strToTime(const std::string& s);
         static struct tm localtime(time_t timestamp);
         static int daysInMonth(int m, int y);

@@ -726,62 +726,72 @@ int TimeLine::month()
     int result = 0;
 
     // Find first day of month
-    QDate currentMonth = QDate::currentDate();
-    currentMonth.setDate(currentMonth.year(), currentMonth.month(), 1);
+    date this_month = date::today();
+    this_month.mDay = 1;
 
     // Find position in time record array close to month begin
-    TimeArray::iterator lowIter = std::lower_bound(mData.begin(), mData.end(), currentMonth, [] (const TimeRecord& lhs, const QDate& rhs) { return lhs.endTime().toLocalTime().date() < rhs; });
+    TimeArray::iterator lowIter = std::lower_bound(mData.begin(), mData.end(), this_month,
+                                                   [] (const TimeRecord& lhs, const date& rhs)
+    {
+        return date::fromTimestamp(lhs.endTime(), date::To_LocalTime) < rhs;
+    });
 
-    for (;lowIter != mData.end(); lowIter++)
+    while (lowIter != mData.end())
     {
         // See if start of current time period is later than current month
-        if (lowIter->startTime().toLocalTime().date().month() > currentMonth.month())
+        if (date::fromTimestamp(lowIter->startTime(), date::To_LocalTime).mMonth > this_month.mMonth)
             break; // quit the loop
 
-        if (lowIter->endTime().toLocalTime().date().month() >= currentMonth.month())
+        if (date::fromTimestamp(lowIter->endTime(), date::To_LocalTime).mMonth >= this_month.mMonth)
         {
-            QDateTime monthBegin(currentMonth, QTime(0,0));
-            QDateTime monthEnd(QDate(currentMonth.year(), currentMonth.month(), currentMonth.daysInMonth()), QTime(23, 59, 59));
+            // GMT time!
+            time_t month_begin = this_month.toTimestamp();
+            time_t month_end = month_begin + date::daysInMonth(this_month.mYear, this_month.mMonth) * 86400 - 1;
 
-            int secondsTo = monthBegin.secsTo(lowIter->startTime().toLocalTime());
+            int64_t secondsTo = lowIter->startTime() - month_begin;
             if (secondsTo > 0)
-                monthBegin = lowIter->startTime();
+                month_begin = lowIter->startTime();
 
-            int secondsFrom = monthEnd.secsTo(lowIter->endTime().toLocalTime());
+            int64_t secondsFrom = lowIter->endTime() - month_end;
             if (secondsFrom < 0)
-                monthEnd = lowIter->endTime().toLocalTime();
+                month_end = lowIter->endTime();
 
-            int secondsSpent = monthBegin.secsTo(monthEnd);
+            int64_t secondsSpent = month_end - month_begin;
             result += secondsSpent;
         }
+
+        lowIter++;
     }
 
     return result;
 }
 
-int TimeLine::getSum(const QDate& start, const QDate& finish)
+int TimeLine::getSum(const date& start, const date& finish)
 {
     int result = 0;
 
-    TimeArray::iterator lowest = std::lower_bound(mData.begin(), mData.end(), start, [] (const TimeRecord& tr, const QDate& d) { return tr.endTime().toLocalTime().date() < d;});
-    //TimeArray::iterator higher = std::upper_bound(mData.begin(), mData.end(), finish, [] (const QDate& d, const TimeRecord& tr) { return tr.startTime().toLocalTime().date() < d;});
+    TimeArray::iterator lowest = std::lower_bound(mData.begin(), mData.end(), start,
+                                                  [] (const TimeRecord& tr, const date& d)
+    {
+        return date::fromTimestamp(tr.endTime(), date::To_LocalTime) < d;
+    });
 
     for (;lowest != mData.end(); lowest++)
     {
         TimeRecord& tr = *lowest;
-        if (tr.startTime().toLocalTime().date() > finish)
+        if (date::fromTimestamp(tr.startTime(), date::To_LocalTime) > finish)
             break;
 
-        QDateTime dayBegin(start, QTime(0, 0, 0));
-        QDateTime dayEnd(finish, QTime(23, 59, 59));
+        time_t day_begin = start.toTimestamp();
+        time_t day_end = finish.toTimestamp() + 86400 - 1;
 
-        if (tr.startTime().toLocalTime().secsTo(dayBegin) < 0)
-            dayBegin = tr.startTime().toLocalTime(); // Time record begin is later than begin of the interval
+        if (day_begin - tr.startTime() < 0)
+            day_begin = tr.startTime(); // Time record begin is later than begin of the interval
 
-        if (tr.endTime().toLocalTime().secsTo(dayEnd) > 0)
-            dayEnd = tr.endTime().toLocalTime();
+        if (day_end - tr.endTime() > 0)
+            day_end = tr.endTime();
 
-        result += dayBegin.secsTo(dayEnd);
+        result += day_end - day_begin;
     }
     return result;
 }
@@ -793,8 +803,9 @@ bool TimeLine::duplicateDetected() const
 
 void TimeLine::putDebugRecord()
 {
-    QDateTime current = QDateTime::currentDateTimeUtc();
-    QDateTime end = current.addSecs(600);
+    time_t current = time(nullptr);
+    time_t end = current + 600;
+
     TimeRecord* r = makeNewRecord(current, end);
     r->save();
 }

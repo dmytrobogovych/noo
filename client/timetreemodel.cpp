@@ -1,7 +1,10 @@
 #include "timetreemodel.h"
 #include "helper.h"
+
 #include <QFontMetrics>
 #include <assert.h>
+
+using namespace helper;
 
 #ifdef USE_SIMPLE_TIMETREE
 
@@ -138,7 +141,7 @@ QModelIndex TimeTreeModel::index(int row, int column, const QModelIndex &parent)
     switch (l)
     {
     case Level_Year:
-        mTimeLine->getYears(components);
+        components = mTimeLine->getYears();
         iter = components.begin();
         std::advance(iter, row);
         id = PackDate(Level_Year, *iter, 1, 1, 0);
@@ -146,7 +149,7 @@ QModelIndex TimeTreeModel::index(int row, int column, const QModelIndex &parent)
 
     case Level_Month:
         // Find monthes set
-        mTimeLine->getMonthes(year, components);
+        components = mTimeLine->getMonthes(year);
         iter = components.begin();
         std::advance(iter, row);
         month = *iter;
@@ -157,7 +160,7 @@ QModelIndex TimeTreeModel::index(int row, int column, const QModelIndex &parent)
 
     case Level_Day:
         // Get set of available days
-        mTimeLine->getDays(year, month, components);
+        components = mTimeLine->getDays(year, month);
 
         // Find day corresponding by requested row
         iter = components.begin();
@@ -198,19 +201,19 @@ QModelIndex TimeTreeModel::parent(const QModelIndex &child) const
         return QModelIndex();
 
     case Level_Month:
-        mTimeLine->getYears(components);
+        components = mTimeLine->getYears();
         iter = components.find(year);
         row = std::distance(components.begin(), iter);
         return createIndex(row, 0, PackDate(Level_Year, year, 1, 1, 0));
 
     case Level_Day:
-        mTimeLine->getMonthes(year, components);
+        components = mTimeLine->getMonthes(year);
         iter = components.find(month);
         row = std::distance(components.begin(), iter);
         return createIndex(row, 0, PackDate(Level_Month, year, month, 1, 0));
 
     case Level_Time:
-        mTimeLine->getDays(year, month, components);
+        components = mTimeLine->getDays(year, month);
         iter = components.find(day);
         row = std::distance(components.begin(), iter);
         return createIndex(row, 0, PackDate(Level_Day, year, month, day, 0));
@@ -238,13 +241,13 @@ int TimeTreeModel::rowCount(const QModelIndex &parent) const
     {
     case Level_Month:
         // Find how much monthes are in that year related records
-        mTimeLine->getMonthes(year, rows);
+        rows = mTimeLine->getMonthes(year);
         result = rows.size();
         break;
 
     case Level_Day:
         // Find how much days are in that year&month related records
-        mTimeLine->getDays(year, month, rows);
+        rows = mTimeLine->getDays(year, month);
         result = rows.size();
         break;
 
@@ -254,7 +257,7 @@ int TimeTreeModel::rowCount(const QModelIndex &parent) const
         break;
 
     case Level_Year:
-        mTimeLine->getYears(rows);
+        rows = mTimeLine->getYears();
         result = rows.size();
         break;
 
@@ -305,7 +308,9 @@ QVariant TimeTreeModel::data(const QModelIndex &index, int role) const
         tr = intervals[index.row()];
 
         // Intervals are in local time already
-        return QString("%1 - %2").arg(helper::chronotr.startTime().time().toString(mTimeFormat), tr.endTime().time().toString(mTimeFormat));
+        // ToDo: they are in GMT!
+        return QString("%1 - %2").arg(QString::fromStdString(chrono::secondsToDisplay(tr.startTime(), false)),
+                                      QString::fromStdString(chrono::secondsToDisplay(tr.endTime(), false)));
 
     default:
         return QVariant();
@@ -479,7 +484,7 @@ QModelIndex TimeTreeModel::dayToIndex(const QDate& date)
 {
     std::set<int> components;
     std::set<int>::iterator iter;
-    mTimeLine->getYears(components);
+    components = mTimeLine->getYears();
 
     iter = components.find(date.year());
     if (iter == components.end())
@@ -487,14 +492,14 @@ QModelIndex TimeTreeModel::dayToIndex(const QDate& date)
     int yearRow = std::distance(components.begin(), iter);
     QModelIndex yearIndex = this->createIndex(yearRow, 0, PackDate(Level_Year, date.year(), 1, 1, 0));
 
-    mTimeLine->getMonthes(date.year(), components);
+    components = mTimeLine->getMonthes(date.year());
     iter = components.find(date.month());
     if (iter == components.end())
         return QModelIndex();
     int monthRow = std::distance(components.begin(), iter);
     QModelIndex monthIndex = this->createIndex(monthRow, 0, PackDate(Level_Month, date.year(), date.month(), 1, 0));
 
-    mTimeLine->getDays(date.year(), date.month(), components);
+    components = mTimeLine->getDays(date.year(), date.month());
     iter = components.find(date.day());
     if (iter == components.end())
         return QModelIndex();

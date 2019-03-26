@@ -5,6 +5,8 @@
 #include "helper.h"
 #include "settings.h"
 
+using namespace helper;
+
 TaskTreePage::TaskTreePage(QWidget *parent)
   :QWizardPage(parent), mTaskView(nullptr), mTaskModel(nullptr)
 {
@@ -120,7 +122,9 @@ void ReportViewPage::generateReport()
       t->loadContent();
     }
 
-    int seconds = t->timeline()->getSum(startDate, finishDate);
+    date start_date(startDate.year(), startDate.month(), startDate.day());
+    date finish_date(finishDate.year(), finishDate.month(), finishDate.day());
+    int seconds = t->timeline()->getSum(start_date, finish_date);
     t->setReportedTime(seconds);
     t->setChildrenReportedTime(0);
     if (wasLoaded)
@@ -140,14 +144,14 @@ void ReportViewPage::generateReport()
   {
     int individualTime = t->getReportedTime();
     bool showSeconds = mSettings.data()[KEY_SHOW_SECONDS].toBool();
-    QString l1 = helper::chrono::secondsToDisplay(individualTime, showSeconds);
+    QString l1 = QString::fromStdString(chrono::secondsToDisplay(individualTime, showSeconds));
     report += t->path() + " : " + l1;
     //if (mSettings.data()[KEY_CUMULATIVE_REPORT].toBool())
     {
       int childrenTime = t->getChildrenReportedTime();
       if (childrenTime)
       {
-        QString l2 = helper::chrono::secondsToDisplay(individualTime + childrenTime, showSeconds);
+        QString l2 = QString::fromStdString(chrono::secondsToDisplay(individualTime + childrenTime, showSeconds));
         report += ". Including subtasks time: " + l2;
       }
     }

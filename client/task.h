@@ -11,6 +11,7 @@
 #include <memory>
 #include <map>
 #include "SQLiteCpp/Database.h"
+#include "helper.h"
 
 typedef int64_t Id;
 
@@ -70,6 +71,7 @@ typedef std::map<int, QSharedPointer<HoursSet> > DaysMap;
 typedef std::map<int, QSharedPointer<DaysMap> > MonthesMap;
 typedef std::map<int, QSharedPointer<MonthesMap> > YearsMap;
 
+
 class TimeLine
 {
 public:
@@ -110,7 +112,7 @@ public:
     int month();
 
     // Returns number of seconds spent in interval
-    int getSum(const QDate& start, const QDate& finish);
+    int getSum(const helper::date& start, const helper::date& finish);
 
     // Checks if there duplicate & overllaping time intervals
     bool duplicateDetected() const;

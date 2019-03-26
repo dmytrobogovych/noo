@@ -79,6 +79,12 @@ date date::fromTimestamp(time_t timestamp, int options)
     return r;
 }
 
+date date::today()
+{
+    date r = date::fromTimestamp(time(nullptr), To_LocalTime);
+    return r;
+}
+
 int date::daysInMonth(int y, int m)
 {
     switch (m)
@@ -103,6 +109,26 @@ int date::daysInMonth(int y, int m)
     }
 }
 
+bool date::operator < (const date& rhs)
+{
+    return std::tie(mYear, mMonth, mDay) < std::tie(rhs.mYear, rhs.mMonth, rhs.mDay);
+}
+
+bool date::operator > (const date& rhs)
+{
+    return std::tie(mYear, mMonth, mDay) > std::tie(rhs.mYear, rhs.mMonth, rhs.mDay);
+}
+
+bool date::operator == (const date& rhs)
+{
+    return std::tie(mYear, mMonth, mDay) == std::tie(rhs.mYear, rhs.mMonth, rhs.mDay);
+}
+
+bool date::operator >= (const date& rhs)
+{
+    return std::tie(mYear, mMonth, mDay) >= std::tie(rhs.mYear, rhs.mMonth, rhs.mDay);
+}
+
 
 std::string chrono::secondsToDisplay(int seconds, bool showSeconds)
 {
@@ -125,6 +151,7 @@ std::string chrono::timeToStr(time_t timestamp)
     return buf;
 }
 
+/*
 std::string chrono::timeToLocalStr(time_t timestamp)
 {
     char buf[128];
@@ -132,6 +159,7 @@ std::string chrono::timeToLocalStr(time_t timestamp)
     strftime(buf, sizeof buf, "%FT%TZ", &t);
     return buf;
 }
+*/
 
 time_t chrono::strToTime(const std::string& s)
 {

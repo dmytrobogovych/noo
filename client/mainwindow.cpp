@@ -892,7 +892,7 @@ void MainWindow::startTrackingRecent()
     }
 }
 
-void MainWindow::stopTracking(TrackingStopReason reason, const QDateTime& currentUtc)
+void MainWindow::stopTracking(TrackingStopReason reason, time_t current_utc)
 {
     // Check if false call
     if (!mCurrentTask)
@@ -907,7 +907,7 @@ void MainWindow::stopTracking(TrackingStopReason reason, const QDateTime& curren
 
 
     // Tell current task to stop
-    mCurrentTask->timeline()->flush(true /* save to DB */, currentUtc);
+    mCurrentTask->timeline()->flush(true /* save to DB */, current_utc);
     mCurrentTask->timeline()->stop(false /* do not update timeline - it is done in the previous line */);
 
     // Save stopped task name
@@ -1301,7 +1301,7 @@ void MainWindow::updateTrayIcon(TrayShowMessage flag)
     {
         bool showSeconds = mSettings->data()[KEY_SHOW_SECONDS].toBool();
         int spentSecondsToday = mCurrentTask->timeline()->today();
-        QString timeString = helper::chrono::secondsToDisplay(spentSecondsToday, showSeconds);
+        QString timeString = QString::fromStdString(helper::chrono::secondsToDisplay(spentSecondsToday, showSeconds));
         tooltip = tr("Litt is tracking ") + mCurrentTask->title() + ".\n" +
                 tr("Time spent today for this task is ") + timeString;
     }
@@ -1445,7 +1445,7 @@ void MainWindow::checkForUpdates()
 void MainWindow::systemSleep()
 {
     //qDebug() << "System goes to sleep";
-    stopTracking(TSR_Automatic, QDateTime::currentDateTimeUtc());
+    stopTracking(TSR_Automatic, QDateTime::currentDateTimeUtc().toTime_t());
 }
 
 void MainWindow::systemResume()
@@ -1472,7 +1472,7 @@ void MainWindow::changeTimeTrackableFlag(bool trackable)
 
     // Stop task if it is marked as non tracking and it is running now
     if (!trackable && mCurrentTask == t)
-        stopTracking(TSR_Manual, QDateTime::currentDateTimeUtc());
+        stopTracking(TSR_Manual, time(nullptr));
 
     // Update UI
     handleTrackableState(t);
@@ -1517,11 +1517,11 @@ void MainWindow::findRequested()
     }
 
     //ui->mFindEdit->setVisible(false);
-    QTextCursor c = ui->mNoteEdit->document()->find(pattern, mFindStartIndex, 0);
+    QTextCursor c = ui->mNoteEdit->document()->find(pattern, mFindStartIndex, nullptr);
     if (c.isNull())
     {
         mFindStartIndex = 0;
-        c = ui->mNoteEdit->document()->find(pattern, mFindStartIndex, 0);
+        c = ui->mNoteEdit->document()->find(pattern, mFindStartIndex, nullptr);
     }
     if (!c.isNull())
     {
@@ -1595,7 +1595,7 @@ void MainWindow::continueOnIdle()
 void MainWindow::breakOnIdle(const QDateTime& stopTime)
 {
     // Stop tracking
-    stopTracking(TSR_Manual, stopTime);
+    stopTracking(TSR_Manual, stopTime.toUTC().toTime_t());
     showTimeForSelectedTask();
 }
 
