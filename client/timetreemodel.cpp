@@ -304,13 +304,18 @@ QVariant TimeTreeModel::data(const QModelIndex &index, int role) const
         return QString::number(day);
 
     case Level_Time:
+    {
         mTimeLine->getTime(year, month, day, &intervals);
         tr = intervals[index.row()];
 
         // Intervals are in local time already
         // ToDo: they are in GMT!
-        return QString("%1 - %2").arg(QString::fromStdString(chrono::secondsToDisplay(tr.startTime(), false)),
-                                      QString::fromStdString(chrono::secondsToDisplay(tr.endTime(), false)));
+        helper::time start = helper::time::fromTimestamp(tr.startTime(), helper::date::To_LocalTime),
+                     end = helper::time::fromTimestamp(tr.endTime(), helper::date::To_LocalTime);
+
+        return QString("%1 - %2").arg(QString::fromStdString(start.toString(false)),
+                                      QString::fromStdString(start.toString(false)));
+    }
 
     default:
         return QVariant();

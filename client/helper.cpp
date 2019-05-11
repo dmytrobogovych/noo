@@ -81,7 +81,7 @@ date date::fromTimestamp(time_t timestamp, int options)
 
 date date::today()
 {
-    date r = date::fromTimestamp(time(nullptr), To_LocalTime);
+    date r = date::fromTimestamp(::time(nullptr), To_LocalTime);
     return r;
 }
 
@@ -129,6 +129,36 @@ bool date::operator >= (const date& rhs)
     return std::tie(mYear, mMonth, mDay) >= std::tie(rhs.mYear, rhs.mMonth, rhs.mDay);
 }
 
+time::time(int h, int m, int s)
+    :mHour(h), mMinute(m), mSecond(s)
+{}
+
+std::string time::toString(bool showSeconds) const
+{
+    char buffer[32];
+    if (showSeconds)
+        sprintf(buffer, "%02d:%02d:%02d", mHour, mMinute, mSecond);
+    else
+        sprintf(buffer, "%02d:%02d", mHour, mMinute);
+
+    return buffer;
+}
+
+helper::time time::fromTimestamp(time_t timestamp, int options)
+{
+    tm* t = nullptr;
+    if (options == date::To_GmtTime)
+        t = gmtime(&timestamp);
+    else
+        t = localtime(&timestamp);
+
+    helper::time r;
+    r.mHour = t->tm_hour;
+    r.mMinute = t->tm_min;
+    r.mSecond = t->tm_sec;
+    return r;
+}
+
 
 std::string chrono::secondsToDisplay(int seconds, bool showSeconds)
 {
@@ -137,9 +167,9 @@ std::string chrono::secondsToDisplay(int seconds, bool showSeconds)
     int secs = seconds % 60;
     char r[32];
     if (showSeconds)
-        sprintf(r, "%2d:%2d:%2d", hours, minutes, secs);
+        sprintf(r, "%02d:%02d:%02d", hours, minutes, secs);
     else
-        sprintf(r, "%2d:%2d", hours, minutes);
+        sprintf(r, "%02d:%02d", hours, minutes);
 
     return r;
 }

@@ -27,7 +27,7 @@ namespace SQLite
 
 // Open the provided database UTF-8 filename with SQLITE_OPEN_xxx provided flags.
 Database::Database(const char* apFilename, const int aFlags /*= SQLITE_OPEN_READONLY*/, const char* apVfs /*= NULL*/) :
-    mpSQLite(NULL),
+    mpSQLite(nullptr),
     mFilename(apFilename)
 {
     int ret = sqlite3_open_v2(apFilename, &mpSQLite, aFlags, apVfs);
@@ -41,10 +41,10 @@ Database::Database(const char* apFilename, const int aFlags /*= SQLITE_OPEN_READ
 
 // Open the provided database UTF-8 filename with SQLITE_OPEN_xxx provided flags.
 Database::Database(const std::string& aFilename, const int aFlags /*= SQLITE_OPEN_READONLY*/, const std::string& aVfs) :
-    mpSQLite(NULL),
+    mpSQLite(nullptr),
     mFilename(aFilename)
 {
-    int ret = sqlite3_open_v2(aFilename.c_str(), &mpSQLite, aFlags, aVfs.empty() ? NULL : aVfs.c_str());
+    int ret = sqlite3_open_v2(aFilename.c_str(), &mpSQLite, aFlags, aVfs.empty() ? nullptr : aVfs.c_str());
     if (SQLITE_OK != ret)
     {
         std::string strerr = sqlite3_errmsg(mpSQLite);
@@ -64,7 +64,7 @@ Database::~Database() noexcept // nothrow
 // Shortcut to execute one or multiple SQL statements without results (UPDATE, INSERT, ALTER, COMMIT, CREATE...).
 int Database::exec(const char* apQueries)
 {
-    int ret = sqlite3_exec(mpSQLite, apQueries, NULL, NULL, NULL);
+    int ret = sqlite3_exec(mpSQLite, apQueries, nullptr, nullptr, nullptr);
     check(ret);
 
     // Return the number of rows modified by those SQL statements (INSERT, UPDATE or DELETE only)

@@ -40,10 +40,22 @@ namespace helper
         bool operator >= (const date& rhs);
     };
 
+    struct time
+    {
+        int mHour = 0, mMinute = 0, mSecond = 0;
+
+        time() = default;
+        time(int h, int m, int s);
+        std::string toString(bool showSeconds = true) const;
+
+        static time fromTimestamp(time_t timestamp, int options);
+    };
+
 
     class chrono
     {
     public:
+        // Seconds is number of seconds in a day. It is NOT a UNIX timestamp.
         static std::string secondsToDisplay(int seconds, bool showSeconds);
         static std::string timeToStr(time_t timestamp);
         static time_t strToTime(const std::string& s);

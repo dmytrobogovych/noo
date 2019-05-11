@@ -206,7 +206,7 @@ void TimeLine::start()
     mActive = true;
 
     // Find current time in UTC format
-    time_t current = time(nullptr);
+    time_t current = ::time(nullptr);
 
     // Check if current time point does not belong to any existing time interval
     if (hasTimePoint(current))
@@ -446,7 +446,7 @@ void TimeLine::stop(bool updateTimeline)
         return;
 
     if (updateTimeline)
-        flush(true, time(nullptr));
+        flush(true, ::time(nullptr));
 
     mActive = false;
     mActiveTimeRecord = nullptr;
@@ -803,7 +803,7 @@ bool TimeLine::duplicateDetected() const
 
 void TimeLine::putDebugRecord()
 {
-    time_t current = time(nullptr);
+    time_t current = ::time(nullptr);
     time_t end = current + 600;
 
     TimeRecord* r = makeNewRecord(current, end);
