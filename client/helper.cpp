@@ -300,3 +300,35 @@ bool EscapeKeyEventFilter::eventFilter(QObject  *obj, QEvent * event)
     }
     return false;
 }
+
+#include "qtkeychain/keychain.h"
+
+QString password::load()
+{
+    QKeychain::ReadPasswordJob job(APPNAME);
+    job.setKey(KEY_PASSWORD);
+    job.setAutoDelete(false);
+    QEventLoop loop;
+    job.connect(&job, SIGNAL(finished(QKeychain::Job*)), &loop, SLOT(quit()));
+    job.start();
+    loop.exec();
+    if (job.error())
+        return QString();
+
+    return job.textData();
+}
+
+bool password::save(const QString& password)
+{
+    QKeychain::WritePasswordJob job(APPNAME);
+    job.setKey(KEY_PASSWORD);
+    job.setAutoDelete(false);
+    job.setTextData(password);
+    QEventLoop loop;
+    job.connect(&job, SIGNAL(finished(QKeychain::Job*)), &loop, SLOT(quit()));
+    job.start();
+    loop.exec();
+    if (job.error())
+        return false;
+    return true;
+}

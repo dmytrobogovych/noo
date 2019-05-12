@@ -2,6 +2,7 @@
 #include "ui_preferencesdlg.h"
 #include "settings.h"
 #include "helper.h"
+#include "storage.h"
 #include "platforms/hidtracker.h"
 #include <QFileDialog>
 #include <QMessageBox>
@@ -73,7 +74,10 @@ void PreferencesDlg::selectDatabase()
 
 void PreferencesDlg::accepted()
 {
-    mSettings.data()[KEY_AUTOSAVE_PASSWORD] = ui->mAutosavePasswordCheckbox->isChecked();
+    bool savePassword = ui->mAutosavePasswordCheckbox->isChecked();
+    mSettings.data()[KEY_AUTOSAVE_PASSWORD] = savePassword;
+    helper::password::save(savePassword ? Storage::instance().key() : QString(""));
+
     mSettings.data()[KEY_SHOW_SECONDS] = ui->mShowSecondsCheckbox->isChecked();
     mSettings.data()[KEY_DB_FILENAME_SPECIFIED] = ui->mCustomDatabaseFileCheckbox->isChecked();
     mSettings.data()[KEY_DB_FILENAME] = ui->mDatabaseLocation->text();

@@ -92,6 +92,13 @@ namespace helper
       void escapePressed(QObject* obj);
 
     };
+
+    class password
+    {
+    public:
+        static QString load();
+        static bool save(const QString& password);
+    };
 }
 
 #endif

@@ -28,6 +28,7 @@
 #include "stopworkdialog.h"
 #include "connectdb_widget.h"
 #include "openorcreatedb_widget.h"
+#include "qtkeychain/keychain.h"
 
 #include <QDesktopWidget>
 #include <iostream>
@@ -72,8 +73,26 @@ MainWindow::MainWindow(QWidget *parent) :
     if (!QFile::exists(path))
         askNewDbPassword();
     else
-        askDbPassword(QString());
-
+    {
+        if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
+        {
+            QString password = helper::password::load();
+            if (password.isEmpty())
+                askDbPassword();
+            else
+            {
+                Storage::instance().setKey(password);
+                if (!Storage::instance().open())
+                {
+                    askDbPassword(tr("Invalid password, please try again."));
+                }
+                else
+                    QApplication::postEvent(this, new UiInitEvent());
+            }
+        }
+        else
+            askDbPassword(QString());
+    }
     this->setUpdatesEnabled(true);
 }
 
@@ -95,28 +114,6 @@ void MainWindow::attachDatabase()
     QString folder = QFileInfo(path).absoluteDir().path();
     Storage::instance().setPath(path);
 
-    /*
-    if (!QFile::exists(path))
-    {
-        QDir().mkpath(folder);
-
-        // Ask about new password
-        mNewPasswordDlg = new NewPasswordDlg(this);
-        connect(mNewPasswordDlg, SIGNAL(finished(int)), this, SLOT(newPasswordDialogFinished(int)));
-        mNewPasswordDlg->show();
-    }
-    else
-    {
-        // See if there is stored password
-        if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool() && mSettings->data()[KEY_PASSWORD].toString() != NOPASSWORDSTRING)
-            password = mSettings->data()[KEY_PASSWORD].toString();
-        else
-        {
-            mPasswordDlg = new PasswordDlg(this);
-            connect(mPasswordDlg, SIGNAL(finished(int)), this, SLOT(passwordDialogFinished(int)));
-            mPasswordDlg->show();
-        }
-    }*/
     this->setUpdatesEnabled(true);
 }
 
@@ -399,20 +396,20 @@ void MainWindow::customEvent(QEvent *ev)
 {
     switch (ev->type())
     {
-    case (QEvent::Type)ClientInitId:
+    case static_cast<QEvent::Type>(ClientInitId):
         // Process client initialization here
         initClient();
         break;
 
-    case (QEvent::Type)ClientCloseId:
+    case static_cast<QEvent::Type>(ClientCloseId):
         close();
         break;
 
-    case (QEvent::Type)AttachDatabaseId:
+    case static_cast<QEvent::Type>(AttachDatabaseId):
         attachDatabase();
         break;
 
-    case (QEvent::Type)SelectTaskId:
+    case static_cast<QEvent::Type>(SelectTaskId):
     {
         QModelIndex index = mTaskTreeModel->getIndex(dynamic_cast<SelectTaskEvent*>(ev)->task());
         if (index.isValid())
@@ -421,6 +418,13 @@ void MainWindow::customEvent(QEvent *ev)
         }
         break;
     }
+
+    case static_cast<QEvent::Type>(UiInitId):
+        setupMainUi();
+        connectUiToDatabase();
+        loadGeometry();
+        break;
+
     default:
         break;
     }
@@ -443,7 +447,10 @@ void MainWindow::preferences()
         // Delete autosaved password if needed
         if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool() == false)
         {
-            mSettings->data()[KEY_PASSWORD] = NOPASSWORDSTRING;
+            // Reset password in keychain
+            helper::password::save(QString(""));
+
+            //mSettings->data()[KEY_PASSWORD] = NOPASSWORDSTRING;
             mSettings->save();
         }
 
@@ -1618,23 +1625,19 @@ void MainWindow::trayWindowDestroyed(QObject *object)
 
 void MainWindow::onDbPasswordEntered(const QString& password)
 {
+    // Save password to keychain if needed
     if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
-    {
-        mSettings->data()[KEY_PASSWORD] = password;
-        mSettings->save();
-    }
+        helper::password::save(password);
 
+    // Try to open database
     Storage::instance().setKey(password);
     if (!Storage::instance().open())
     {
+        // Ask password again if failed
         askDbPassword(tr("Invalid password, please try again."));
     }
     else
-    {
-        setupMainUi();
-        connectUiToDatabase();
-        loadGeometry();
-    }
+        QApplication::postEvent(this, new UiInitEvent());
 }
 
 void MainWindow::onDbPasswordCancelled()
@@ -1644,12 +1647,11 @@ void MainWindow::onDbPasswordCancelled()
 
 void MainWindow::onNewDbPasswordEntered(const QString& password)
 {
+    // Save password to keychain if needed
     if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
-    {
-        mSettings->data()[KEY_PASSWORD] = password;
-        mSettings->save();
-    }
+        helper::password::save(password);
 
+    // Configure storage
     Storage::instance().setKey(password);
 
     // Remove old database
@@ -1661,11 +1663,7 @@ void MainWindow::onNewDbPasswordEntered(const QString& password)
         showFatal(tr("Failed to create new database. Exiting."));
     }
     else
-    {
-        setupMainUi();
-        connectUiToDatabase();
-        loadGeometry();
-    }
+        QApplication::postEvent(this, new UiInitEvent());
 }
 
 void MainWindow::onDatabaseChanged(const QString& path)

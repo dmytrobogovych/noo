@@ -5,38 +5,46 @@
 #include "task.h"
 enum
 {
-  ClientInitId = 62000,
-  ClientCloseId = 62001,
-  AttachDatabaseId,
-  SelectTaskId
+    ClientInitId = 62000,
+    ClientCloseId = 62001,
+    AttachDatabaseId,
+    SelectTaskId,
+    UiInitId
 };
 
 class ClientInitEvent: public QEvent
 {
 public:
-  ClientInitEvent();
+    ClientInitEvent();
 };
 
 class ClientCloseEvent: public QEvent
 {
 public:
-  ClientCloseEvent();
+    ClientCloseEvent();
 };
 
 class AttachDatabaseEvent: public QEvent
 {
 public:
-  AttachDatabaseEvent();
+    AttachDatabaseEvent();
 };
 
 class SelectTaskEvent: public QEvent
 {
 public:
-  SelectTaskEvent(PTask task);
-  PTask task();
+    SelectTaskEvent(PTask task);
+    PTask task();
 
 protected:
-  PTask mTask;
+    PTask mTask;
 };
+
+class UiInitEvent: public QEvent
+{
+public:
+    UiInitEvent();
+};
+
 
 #endif // APPEVENTS_H

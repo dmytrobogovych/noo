@@ -146,3 +146,7 @@ OBJECTIVE_SOURCES += \
 !include("fervor/Fervor.pri") {
 	error("Unable to include Fervor autoupdater.")
 }
+
+!include("qtkeychain/qt5keychain.pri") {
+        error("Unable to include QTKeyChain library.")
+}
