@@ -314,7 +314,7 @@ QVariant TimeTreeModel::data(const QModelIndex &index, int role) const
                      end = helper::time::fromTimestamp(tr.endTime(), helper::date::To_LocalTime);
 
         return QString("%1 - %2").arg(QString::fromStdString(start.toString(false)),
-                                      QString::fromStdString(start.toString(false)));
+                                      QString::fromStdString(end.toString(false)));
     }
 
     default:

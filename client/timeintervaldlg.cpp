@@ -9,7 +9,7 @@
 TimeIntervalDlg::TimeIntervalDlg(QWidget *parent, TimeTreeModel* model, PTimeLine timeline, Type type, const TimeRecord& interval) :
   QDialog(parent, Qt::Sheet),
   ui(new Ui::TimeIntervalDlg),
-  mModel(model), mTimeline(timeline), mType(type), mInterval(interval)
+  mTimeline(timeline), mType(type), mInterval(interval), mModel(model)
 {
   ui->setupUi(this);
   connect(ui->mStartTimeEdit, SIGNAL(dateTimeChanged(QDateTime)), this, SLOT(dataChanged(QDateTime)));

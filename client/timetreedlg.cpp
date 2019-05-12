@@ -31,7 +31,7 @@ void TimeTreeDlg::addInterval()
     else
     {
         QDateTime current = QDateTime::currentDateTime();
-        time_t t = current.toTime_t();
+        //time_t t = current.toTime_t();
         //helper::time time_of_day = helper::time::fromTimestamp(t, helper::date::To_LocalTime);
 
         mTimeIntervalDlg = new TimeIntervalDlg(this, mModel, mTimeline, TimeIntervalDlg::Type::New, TimeRecord());
@@ -41,6 +41,7 @@ void TimeTreeDlg::addInterval()
         mTimeIntervalDlg->setFinishDate(current);
         //mTimeIntervalDlg->setModal(false);
         mTimeIntervalDlg->show();
+        mTimeIntervalDlg = nullptr;
     }
 }
 

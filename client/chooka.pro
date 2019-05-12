@@ -75,7 +75,9 @@ SOURCES += main.cpp\
     findsupport.cpp \
     stopworkdialog.cpp \
     startworkdialog.cpp \
-    twofish.cpp
+    twofish.cpp \
+    openorcreatedb_widget.cpp \
+    connectdb_widget.cpp
 
 HEADERS  += mainwindow.h \
     storage.h \
@@ -116,7 +118,9 @@ HEADERS  += mainwindow.h \
     findsupport.h \
     stopworkdialog.h \
     startworkdialog.h \
-    twofish.h
+    twofish.h \
+    openorcreatedb_widget.h \
+    connectdb_widget.h
 
 FORMS    += mainwindow.ui \
     newpassworddlg.ui \
@@ -129,7 +133,9 @@ FORMS    += mainwindow.ui \
     attachmentsdialog.ui \
     finddialog.ui \
     stopworkdialog.ui \
-    startworkdialog.ui
+    startworkdialog.ui \
+    openorcreatedb_widget.ui \
+    connectdb_widget.ui
 
 RESOURCES = mainwindow.qrc resources/qdarkstyle/style.qrc
 
