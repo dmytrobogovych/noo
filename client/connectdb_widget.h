@@ -12,11 +12,19 @@ class ConnectDbWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ConnectDbWidget(QWidget *parent = nullptr);
+    explicit ConnectDbWidget(const QString& msg = QString(), QWidget *parent = nullptr);
     ~ConnectDbWidget();
 
 private:
     Ui::ConnectDbWidget *ui;
+
+public slots:
+    void onOk();
+    void onCancel();
+
+signals:
+    void passwordEntered(const QString& password);
+    void cancelled();
 };
 
 #endif // CONNECTDB_WIDGET_H

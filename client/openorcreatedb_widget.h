@@ -17,6 +17,14 @@ public:
 
 private:
     Ui::OpenOrCreateDbWidget *ui;
+
+    QString mDbPath;
+    void handleEnteredPasswords();
+    void askForDatabase();
+
+signals:
+    void databaseChanged(const QString& path);
+    void passwordEntered(const QString& password);
 };
 
 #endif // OPENORCREATEDB_WIDGET_H

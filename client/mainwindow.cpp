@@ -26,13 +26,17 @@
 #include "finddialog.h"
 #include "startworkdialog.h"
 #include "stopworkdialog.h"
+#include "connectdb_widget.h"
+#include "openorcreatedb_widget.h"
+
 #include <QDesktopWidget>
+#include <iostream>
 
 #define SETTINGS mSettings->data()
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), mPasswordFailed(false), mFindInTasksDlg(this), mDockRecentMenu(nullptr)
+    mPasswordFailed(false), mFindInTasksDlg(this), mDockRecentMenu(nullptr)
 {
     mSettings = QSharedPointer<Settings>(new Settings());
 
@@ -47,21 +51,30 @@ MainWindow::MainWindow(QWidget *parent) :
     mCurrentIntervalLabel = nullptr;
     mTrayIcon = nullptr;
 
-    ui->setupUi(this);
-
-    // Hide Find line edit for now
-    ui->mFindFrame->setVisible(false);
-    helper::EscapeKeyEventFilter* eventFilter = new helper::EscapeKeyEventFilter(ui->mFindEdit);
-    connect(eventFilter, SIGNAL(escapePressed(QObject*)), this, SLOT(findRejected(QObject*)));
-    ui->mFindEdit->installEventFilter(eventFilter);
-
     QCoreApplication::setApplicationName(APPNAME);
-    //QCoreApplication::setOrganizationName(COMPANY);
-    // Set this to your own appcast URL, of course
-    FvUpdater::sharedUpdater()->SetFeedURL("http://satorilight.com/LittAppCast.xml");
 
-    initClient();
-    QApplication::postEvent(this, new AttachDatabaseEvent());
+    loadGeometry();
+
+    // Now check if database is already configured
+    QWidget* centralWidget = new QWidget(this);
+    setCentralWidget(centralWidget);
+    centralWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+
+    // Check if database file exists
+    QString path = helper::path::pathToDatabase();
+
+    if (mSettings->data()[KEY_DB_FILENAME_SPECIFIED].toBool())
+        path = mSettings->data()[KEY_DB_FILENAME].toString();
+
+    QString folder = QFileInfo(path).absoluteDir().path();
+    Storage::instance().setPath(path);
+
+    if (!QFile::exists(path))
+        askNewDbPassword();
+    else
+        askDbPassword(QString());
+
+    this->setUpdatesEnabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -75,12 +88,14 @@ void MainWindow::attachDatabase()
 {
     // Open database
     QString path = helper::path::pathToDatabase();
+
     if (mSettings->data()[KEY_DB_FILENAME_SPECIFIED].toBool())
         path = mSettings->data()[KEY_DB_FILENAME].toString();
 
     QString folder = QFileInfo(path).absoluteDir().path();
     Storage::instance().setPath(path);
 
+    /*
     if (!QFile::exists(path))
     {
         QDir().mkpath(folder);
@@ -93,7 +108,6 @@ void MainWindow::attachDatabase()
     else
     {
         // See if there is stored password
-        QString password;
         if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool() && mSettings->data()[KEY_PASSWORD].toString() != NOPASSWORDSTRING)
             password = mSettings->data()[KEY_PASSWORD].toString();
         else
@@ -102,24 +116,8 @@ void MainWindow::attachDatabase()
             connect(mPasswordDlg, SIGNAL(finished(int)), this, SLOT(passwordDialogFinished(int)));
             mPasswordDlg->show();
         }
-    }
+    }*/
     this->setUpdatesEnabled(true);
-}
-
-void MainWindow::openDatabase(const QString &password)
-{
-    Storage::instance().setKey(password);
-    if (!Storage::instance().open())
-    {
-        mPasswordFailed = true;
-        alertBox(tr("Error"), tr("Failed to open database"), AlertType_CannotOpen);
-    }
-    else
-        if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
-        {
-            mSettings->data()[KEY_PASSWORD] = password;
-            mSettings->save();
-        }
 }
 
 void MainWindow::connectUiToDatabase()
@@ -170,10 +168,6 @@ void MainWindow::alertBox(const QString &title, const QString &text, AlertType a
     {
     case AlertType_Critical:
         connect(mAlertBox, SIGNAL(finished(int)), this, SLOT(criticalAlertFinished(int)));
-        break;
-
-    case AlertType_CannotOpen:
-        connect(mAlertBox, SIGNAL(finished(int)), this, SLOT(openAlertFinished(int)));
         break;
 
     case AlertType_Warning:
@@ -293,7 +287,7 @@ void MainWindow::save()
 
 QSharedPointer<QByteArray> MainWindow::getUndoStack() const
 {
-    QTextDocument* doc = ui->mNoteEdit->document();
+    //QTextDocument* doc = ui->mNoteEdit->document();
 
     return QSharedPointer<QByteArray>(new QByteArray());
 }
@@ -356,7 +350,7 @@ void MainWindow::loadGeometry()
     }
 
     // Set splitter position
-    if (settings.contains(KEY_SPLITTEROFFSET1) && settings.contains(KEY_SPLITTEROFFSET2))
+    if (settings.contains(KEY_SPLITTEROFFSET1) && settings.contains(KEY_SPLITTEROFFSET2) && ui)
     {
         QList<int> sizes = ui->mSplitter->sizes();
         sizes[0] = settings.value(KEY_SPLITTEROFFSET1).toInt();
@@ -364,7 +358,7 @@ void MainWindow::loadGeometry()
         ui->mSplitter->setSizes(sizes);
     }
 
-    if (settings.contains(KEY_TIMESPLITTER_OFFSET1) && settings.contains(KEY_TIMESPLITTER_OFFSET2))
+    if (settings.contains(KEY_TIMESPLITTER_OFFSET1) && settings.contains(KEY_TIMESPLITTER_OFFSET2) && ui)
     {
         QList<int> sizes = ui->mTimeSplitter->sizes();
         sizes[0] = settings.value(KEY_TIMESPLITTER_OFFSET1).toInt();
@@ -380,22 +374,24 @@ void MainWindow::sync()
 
 void MainWindow::closeEvent(QCloseEvent * ev)
 {
-    // Update DB if document was modified
-    if (ui->mNoteEdit->document()->isModified())
+    if (ui)
     {
-        // See if there is active selection
-        QModelIndex index = ui->mTaskTree->currentIndex();
-        if (index.isValid())
+        // Update DB if document was modified
+        if (ui->mNoteEdit->document()->isModified())
         {
-            PTask task = mTaskTreeModel->getTask(index);
-            task->setHtml(ui->mNoteEdit->document()->toPlainText());
-            task->save();
+            // See if there is active selection
+            QModelIndex index = ui->mTaskTree->currentIndex();
+            if (index.isValid())
+            {
+                PTask task = mTaskTreeModel->getTask(index);
+                task->setHtml(ui->mNoteEdit->document()->toPlainText());
+                task->save();
+            }
         }
+
+        if (!mPasswordFailed)
+            save();
     }
-
-    if (!mPasswordFailed)
-        save();
-
     ev->accept();
 }
 
@@ -802,6 +798,56 @@ void MainWindow::updateAttachmentsLabel(PTask t)
             text = "<a href=\"localfile\" style=\"color: #3966A0\">" + QString::number(t->getAttachmentCount()) + " " + tr("attachments") + "</a>";
     }
     mAttachmentsLabel->setText(text);
+}
+
+void MainWindow::setupMainUi()
+{
+    // Detach old widget
+    setCentralWidget(nullptr);
+
+    // Construct main UI
+    ui = new Ui::MainWindow();
+    ui->setupUi(this);
+
+    // Hide Find line edit for now
+    ui->mFindFrame->setVisible(false);
+    helper::EscapeKeyEventFilter* eventFilter = new helper::EscapeKeyEventFilter(ui->mFindEdit);
+    connect(eventFilter, SIGNAL(escapePressed(QObject*)), this, SLOT(findRejected(QObject*)));
+    ui->mFindEdit->installEventFilter(eventFilter);
+
+    //QCoreApplication::setOrganizationName(COMPANY);
+    // Set this to your own appcast URL, of course
+    FvUpdater::sharedUpdater()->SetFeedURL("http://satorilight.com/LittAppCast.xml");
+
+    initClient();
+    QApplication::postEvent(this, new AttachDatabaseEvent());
+}
+
+// Ask password
+void MainWindow::askDbPassword(const QString& message)
+{
+    setCentralWidget(nullptr); setCentralWidget(new QWidget(this));
+    auto cdw = new ConnectDbWidget(message, centralWidget());
+    connect(cdw, SIGNAL(passwordEntered(QString)), this, SLOT(onDbPasswordEntered(QString)));
+    connect(cdw, SIGNAL(cancelled()), this, SLOT(onDbPasswordCancelled()));
+
+    QVBoxLayout* l = new QVBoxLayout(centralWidget());
+    l->addWidget(cdw);
+    l->setAlignment(Qt::AlignCenter);
+    centralWidget()->setLayout(l);
+}
+
+void MainWindow::askNewDbPassword()
+{
+    setCentralWidget(nullptr); setCentralWidget(new QWidget(this));
+    auto w = new OpenOrCreateDbWidget(centralWidget());
+    connect(w, &OpenOrCreateDbWidget::databaseChanged, [this](const QString& path)     { onDatabaseChanged(path); });
+    connect(w, &OpenOrCreateDbWidget::passwordEntered, [this](const QString& password) { onNewDbPasswordEntered(password); });
+
+    auto l = new QVBoxLayout(centralWidget());
+    l->addWidget(w);
+    l->setAlignment(Qt::AlignCenter);
+    centralWidget()->setLayout(l);
 }
 
 void MainWindow::startOrStopTracking()
@@ -1351,59 +1397,10 @@ void MainWindow::showTimeReport()
     trz.exec();
 }
 
-void MainWindow::newPasswordDialogFinished(int status)
-{
-    if (status == QDialog::Accepted)
-    {
-        Storage::instance().setKey(mNewPasswordDlg->password());
-        if (!Storage::instance().create())
-        {
-            // Quit application
-            mPasswordFailed = true;
-            alertBox(tr("Error"), tr("Failed to initialize database"), AlertType_Critical);
-        }
-
-        // Remember password if it is specified in settings
-        if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
-            mSettings->data()[KEY_PASSWORD] = mNewPasswordDlg->password();
-        else
-            mSettings->data()[KEY_PASSWORD] = NOPASSWORDSTRING;
-
-        // Flush settings
-        mSettings->save();
-
-        connectUiToDatabase();
-    }
-    else
-        close();
-}
-
-void MainWindow::passwordDialogFinished(int status)
-{
-    QString password;
-    if (status == QDialog::Accepted)
-    {
-        password = mPasswordDlg->password();
-        openDatabase(password);
-        connectUiToDatabase();
-    }
-    else
-    {
-        mPasswordFailed = false;
-        QApplication::postEvent(this, new ClientCloseEvent());
-    }
-}
 
 void MainWindow::criticalAlertFinished(int /*status*/)
 {
     QApplication::postEvent(this, new ClientCloseEvent());
-}
-
-void MainWindow::openAlertFinished(int /*status*/)
-{
-    mPasswordDlg = new PasswordDlg(this);
-    connect(mPasswordDlg, SIGNAL(finished(int)), this, SLOT(passwordDialogFinished(int)));
-    mPasswordDlg->show();
 }
 
 void MainWindow::warningAlertFinished(int /*status*/)
@@ -1617,4 +1614,73 @@ void MainWindow::stopOnActivity()
 void MainWindow::trayWindowDestroyed(QObject *object)
 {
     mTrayWindow = nullptr;
+}
+
+void MainWindow::onDbPasswordEntered(const QString& password)
+{
+    if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
+    {
+        mSettings->data()[KEY_PASSWORD] = password;
+        mSettings->save();
+    }
+
+    Storage::instance().setKey(password);
+    if (!Storage::instance().open())
+    {
+        askDbPassword(tr("Invalid password, please try again."));
+    }
+    else
+    {
+        setupMainUi();
+        connectUiToDatabase();
+        loadGeometry();
+    }
+}
+
+void MainWindow::onDbPasswordCancelled()
+{
+    askNewDbPassword();
+}
+
+void MainWindow::onNewDbPasswordEntered(const QString& password)
+{
+    if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
+    {
+        mSettings->data()[KEY_PASSWORD] = password;
+        mSettings->save();
+    }
+
+    Storage::instance().setKey(password);
+
+    // Remove old database
+    ::remove(Storage::instance().path().toStdString().c_str());
+
+    // Try to create new one
+    if (!Storage::instance().create())
+    {
+        showFatal(tr("Failed to create new database. Exiting."));
+    }
+    else
+    {
+        setupMainUi();
+        connectUiToDatabase();
+        loadGeometry();
+    }
+}
+
+void MainWindow::onDatabaseChanged(const QString& path)
+{
+    // Bind to specific database
+    mSettings->data()[KEY_DB_FILENAME_SPECIFIED] = true;
+    mSettings->data()[KEY_DB_FILENAME] = path;
+    mSettings->save();
+    Storage::instance().setPath(path);
+
+    askDbPassword();
+}
+
+void MainWindow::showFatal(const QString& message)
+{
+    std::cerr << message.toStdString() << std::endl;
+    exit(EXIT_FAILURE);
 }
