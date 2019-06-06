@@ -286,7 +286,7 @@ void MarkdownHighlighter::initTextFormats(int defaultFontSize) {
 
     // set character formats for headlines
     format = QTextCharFormat();
-    format.setForeground(QBrush(QColor(0, 49, 110)));
+    //format.setForeground(QBrush(QColor(0, 49, 110)));
     format.setFontWeight(QFont::Bold);
     format.setFontPointSize(defaultFontSize * 1.6);
     _formats[H1] = format;
@@ -304,31 +304,31 @@ void MarkdownHighlighter::initTextFormats(int defaultFontSize) {
 
     // set character format for horizontal rulers
     format = QTextCharFormat();
-    format.setForeground(QBrush(Qt::darkGray));
-    format.setBackground(QBrush(Qt::lightGray));
+    //format.setForeground(QBrush(Qt::darkGray));
+    //format.setBackground(QBrush(Qt::lightGray));
     _formats[HorizontalRuler] = format;
 
     // set character format for lists
     format = QTextCharFormat();
-    format.setForeground(QBrush(QColor(163, 0, 123)));
+    //format.setForeground(QBrush(QColor(163, 0, 123)));
     _formats[List] = format;
 
     // set character format for links
     format = QTextCharFormat();
-    format.setForeground(QBrush(QColor(0, 128, 255)));
+    //format.setForeground(QBrush(QColor(0, 128, 255)));
     format.setFontUnderline(true);
     _formats[Link] = format;
 
     // set character format for images
     format = QTextCharFormat();
-    format.setForeground(QBrush(QColor(0, 191, 0)));
-    format.setBackground(QBrush(QColor(228, 255, 228)));
+    //format.setForeground(QBrush(QColor(0, 191, 0)));
+    //format.setBackground(QBrush(QColor(228, 255, 228)));
     _formats[Image] = format;
 
     // set character format for code blocks
     format = QTextCharFormat();
     format.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-    format.setBackground(QColor(220, 220, 220));
+    //format.setBackground(QColor(220, 220, 220));
     _formats[CodeBlock] = format;
     _formats[InlineCodeBlock] = format;
 
@@ -345,23 +345,23 @@ void MarkdownHighlighter::initTextFormats(int defaultFontSize) {
 
     // set character format for comments
     format = QTextCharFormat();
-    format.setForeground(QBrush(Qt::gray));
+    format.setForeground(QBrush(Qt::lightGray));
     _formats[Comment] = format;
 
     // set character format for masked syntax
     format = QTextCharFormat();
-    format.setForeground(QBrush("#cccccc"));
+    //format.setForeground(QBrush("#cccccc"));
     _formats[MaskedSyntax] = format;
 
     // set character format for tables
     format = QTextCharFormat();
     format.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-    format.setForeground(QBrush(QColor("#649449")));
+    //format.setForeground(QBrush(QColor("#649449")));
     _formats[Table] = format;
 
     // set character format for block quotes
     format = QTextCharFormat();
-    format.setForeground(QBrush(QColor(Qt::darkRed)));
+    //format.setForeground(QBrush(QColor(Qt::darkRed)));
     _formats[BlockQuote] = format;
 
     format = QTextCharFormat();
