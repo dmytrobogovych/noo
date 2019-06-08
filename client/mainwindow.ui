@@ -134,7 +134,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QPlainTextEdit" name="mNoteEdit">
+             <widget class="QMarkdownTextEdit" name="mNoteEdit">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -739,6 +739,11 @@
    <class>TaskTreeView</class>
    <extends>QTreeView</extends>
    <header>tasktreemodel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QMarkdownTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>qmarkdowntextedit/qmarkdowntextedit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

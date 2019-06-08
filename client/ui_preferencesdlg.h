@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'preferencesdlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.0
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -57,7 +57,7 @@ public:
     {
         if (PreferencesDlg->objectName().isEmpty())
             PreferencesDlg->setObjectName(QString::fromUtf8("PreferencesDlg"));
-        PreferencesDlg->resize(444, 353);
+        PreferencesDlg->resize(444, 374);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -211,7 +211,7 @@ public:
     {
         PreferencesDlg->setWindowTitle(QApplication::translate("PreferencesDlg", "Dialog", nullptr));
         mShowSecondsCheckbox->setText(QApplication::translate("PreferencesDlg", "Show seconds", nullptr));
-        mAutosavePasswordCheckbox->setText(QApplication::translate("PreferencesDlg", "Autosave password (requires app restart)", nullptr));
+        mAutosavePasswordCheckbox->setText(QApplication::translate("PreferencesDlg", "Save password in keychain", nullptr));
         mShowTrayIconCheckbox->setText(QApplication::translate("PreferencesDlg", "Show tray icon", nullptr));
         mDarkThemeCheckbox->setText(QApplication::translate("PreferencesDlg", "Use dark theme", nullptr));
         mCustomDatabaseFileCheckbox->setText(QApplication::translate("PreferencesDlg", "Use database at custom location (requires app restart)", nullptr));

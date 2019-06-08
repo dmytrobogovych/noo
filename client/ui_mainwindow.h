@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.0
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -23,12 +23,12 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "qmarkdowntextedit/qmarkdowntextedit.h"
 #include "tasktreemodel.h"
 
 QT_BEGIN_NAMESPACE
@@ -79,7 +79,7 @@ public:
     QSplitter *mTimeSplitter;
     QFrame *mEditFrame;
     QVBoxLayout *verticalLayout;
-    QPlainTextEdit *mNoteEdit;
+    QMarkdownTextEdit *mNoteEdit;
     QFrame *mFindFrame;
     QHBoxLayout *mFindFrameLayout;
     QLabel *label;
@@ -307,7 +307,7 @@ public:
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        mNoteEdit = new QPlainTextEdit(mEditFrame);
+        mNoteEdit = new QMarkdownTextEdit(mEditFrame);
         mNoteEdit->setObjectName(QString::fromUtf8("mNoteEdit"));
         sizePolicy.setHeightForWidth(mNoteEdit->sizePolicy().hasHeightForWidth());
         mNoteEdit->setSizePolicy(sizePolicy);

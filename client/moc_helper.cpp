@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'helper.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.0)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'helper.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.0. It"
+#error "This file was generated using the moc from 5.12.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,29 +20,29 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_EscapeKeyEventFilter_t {
+struct qt_meta_stringdata_helper__EscapeKeyEventFilter_t {
     QByteArrayData data[4];
-    char stringdata0[40];
+    char stringdata0[48];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_EscapeKeyEventFilter_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_helper__EscapeKeyEventFilter_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_EscapeKeyEventFilter_t qt_meta_stringdata_EscapeKeyEventFilter = {
+static const qt_meta_stringdata_helper__EscapeKeyEventFilter_t qt_meta_stringdata_helper__EscapeKeyEventFilter = {
     {
-QT_MOC_LITERAL(0, 0, 20), // "EscapeKeyEventFilter"
-QT_MOC_LITERAL(1, 21, 13), // "escapePressed"
-QT_MOC_LITERAL(2, 35, 0), // ""
-QT_MOC_LITERAL(3, 36, 3) // "obj"
+QT_MOC_LITERAL(0, 0, 28), // "helper::EscapeKeyEventFilter"
+QT_MOC_LITERAL(1, 29, 13), // "escapePressed"
+QT_MOC_LITERAL(2, 43, 0), // ""
+QT_MOC_LITERAL(3, 44, 3) // "obj"
 
     },
-    "EscapeKeyEventFilter\0escapePressed\0\0"
-    "obj"
+    "helper::EscapeKeyEventFilter\0escapePressed\0"
+    "\0obj"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_EscapeKeyEventFilter[] = {
+static const uint qt_meta_data_helper__EscapeKeyEventFilter[] = {
 
  // content:
        8,       // revision
@@ -64,10 +64,10 @@ static const uint qt_meta_data_EscapeKeyEventFilter[] = {
        0        // eod
 };
 
-void EscapeKeyEventFilter::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void helper::EscapeKeyEventFilter::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        EscapeKeyEventFilter *_t = static_cast<EscapeKeyEventFilter *>(_o);
+        auto *_t = static_cast<EscapeKeyEventFilter *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->escapePressed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
@@ -85,30 +85,30 @@ void EscapeKeyEventFilter::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject EscapeKeyEventFilter::staticMetaObject = { {
+QT_INIT_METAOBJECT const QMetaObject helper::EscapeKeyEventFilter::staticMetaObject = { {
     &QObject::staticMetaObject,
-    qt_meta_stringdata_EscapeKeyEventFilter.data,
-    qt_meta_data_EscapeKeyEventFilter,
+    qt_meta_stringdata_helper__EscapeKeyEventFilter.data,
+    qt_meta_data_helper__EscapeKeyEventFilter,
     qt_static_metacall,
     nullptr,
     nullptr
 } };
 
 
-const QMetaObject *EscapeKeyEventFilter::metaObject() const
+const QMetaObject *helper::EscapeKeyEventFilter::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *EscapeKeyEventFilter::qt_metacast(const char *_clname)
+void *helper::EscapeKeyEventFilter::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_EscapeKeyEventFilter.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_helper__EscapeKeyEventFilter.stringdata0))
         return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
-int EscapeKeyEventFilter::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int helper::EscapeKeyEventFilter::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -126,7 +126,7 @@ int EscapeKeyEventFilter::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void EscapeKeyEventFilter::escapePressed(QObject * _t1)
+void helper::EscapeKeyEventFilter::escapePressed(QObject * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

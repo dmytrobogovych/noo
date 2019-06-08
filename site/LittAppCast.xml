@@ -7,8 +7,16 @@
     <language>en</language>
     <atom:link href="http://satorilight.com/LittAppCast.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Version 0.9.2</title>
+      <pubDate>Sun, 12 May 2019 17:19:50 +0000</pubDate>
+      <guid isPermalink="true">http://satorilight.com/releasenotes.html</guid>
+      <link>http://satorilight.com/releasenotes.html</link>
+      <sparkle:releaseNotesLink>http://satorilight.com/releasenotes.html</sparkle:releaseNotesLink>
+      <enclosure url="http://satorilight.com/downloads/Litt-osx-0.9.2.dmg" type="application/octet-stream" length="148703" fervor:platform="Q_OS_MAC" sparkle:version="0.9.2" sparkle:dsaSignature="0000000000"/>
+    </item>
+    <item>
       <title>Version 0.9.1</title>
-      <pubDate>Sun, 09 Dec 2018 14:34:39 +0000</pubDate>
+      <pubDate>Sun, 12 May 2019 17:18:00 +0000</pubDate>
       <guid isPermalink="true">http://satorilight.com/releasenotes.html</guid>
       <link>http://satorilight.com/releasenotes.html</link>
       <sparkle:releaseNotesLink>http://satorilight.com/releasenotes.html</sparkle:releaseNotesLink>

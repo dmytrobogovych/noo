@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += printsupport
 CONFIG += c++11
 TARGET = Litt
 TEMPLATE = app
-VERSION = 0.9.1
+VERSION = 0.9.2
 VERSTR = '\\"$${VERSION}\\"'
 DEFINES += VER=\"$${VERSTR}\"
 
@@ -149,4 +149,8 @@ OBJECTIVE_SOURCES += \
 
 !include("qtkeychain/qt5keychain.pri") {
         error("Unable to include QTKeyChain library.")
+}
+
+!include("qmarkdowntextedit/qmarkdowntextedit.pri") {
+        error("Unable to include QMarkdownTextEdit library")
 }

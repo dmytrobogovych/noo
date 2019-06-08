@@ -13,8 +13,8 @@ PUBLISHBUILD=YES
 SIGNID="Developer ID Application: Dmytro Bogovych (563QRB9S29)"
 
 # Default values only - no need to change every run
-ZIPBUILD=Litt-osx-0.9.0.dmg
-DMGBUILD=Litt-osx-0.9.0.dmg
+ZIPBUILD=Litt-osx-0.9.2.dmg
+DMGBUILD=Litt-osx-0.9.2.dmg
 cd ../client
 version=`less chooka.pro | grep "VERSION =" | cut -d' ' -f 3`
 
@@ -26,7 +26,7 @@ if [ "$MAKEBUILD" = "YES" ]; then
 	rm -rf Makefile
 
 	echo Running qmake                        
-	QT_BINARY_DIR=/Users/anand/Qt5.12.0/5.12.0/clang_64/bin
+	QT_BINARY_DIR=/Users/anand/qt/5.12.2/clang_64/bin
 	$QT_BINARY_DIR/qmake chooka.pro
 
 	echo Building
@@ -54,6 +54,8 @@ if [ "$MAKEBUILD" = "YES" ]; then
 	dmgbuild -s dmgsettings.py "Litt application" ../Litt-osx-$version.dmg
 	DMGBUILD=Litt-osx-$version.dmg
 fi
+
+exit
 
 cd ../client
 
