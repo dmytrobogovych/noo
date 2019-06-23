@@ -2,6 +2,7 @@
 #include <QVariant>
 #include <assert.h>
 #include <encryption.h>
+#include <iostream>
 
 #ifdef TARGET_WIN
 # include <WinSock2.h>
@@ -124,29 +125,57 @@ bool Storage::create()
     }
     catch(std::exception& e)
     {
+        std::cout << e.what() << std::endl;
         return false;
     }
 #endif
 
     try
     {
+        // Synctime & timestamp are always milliseconds from the start of UNIX epoch.
+
         // Timeline
-        mDatabase->exec("CREATE TABLE timeline (id INTEGER PRIMARY KEY, removed INTEGER, taskid INTEGER, starttime TEXT, endtime TEXT, synctime TEXT)");
+        mDatabase->exec("CREATE TABLE timeline (id INTEGER PRIMARY KEY, removed INTEGER, "
+                        "taskid INTEGER, starttime TEXT, endtime TEXT, timestamp INTEGER)");
         mDatabase->exec("CREATE INDEX timeline_taskid_index ON timeline(taskid ASC)");
 
         // Tasks tree
-        mDatabase->exec("CREATE TABLE task (type INTEGER, removed INTEGER, modifytime TEXT, id INTEGER PRIMARY KEY, parentid INTEGER, orderid INTEGER, title TEXT, html TEXT, flags INTEGER, synctime1 TEXT, synctime2 TEXT)");
+        mDatabase->exec("CREATE TABLE task (type INTEGER, removed INTEGER, "
+                        "id INTEGER PRIMARY KEY, parentid INTEGER, orderid INTEGER, title TEXT, html TEXT, "
+                        "flags INTEGER, timestamp INTEGER)");
         mDatabase->exec("CREATE INDEX task_parentid_index ON task(parentid ASC)");
 
+        // Tasks history
+        mDatabase->exec("CREATE TABLE history_task (removed_old INTEGER, removed_new INTEGER, "
+                        "timestamp_old INTEGER, timestamp_new INTEGER, "
+                        "id INTEGER PRIMARY KEY, "
+                        "parent_id_old INTEGER, parent_id_new INTEGER, "
+                        "order_id_old INTEGER, order_id_new INTEGER, "
+                        "diff_title TEXT, diff_html TEXT, "
+                        "flags_old INTEGER, flags_new INTEGER)");
+
         // Attachments
-        mDatabase->exec("CREATE TABLE file (id INTEGER PRIMARY KEY, removed INTEGER, taskid INTEGER, filename TEXT, content BLOB, orderid INTEGER, synctime TEXT)");
+        mDatabase->exec("CREATE TABLE file (id INTEGER PRIMARY KEY, removed INTEGER, taskid INTEGER, "
+                        "filename TEXT, content BLOB, orderid INTEGER, timestamp INTEGER)");
+
+        mDatabase->exec("CREATE TABLE history_file (id INTEGER PRIMARY KEY, "
+                        "removed_old INTEGER, removed_new INTEGER, "
+                        "taskid_old INTEGER, taskid_new INTEGER, "
+                        "filename_old TEXT, filename_new TEXT,"
+                        "content BLOB, "
+                        "order_id_old INTEGER, order_id_new INTEGER, "
+                        "timestamp_old INTEGER, timestamp_new INTEGER)");
+
         mDatabase->exec("CREATE INDEX file_taskid_index ON file(taskid ASC)");
 
         // Sync status
-        mDatabase->exec("CREATE TABLE syncs (datetime TEXT, status TEXT)");
+        mDatabase->exec("CREATE TABLE syncs (timestamp INT, status TEXT)");
+
+
     }
     catch(std::exception& e)
     {
+        std::cerr << e.what() << std::endl;
         return false;
     }
 

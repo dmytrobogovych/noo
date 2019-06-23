@@ -28,13 +28,25 @@ if [ "$MAKEBUILD" = "YES" ]; then
 	echo Running qmake                        
 	QT_BINARY_DIR=/Users/anand/qt/5.12.2/clang_64/bin
 	$QT_BINARY_DIR/qmake chooka.pro
-
+        if [ $? -ne 0 ]; then
+            echo "qmake failed. Exiting."
+            exit
+        fi
 	echo Building
 	make clean
 	make
+        if [ $? -ne 0 ]; then
+            echo "make failed. Exiting."
+            exit
+        fi
 
 	echo Deploying Qt libraries
 	$QT_BINARY_DIR/macdeployqt Litt.app -codesign="$SIGNID"
+        if [ $? -ne 0 ]; then
+            echo "macdeployqt failed. Exiting."
+            exit
+        fi
+        echo "Codesign is skipped for now, please purchase a Apple developer subscription!"
 	#codesign -s $CODESIGN Litt.app 
 
 	mkdir Chooka.app/Contents/Resources
