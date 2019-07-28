@@ -200,9 +200,9 @@ bool Storage::open()
     }
     catch(std::exception& e)
     {
+        std::cerr << e.what() << std::endl;
         return false;
     }
-
 
     loadTaskTree();
     return true;

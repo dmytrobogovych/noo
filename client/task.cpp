@@ -487,7 +487,7 @@ void TimeLine::flush(bool saveToDb, time_t currentUtc)
 void TimeLine::load()
 {
     SQLite::Statement q(Storage::instance().database(), "select id, starttime, endtime from timeline where (taskid = :taskid) and ((removed is null) or (removed != 1)) order by id asc");
-    q.bind(":taskid", mTaskId);
+    q.bind(":taskid", static_cast<sqlite3_int64>(mTaskId));
     while (q.executeStep())
     {
         time_t start = helper::chrono::strToTime(q.getColumn(1).getText());

@@ -61,69 +61,59 @@ set(CPPLINT_ARG_LINELENGTH "--linelength=120")
 
 # list of sources files of the library
 set(SQLITECPP_SRC
- ${PROJECT_SOURCE_DIR}/src/Column.cpp
- ${PROJECT_SOURCE_DIR}/src/Database.cpp
- ${PROJECT_SOURCE_DIR}/src/Statement.cpp
- ${PROJECT_SOURCE_DIR}/src/Transaction.cpp
-)
+    ${PROJECT_SOURCE_DIR}/src/Column.cpp
+    ${PROJECT_SOURCE_DIR}/src/Database.cpp
+    ${PROJECT_SOURCE_DIR}/src/Statement.cpp
+    ${PROJECT_SOURCE_DIR}/src/Transaction.cpp
+    )
 source_group(src FILES ${SQLITECPP_SRC})
 
 # list of header files of the library
 set(SQLITECPP_INC
- ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/SQLiteCpp.h
- ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Assertion.h
- ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Column.h
- ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Database.h
- ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Exception.h
- ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Statement.h
- ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Transaction.h
-)
+    ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/SQLiteCpp.h
+    ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Assertion.h
+    ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Column.h
+    ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Database.h
+    ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Exception.h
+    ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Statement.h
+    ${PROJECT_SOURCE_DIR}/include/SQLiteCpp/Transaction.h
+    )
 source_group(inc FILES ${SQLITECPP_INC})
 
 # list of test files of the library
 set(SQLITECPP_TESTS
- tests/Database_test.cpp
- tests/Statement_test.cpp
-)
+    tests/Database_test.cpp
+    tests/Statement_test.cpp
+    )
 source_group(tests FILES ${SQLITECPP_TESTS})
 
 # list of example files of the library
 set(SQLITECPP_EXAMPLES
- examples/example1/main.cpp
-)
+    examples/example1/main.cpp
+    )
 source_group(example1 FILES ${SQLITECPP_EXAMPLES})
 
 # list of doc files of the library
 set(SQLITECPP_DOC
- README.md
- WRAPPERS.md
- LICENSE.txt
- TODO.txt
-)
+    README.md
+    WRAPPERS.md
+    LICENSE.txt
+    TODO.txt
+    )
 source_group(doc FILES ${SQLITECPP_DOC})
 
 # All includes are relative to the "include" directory 
-include_directories("${PROJECT_SOURCE_DIR}/include")
 
 # add sources of the wrapper as a "SQLiteCpp" static library
 add_library(SQLiteCpp ${SQLITECPP_SRC} ${SQLITECPP_INC} ${SQLITECPP_DOC})
 
+target_include_directories(SQLiteCpp PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/sqlite3
+    ${CMAKE_CURRENT_SOURCE_DIR}/include )
+
 if (UNIX AND (CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
     set_target_properties(SQLiteCpp PROPERTIES COMPILE_FLAGS "-fPIC")
 endif (UNIX AND (CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
-
-
-# SQLite3 library (Windows only)
-
-option (SQLITECPP_INTERNAL_SQLITE "Add the internal SQLite3 source to the project." ON)
-if (WIN32)
-    if (SQLITECPP_INTERNAL_SQLITE)
-        # build the SQLite3 C library for Windows (for ease of use) versus Linux sqlite3-dev package
-        add_subdirectory(sqlite3)
-        include_directories("${PROJECT_SOURCE_DIR}/sqlite3")
-    endif (SQLITECPP_INTERNAL_SQLITE)
-endif (WIN32)
-
 
 # Optional additional targets:
 
@@ -131,9 +121,9 @@ option(SQLITECPP_RUN_CPPLINT "Run cpplint.py tool for Google C++ StyleGuide." OF
 if (SQLITECPP_RUN_CPPLINT)
     # add a cpplint target to the "all" target
     add_custom_target(SQLiteCpp_cpplint
-     ALL
-     COMMAND python ${PROJECT_SOURCE_DIR}/cpplint.py ${CPPLINT_ARG_OUTPUT} ${CPPLINT_ARG_VERBOSE} ${CPPLINT_ARG_LINELENGTH} ${SQLITECPP_SRC} ${SQLITECPP_INC}
-    )
+        ALL
+        COMMAND python ${PROJECT_SOURCE_DIR}/cpplint.py ${CPPLINT_ARG_OUTPUT} ${CPPLINT_ARG_VERBOSE} ${CPPLINT_ARG_LINELENGTH} ${SQLITECPP_SRC} ${SQLITECPP_INC}
+        )
 else (SQLITECPP_RUN_CPPLINT)
     message(STATUS "SQLITECPP_RUN_CPPLINT OFF")
 endif (SQLITECPP_RUN_CPPLINT)
@@ -142,11 +132,11 @@ option(SQLITECPP_RUN_CPPCHECK "Run cppcheck C++ static analysis tool." OFF)
 if (SQLITECPP_RUN_CPPCHECK)
     find_program(CPPCHECK_EXECUTABLE NAMES cppcheck)
     if (CPPCHECK_EXECUTABLE)
-       # add a cppcheck target to the "all" target
-       add_custom_target(SQLiteCpp_cppcheck
-        ALL
-        COMMAND cppcheck -j 4 cppcheck --enable=style --quiet ${CPPCHECK_ARG_TEMPLATE} ${PROJECT_SOURCE_DIR}/src
-       )
+        # add a cppcheck target to the "all" target
+        add_custom_target(SQLiteCpp_cppcheck
+            ALL
+            COMMAND cppcheck -j 4 cppcheck --enable=style --quiet ${CPPCHECK_ARG_TEMPLATE} ${PROJECT_SOURCE_DIR}/src
+            )
     else (CPPCHECK_EXECUTABLE)
         message(STATUS "cppcheck not found")
     endif (CPPCHECK_EXECUTABLE)
@@ -160,10 +150,10 @@ if (SQLITECPP_RUN_DOXYGEN)
     if (DOXYGEN_FOUND)
         # add a Doxygen target to the "all" target
         add_custom_target(SQLiteCpp_doxygen
-         ALL
-         COMMAND doxygen Doxyfile > ${DEV_NULL}
-         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-        )
+            ALL
+            COMMAND doxygen Doxyfile > ${DEV_NULL}
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+            )
     else (DOXYGEN_FOUND)
         message(STATUS "Doxygen not found")
     endif (DOXYGEN_FOUND)
@@ -187,7 +177,7 @@ if (SQLITECPP_BUILD_TESTS)
         add_definitions(-Wno-variadic-macros -Wno-long-long -Wno-conversion -Wno-switch-enum)
     endif (NOT MSVC)
 
-    add_subdirectory(googletest) 
+    add_subdirectory(googletest)
     include_directories("${PROJECT_SOURCE_DIR}/googletest/include")
 
     # add the unit test executable

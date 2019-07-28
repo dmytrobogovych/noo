@@ -7,17 +7,17 @@
 #endif
 
 HIDActivityTracker::HIDActivityTracker()
-  :mInterval(600), mTrackerActive(false), mState(None)
+    :mInterval(600), mTrackerActive(false), mState(None)
 {
 #ifdef TARGET_OSX
-  mImpl = new HIDTrackerImplOSX();
-  mImpl->setInterval(mInterval);
+    mImpl = new HIDTrackerImplOSX();
+    mImpl->setInterval(mInterval);
 #endif
 
-  // Check timer belongs to this object
-  mCheckTimer = new QTimer(this);
-  mCheckTimer->setSingleShot(false);
-  connect(mCheckTimer, SIGNAL(timeout()), this, SLOT(checkState()));
+    // Check timer belongs to this object
+    mCheckTimer = new QTimer(this);
+    mCheckTimer->setSingleShot(false);
+    connect(mCheckTimer, SIGNAL(timeout()), this, SLOT(checkState()));
 }
 
 HIDActivityTracker::~HIDActivityTracker()
@@ -26,131 +26,131 @@ HIDActivityTracker::~HIDActivityTracker()
 
 bool HIDActivityTracker::isPossible()
 {
-  if (!mImpl)
-    return false;
-  return mImpl->isPossible();
+    if (!mImpl)
+        return false;
+    return mImpl->isPossible();
 }
 
 void HIDActivityTracker::setInterval(int seconds)
 {
-  if (mImpl)
-    mImpl->setInterval(seconds);
+    if (mImpl)
+        mImpl->setInterval(seconds);
 
-  mInterval = seconds;
+    mInterval = seconds;
 }
 
 int HIDActivityTracker::interval() const
 {
-  return mInterval;
+    return mInterval;
 }
 
 bool HIDActivityTracker::isTrackerActive()
 {
-  return mTrackerActive;
+    return mTrackerActive;
 }
 
 bool HIDActivityTracker::start()
 {
-  if (mTrackerActive)
-    return true;
+    if (mTrackerActive)
+        return true;
 
-  if (mImpl)
-    mTrackerActive = mImpl->start();
+    if (mImpl)
+        mTrackerActive = mImpl->start();
 
-  mState = None;
-  mIdleSignalSent = false;
-  mActivitySignalSent = false;
-  if (mTrackerActive)
-    mCheckTimer->start(1000);
+    mState = None;
+    mIdleSignalSent = false;
+    mActivitySignalSent = false;
+    if (mTrackerActive)
+        mCheckTimer->start(1000);
 
-  return mTrackerActive;
+    return mTrackerActive;
 }
 
 void HIDActivityTracker::stop()
 {
-  if (!mTrackerActive)
-    return;
+    if (!mTrackerActive)
+        return;
 
-  if (mImpl)
-    mImpl->stop();
+    if (mImpl)
+        mImpl->stop();
 
-  mState = None;
-  mCheckTimer->stop();
-  mTrackerActive = false;
+    mState = None;
+    mCheckTimer->stop();
+    mTrackerActive = false;
 }
 
 bool HIDActivityTracker::isUserActive()
 {
-  if (!mImpl)
-    return true;
+    if (!mImpl)
+        return true;
 
-  return mImpl->isUserActive();
+    return mImpl->isUserActive();
 }
 
 void HIDActivityTracker::resetUserActive()
 {
-  if (!mImpl)
-    return;
-  mState = None;
-  mImpl->resetUserActive();
+    if (!mImpl)
+        return;
+    mState = None;
+    mImpl->resetUserActive();
 }
 
 void HIDActivityTracker::acceptIdleState()
 {
-  mState = Idle;
+    mState = Idle;
 }
 
 void HIDActivityTracker::acceptUserActiveState()
 {
-  mState = UserActive;
+    mState = UserActive;
 }
 
 void HIDActivityTracker::checkState()
 {
-  if (!mTrackerActive)
-    return;
+    if (!mTrackerActive)
+        return;
 
-  // Now activity tracker is started, check if there was user activity during interval
-  if (!mImpl->isUserActive())
-  {
-    switch (mState)
+    // Now activity tracker is started, check if there was user activity during interval
+    if (!mImpl->isUserActive())
     {
-    case None:
-      mState = Idle;
-      break;
+        switch (mState)
+        {
+        case None:
+            mState = Idle;
+            break;
 
-    case Idle:
-      break;
+        case Idle:
+            break;
 
-    case UserActive:
-      if (!mIdleSignalSent)
-      {
-        mIdleSignalSent = true;
-        mActivitySignalSent = false;
-        emit idleDetected();
-      }
-      break;
+        case UserActive:
+            if (!mIdleSignalSent)
+            {
+                mIdleSignalSent = true;
+                mActivitySignalSent = false;
+                emit idleDetected();
+            }
+            break;
+        }
     }
-  }
-  else
-  {
-    switch (mState)
+    else
     {
-    case None:
-      mState = UserActive;
-      break;
+        switch (mState)
+        {
+        case None:
+            mState = UserActive;
+            break;
 
-    case UserActive:
-      break;
+        case UserActive:
+            break;
 
-    case Idle:
-      if (!mActivitySignalSent)
-      {
-        mActivitySignalSent = true;
-        mIdleSignalSent = false;
-        emit activityDetected();
-      }
-      break;
+        case Idle:
+            if (!mActivitySignalSent)
+            {
+                mActivitySignalSent = true;
+                mIdleSignalSent = false;
+                emit activityDetected();
+            }
+            break;
+        }
     }
-  }
 }

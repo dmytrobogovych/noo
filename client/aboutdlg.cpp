@@ -1,4 +1,5 @@
 #include "config.h"
+#include "helper.h"
 #include "aboutdlg.h"
 #include "ui_aboutdlg.h"
 #include <QPushButton>
@@ -16,7 +17,7 @@ AboutDlg::AboutDlg(QWidget *parent) :
 
   QString text(ABOUTTEXT);
   text += ".\r\n";
-  text += QString("Version %1.").arg(VER);
+  text += QString("Version %1.").arg(QString::fromStdString(helper::app_version()));
   ui->mTextLabel->setText(text);
 
   QString appPath = QCoreApplication::applicationDirPath();

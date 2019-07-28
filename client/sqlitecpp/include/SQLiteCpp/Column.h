@@ -11,7 +11,6 @@
 #pragma once
 
 #include <sqlite3.h>
-
 #include <SQLiteCpp/Statement.h>
 #include <SQLiteCpp/Exception.h>
 

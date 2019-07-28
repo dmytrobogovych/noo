@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QObject>
+#include "config.h"
 
 class Settings;
 namespace helper
@@ -99,6 +100,8 @@ namespace helper
         static QString load();
         static bool save(const QString& password);
     };
+
+    extern std::string app_version();
 }
 
 #endif

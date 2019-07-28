@@ -44,11 +44,3 @@ public:
     #define __has_feature(x) 0
 #endif
 
-// Detect whether the compiler supports C++11 noexcept exception specifications.
-#if (defined(__GNUC__) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 7 ) && defined(__GXX_EXPERIMENTAL_CXX0X__))
-// GCC 4.7 and following have noexcept
-#elif defined(__clang__) && __has_feature(cxx_noexcept)
-// Clang 3.0 and above have noexcept
-#else
-    #define noexcept    throw()
-#endif

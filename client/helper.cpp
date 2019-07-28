@@ -1,6 +1,7 @@
 #include "config.h"
 #include "helper.h"
 #include "platforms/hidtracker.h"
+#include "build-number/build_number.h"
 
 #include <QCoreApplication>
 #include <QDesktopServices>
@@ -8,6 +9,10 @@
 #include <QKeyEvent>
 #include <QTextStream>
 #include <QApplication>
+#include <sstream>
+
+
+#include "qtkeychain/keychain.h"
 
 #ifdef TARGET_OSX
 
@@ -25,7 +30,7 @@ char* __strlcat_chk (char* dest, const char* src, int len, int destcapacity)
 
 #include "settings.h"
 
-using namespace helper;
+namespace helper {
 
 void theme::applyCurrent(Settings& settings)
 {
@@ -301,8 +306,6 @@ bool EscapeKeyEventFilter::eventFilter(QObject  *obj, QEvent * event)
     return false;
 }
 
-#include "qtkeychain/keychain.h"
-
 QString password::load()
 {
     QKeychain::ReadPasswordJob job(APPNAME);
@@ -332,3 +335,13 @@ bool password::save(const QString& password)
         return false;
     return true;
 }
+
+std::string app_version()
+{
+    std::ostringstream oss;
+    oss << APP_VERSION_MAJOR << "." << APP_VERSION_MINOR << "." << APP_VERSION_SUFFIX << "." << APP_BUILD_NUMBER;
+
+    return oss.str();
+}
+
+} // end of namespace helper

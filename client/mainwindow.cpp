@@ -21,7 +21,9 @@
 #include "aboutdlg.h"
 #include "attachmentslist.h"
 #include "attachmentsdialog.h"
-#include "fvupdater.h"
+#if defined(TARGET_OSX)
+# include "fvupdater.h"
+#endif
 #include "taskaction.h"
 #include "finddialog.h"
 #include "startworkdialog.h"
@@ -791,7 +793,7 @@ void MainWindow::prepareRecentTasksMenu(QMenu* submenu)
     for (PTask t: mRecentTrackingTasks)
     {
         QAction* action = submenu->addAction(t->title(), this, SLOT(startTrackingRecent()));
-        action->setProperty("taskid", QVariant(t->id()));
+        action->setProperty("taskid", QVariant(static_cast<qulonglong>(t->id())));
     }
 }
 
@@ -824,8 +826,9 @@ void MainWindow::setupMainUi()
 
     //QCoreApplication::setOrganizationName(COMPANY);
     // Set this to your own appcast URL, of course
+#if defined(TARGET_OSX)
     FvUpdater::sharedUpdater()->SetFeedURL("http://satorilight.com/LittAppCast.xml");
-
+#endif
     initClient();
     QApplication::postEvent(this, new AttachDatabaseEvent());
 }
@@ -1233,6 +1236,9 @@ int MainWindow::showTrayWindow(QDialog* dlg)
 #ifdef TARGET_OSX
     QRect windowRect(desktopWidth - w - 10, iconRect.bottom() + 10, w, h);
 #endif
+#ifdef TARGET_LINUX
+    QRect windowRect(desktopWidth - w - 10, iconRect.bottom() + 10, w, h);
+#endif
 #ifdef TARGET_WIN
 
 #endif
@@ -1257,6 +1263,7 @@ int MainWindow::showTrayWindow(QDialog* dlg)
 
 void MainWindow::installDockMenu()
 {
+#if defined(TARGET_OSX)
     QMenu* menu = new QMenu();
     menu->addAction(ui->mStartOrStopTrackingAction);
     mDockRecentMenu = menu->addMenu(ui->mStartRecentTaskMenu->title());
@@ -1264,6 +1271,7 @@ void MainWindow::installDockMenu()
     prepareRecentTasksMenu(mDockRecentMenu);
 
     qt_mac_set_dock_menu(menu);
+#endif
 }
 
 void MainWindow::timeFormatChanged()
@@ -1443,7 +1451,9 @@ void MainWindow::showAttachments()
 
 void MainWindow::checkForUpdates()
 {
+#if defined(TARGET_OSX)
     FvUpdater::sharedUpdater()->CheckForUpdatesNotSilent();
+#endif
 }
 
 void MainWindow::systemSleep()

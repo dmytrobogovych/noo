@@ -10,12 +10,9 @@
  */
 #pragma once
 
-#include <sqlite3.h>
-
+#include "sqlite3.h"
 #include <SQLiteCpp/Column.h>
-
 #include <string>
-
 
 namespace SQLite
 {

@@ -37,7 +37,11 @@
 // Text flushing interval
 #define TEXT_FLUSH_INTERVAL (10)
 
-#ifdef TARGET_OSX
+#define APP_VERSION_MAJOR 0
+#define APP_VERSION_MINOR 9
+#define APP_VERSION_SUFFIX 3
+
+//#ifdef TARGET_OSX
 #define TRAY_START_ICON_NAME ":/icons/icons/starttracking-osx.png"
 #define TRAY_STOP_ICON_NAME ":/icons/icons/stoptracking-osx.png"
 
@@ -46,6 +50,6 @@
 
 #define ACTION_START_ICON_NAME ":/icons/icons/clock-32x32.png"
 #define ACTION_STOP_ICON_NAME ":/icons/icons/process-stop.png"
-#endif
+//#endif
 
 #endif
