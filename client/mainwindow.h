@@ -96,6 +96,7 @@ private:
     QDialog* mTrayWindow = nullptr;
     QString mPassword = NOPASSWORDSTRING;
     ConnectDbWidget* mConnectDbWidget = nullptr;
+    OpenOrCreateDbWidget* mOpenOrCreateDbWidget = nullptr;
 
     QStackedWidget* mStackedViews = nullptr;
 

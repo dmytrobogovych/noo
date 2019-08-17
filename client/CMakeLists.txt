@@ -142,7 +142,7 @@ target_include_directories(${EXE_NAME} SYSTEM BEFORE
     #PUBLIC ${UUID_INCLUDE}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/sqlitecpp/include
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/sqlitecpp/sqlite3/include
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../lib/openssl/include
+    PUBLIC ${OPENSSL_INCLUDE}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../lib/uuid/include
     )
 
@@ -164,8 +164,7 @@ endif()
 target_link_libraries(${EXE_NAME}
     SQLiteCpp
     qtkeychain
-    #${UUID_LIB}
-    uuid
+    ${UUID_LIB}
     ${OPENSSL_CRYPTO}
     Qt5::Core Qt5::Widgets Qt5::PrintSupport Qt5::OpenGL                # Qt
     ${PLATFORM_LIBS}                                                    # System specific libraries

@@ -6,6 +6,7 @@
 #include "helper.h"
 #include "newpassworddlg.h"
 #include "passworddlg.h"
+
 #include <QSettings>
 #include <QPrinter>
 #include <QPrintDialog>
@@ -13,6 +14,7 @@
 #include <QDir>
 #include <QCloseEvent>
 #include <QDesktopServices>
+#include <assert.h>
 
 #include "appevents.h"
 #include "preferencesdlg.h"
@@ -61,14 +63,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QCoreApplication::setApplicationName(APPNAME);
 
     loadGeometry();
-
-    // Now check if database is already configured
-    mStackedViews = new QStackedWidget(this);
-    setCentralWidget(mStackedViews);
-    mStackedViews->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    buildMainView();
-    buildOpenOrCreateView();
-    buildPasswordView();
 
     // Find default database file exists
     QString path = helper::path::pathToDatabase();
@@ -852,7 +846,7 @@ void MainWindow::buildPasswordView()
 {
     if (!mConnectDbWidget)
     {
-        mConnectDbWidget = new ConnectDbWidget(message, mStackedViews);
+        mConnectDbWidget = new ConnectDbWidget(QString(), mStackedViews);
         connect(mConnectDbWidget, SIGNAL(passwordEntered(QString)), this, SLOT(onDbPasswordEntered(QString)));
         connect(mConnectDbWidget, SIGNAL(cancelled()), this, SLOT(onDbPasswordCancelled()));
         int index = mStackedViews->addWidget(mConnectDbWidget);
@@ -865,9 +859,9 @@ void MainWindow::buildOpenOrCreateView()
     if (!mOpenOrCreateDbWidget)
     {
         mOpenOrCreateDbWidget = new OpenOrCreateDbWidget(mStackedViews);
-        connect(w, &OpenOrCreateDbWidget::databaseChanged,
+        connect(mOpenOrCreateDbWidget, &OpenOrCreateDbWidget::databaseChanged,
             [this](const QString& path) { onDatabaseChanged(path); });
-        connect(w, &OpenOrCreateDbWidget::passwordEntered,
+        connect(mOpenOrCreateDbWidget, &OpenOrCreateDbWidget::passwordEntered,
             [this](const QString& password) { onNewDbPasswordEntered(password); });
         int index = mStackedViews->addWidget(mOpenOrCreateDbWidget);
         assert (index == ViewIndex_OpenOrCreateDb);

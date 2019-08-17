@@ -1,6 +1,9 @@
 #include "browserwidget.h"
 #include "ui_browserwidget.h"
 
+#include "tasktreemodel.h"
+#include <QMessageBox>
+
 BrowserWidget::BrowserWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BrowserWidget)
@@ -13,7 +16,7 @@ BrowserWidget::~BrowserWidget()
     delete ui;
 }
 
-void BrowserWidget::newRootTask()
+void BrowserWidget::onNewRootTask()
 {
     PTask rootTask = mTaskTreeModel->addTask(QModelIndex(), Storage::instance().topOfTaskTree().size());
     QModelIndex rootIndex = mTaskTreeModel->getIndex(rootTask);
@@ -21,7 +24,7 @@ void BrowserWidget::newRootTask()
     ui->mTaskTree->edit(rootIndex);
 }
 
-void BrowserWidget::newTask()
+void BrowserWidget::onNewTask()
 {
     QModelIndex index = ui->mTaskTree->currentIndex();
     if (index.isValid())
@@ -39,7 +42,7 @@ void BrowserWidget::newTask()
     ui->mTaskTree->edit(childIndex);
 }
 
-void BrowserWidget::newSibling()
+void BrowserWidget::onNewSibling()
 {
     QModelIndex index = ui->mTaskTree->currentIndex();
     if (!index.isValid())
@@ -55,7 +58,7 @@ void BrowserWidget::newSibling()
     ui->mTaskTree->edit(i);
 }
 
-void BrowserWidget::moveUp()
+void BrowserWidget::onMoveUp()
 {
     QModelIndex index = ui->mTaskTree->currentIndex();
     if (!index.isValid())
@@ -72,7 +75,7 @@ void BrowserWidget::moveUp()
     ui->mTaskTree->setCurrentIndex(mTaskTreeModel->getIndex(currentTask));
 }
 
-void BrowserWidget::moveDown()
+void BrowserWidget::onMoveDown()
 {
     QModelIndex index = ui->mTaskTree->currentIndex();
     if (!index.isValid())
@@ -95,14 +98,14 @@ void BrowserWidget::moveDown()
     ui->mTaskTree->setCurrentIndex(mTaskTreeModel->getIndex(currentTask));
 }
 
-void BrowserWidget::renameTask()
+void BrowserWidget::onRenameTask()
 {
     QModelIndex index = ui->mTaskTree->currentIndex();
     if (index.isValid())
         ui->mTaskTree->edit(index);
 }
 
-void BrowserWidget::deleteTask()
+void BrowserWidget::onDeleteTask()
 {
     QModelIndex index = ui->mTaskTree->currentIndex();
     if (!index.isValid())
@@ -134,4 +137,23 @@ void BrowserWidget::deleteTask()
 
         mTaskTreeModel->deleteTask(ui->mTaskTree->currentIndex());
     }
+}
+
+void BrowserWidget::alertBox(const QString &title, const QString &text, AlertType alertType)
+{
+    mAlertBox = new QMessageBox(alertType == AlertType_Critical ? QMessageBox::Critical : QMessageBox::Warning,
+                                title, text, QMessageBox::Ok, this,
+                                Qt::Sheet);
+    switch (alertType)
+    {
+    case AlertType_Critical:
+        connect(mAlertBox, SIGNAL(finished(int)), this, SLOT(criticalAlertFinished(int)));
+        break;
+
+    case AlertType_Warning:
+        connect(mAlertBox, SIGNAL(finished(int)), this, SLOT(warningAlertFinished(int)));
+        break;
+    }
+
+    mAlertBox->show();
 }
