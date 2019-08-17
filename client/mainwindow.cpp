@@ -37,6 +37,10 @@
 
 #define SETTINGS mSettings->data()
 
+const int ViewIndex_Main = 0;
+const int ViewIndex_OpenOrCreateDb = 1;
+const int ViewIndex_DbPassword = 2;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     mPasswordFailed(false), mFindInTasksDlg(this), mDockRecentMenu(nullptr)
@@ -59,13 +63,17 @@ MainWindow::MainWindow(QWidget *parent) :
     loadGeometry();
 
     // Now check if database is already configured
-    QWidget* centralWidget = new QWidget(this);
-    setCentralWidget(centralWidget);
-    centralWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    mStackedViews = new QStackedWidget(this);
+    setCentralWidget(mStackedViews);
+    mStackedViews->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    buildMainView();
+    buildOpenOrCreateView();
+    buildPasswordView();
 
-    // Check if database file exists
+    // Find default database file exists
     QString path = helper::path::pathToDatabase();
 
+    // Find optional custom path to database
     if (mSettings->data()[KEY_DB_FILENAME_SPECIFIED].toBool())
         path = mSettings->data()[KEY_DB_FILENAME].toString();
 
@@ -591,6 +599,16 @@ void MainWindow::deleteTask()
     }
     else
     {
+        if (mSettings->data()[KEY_ASK_BEFORE_DELETE].toBool())
+        {
+            auto reply = QMessageBox::question(this,
+                                               tr("Are you sure?"),
+                                               tr("Are you sure you want to delete ") + t->title(),
+                                               QMessageBox::Yes | QMessageBox::No);
+            if (reply == QMessageBox::No)
+                return;
+        }
+
         if (mAutomaticTask == t)
             mAutomaticTask.reset();
 
@@ -811,9 +829,6 @@ void MainWindow::updateAttachmentsLabel(PTask t)
 
 void MainWindow::setupMainUi()
 {
-    // Detach old widget
-    setCentralWidget(nullptr);
-
     // Construct main UI
     ui = new Ui::MainWindow();
     ui->setupUi(this);
@@ -833,31 +848,41 @@ void MainWindow::setupMainUi()
     QApplication::postEvent(this, new AttachDatabaseEvent());
 }
 
+void MainWindow::buildPasswordView()
+{
+    if (!mConnectDbWidget)
+    {
+        mConnectDbWidget = new ConnectDbWidget(message, mStackedViews);
+        connect(mConnectDbWidget, SIGNAL(passwordEntered(QString)), this, SLOT(onDbPasswordEntered(QString)));
+        connect(mConnectDbWidget, SIGNAL(cancelled()), this, SLOT(onDbPasswordCancelled()));
+        int index = mStackedViews->addWidget(mConnectDbWidget);
+        assert (index == ViewIndex_DbPassword);
+    }
+}
+
+void MainWindow::buildOpenOrCreateView()
+{
+    if (!mOpenOrCreateDbWidget)
+    {
+        mOpenOrCreateDbWidget = new OpenOrCreateDbWidget(mStackedViews);
+        connect(w, &OpenOrCreateDbWidget::databaseChanged,
+            [this](const QString& path) { onDatabaseChanged(path); });
+        connect(w, &OpenOrCreateDbWidget::passwordEntered,
+            [this](const QString& password) { onNewDbPasswordEntered(password); });
+        int index = mStackedViews->addWidget(mOpenOrCreateDbWidget);
+        assert (index == ViewIndex_OpenOrCreateDb);
+    }
+}
+
 // Ask password
 void MainWindow::askDbPassword(const QString& message)
 {
-    setCentralWidget(nullptr); setCentralWidget(new QWidget(this));
-    auto cdw = new ConnectDbWidget(message, centralWidget());
-    connect(cdw, SIGNAL(passwordEntered(QString)), this, SLOT(onDbPasswordEntered(QString)));
-    connect(cdw, SIGNAL(cancelled()), this, SLOT(onDbPasswordCancelled()));
-
-    QVBoxLayout* l = new QVBoxLayout(centralWidget());
-    l->addWidget(cdw);
-    l->setAlignment(Qt::AlignCenter);
-    centralWidget()->setLayout(l);
+    mStackedViews->setCurrentIndex(0);
 }
 
 void MainWindow::askNewDbPassword()
 {
-    setCentralWidget(nullptr); setCentralWidget(new QWidget(this));
-    auto w = new OpenOrCreateDbWidget(centralWidget());
-    connect(w, &OpenOrCreateDbWidget::databaseChanged, [this](const QString& path)     { onDatabaseChanged(path); });
-    connect(w, &OpenOrCreateDbWidget::passwordEntered, [this](const QString& password) { onNewDbPasswordEntered(password); });
-
-    auto l = new QVBoxLayout(centralWidget());
-    l->addWidget(w);
-    l->setAlignment(Qt::AlignCenter);
-    centralWidget()->setLayout(l);
+    mStackedViews->setCurrentIndex(1);
 }
 
 void MainWindow::startOrStopTracking()

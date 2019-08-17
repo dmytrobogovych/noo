@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>444</width>
-    <height>374</height>
+    <width>586</width>
+    <height>452</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,6 +31,16 @@
     <widget class="QCheckBox" name="mAutosavePasswordCheckbox">
      <property name="text">
       <string>Save password in keychain</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="mAskBeforeDeleteCheckbox">
+     <property name="text">
+      <string>Ask before delete</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

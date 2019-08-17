@@ -7,7 +7,7 @@
 #endif
 
 HIDActivityTracker::HIDActivityTracker()
-    :mInterval(600), mTrackerActive(false), mState(None)
+    :mInterval(600), mTrackerActive(false), mState(None), mImpl(nullptr)
 {
 #ifdef TARGET_OSX
     mImpl = new HIDTrackerImplOSX();

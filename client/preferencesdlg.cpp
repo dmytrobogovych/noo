@@ -28,6 +28,9 @@ PreferencesDlg::PreferencesDlg(QWidget *parent, Settings& settings) :
     // Show seconds or not?
     ui->mShowSecondsCheckbox->setChecked(settings.data().value(KEY_SHOW_SECONDS).toBool());
 
+    // Ask confirmation before node delete
+    ui->mAskBeforeDeleteCheckbox->setChecked(settings.data().value(KEY_ASK_BEFORE_DELETE).toBool());
+
     // Dark theme ?
     ui->mDarkThemeCheckbox->setChecked(settings.data().value(KEY_DARK_THEME).toBool());
 
@@ -79,13 +82,13 @@ void PreferencesDlg::accepted()
     helper::password::save(savePassword ? Storage::instance().key() : QString(""));
 
     mSettings.data()[KEY_SHOW_SECONDS] = ui->mShowSecondsCheckbox->isChecked();
+    mSettings.data()[KEY_ASK_BEFORE_DELETE] = ui->mAskBeforeDeleteCheckbox->isChecked();
     mSettings.data()[KEY_DB_FILENAME_SPECIFIED] = ui->mCustomDatabaseFileCheckbox->isChecked();
     mSettings.data()[KEY_DB_FILENAME] = ui->mDatabaseLocation->text();
     mSettings.data()[KEY_SMART_STOP] = ui->mSmartStopTracking->isChecked();
     mSettings.data()[KEY_SMART_STOP_MINUTES] = ui->mSmartStopIntervalInMinutes->text().toInt();
     mSettings.data()[KEY_SMART_START] = ui->mSmartStartTracking->isChecked();
     mSettings.data()[KEY_SHOW_TRAY_ICON] = ui->mShowTrayIconCheckbox->isChecked();
-    //mSettings.data()[KEY_ASK_START] = ui->mAskQuestionOnStartRadiobutton->isChecked();
     mSettings.data()[KEY_ASK_STOP] = ui->mAskQuestionOnStopRadiobutton->isChecked();
 
     if (mSettings.data()[KEY_DARK_THEME].toBool() != ui->mDarkThemeCheckbox->isChecked()) {

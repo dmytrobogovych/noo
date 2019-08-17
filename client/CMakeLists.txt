@@ -123,7 +123,7 @@ if (TARGET_OSX)
 endif()
 
 # This will create you executable
-set (EXE_NAME litt_outliner)
+set (EXE_NAME Litt)
 
 add_executable(${EXE_NAME}
     ${ADDITIONAL_EXE_OPTIONS}

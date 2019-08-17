@@ -8,6 +8,7 @@
 #include <QTextCharFormat>
 #include <QSystemTrayIcon>
 #include <QMessageBox>
+#include <QStackedWidget>
 
 #include "tasktreemodel.h"
 #include "settings.h"
@@ -16,6 +17,9 @@
 #include "logger.h"
 #include "platforms/hidtracker.h"
 #include "finddialog.h"
+#include "connectdb_widget.h"
+#include "openorcreatedb_widget.h"
+
 #include <deque>
 
 #ifdef TARGET_OSX
@@ -91,7 +95,9 @@ private:
     QMenu* mDockRecentMenu;
     QDialog* mTrayWindow = nullptr;
     QString mPassword = NOPASSWORDSTRING;
+    ConnectDbWidget* mConnectDbWidget = nullptr;
 
+    QStackedWidget* mStackedViews = nullptr;
 
     void saveGeometry();
     void loadGeometry();
@@ -147,6 +153,10 @@ private:
 
     // Show UI about fatal alert & button to quit app
     void showFatal(const QString& message);
+
+    void buildPasswordView();
+    void buildOpenOrCreateView();
+    void buildMainView();
 
 signals:
     void onTimeFormatChanged();

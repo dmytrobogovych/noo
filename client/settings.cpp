@@ -2,6 +2,9 @@
 #include "helper.h"
 #include <QSettings>
 #include <QStringList>
+#include <QFile>
+#include <QFileInfo>
+#include <QDir>
 
 Settings::Settings()
 {
@@ -30,6 +33,16 @@ void Settings::save()
 
 void Settings::load()
 {
+    // Path to settings file
+    QString path = helper::path::pathToSettings();
+
+    // Check if directory exists at all
+    QString dir = QFileInfo(path).absoluteDir().path();
+
+    if (!QDir(dir).exists())
+        QDir().mkdir(dir);
+
+    // Load data itself
     QSettings settings(helper::path::pathToSettings(), QSettings::IniFormat);
     mData.clear();
     const QStringList keys = settings.allKeys();
