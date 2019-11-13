@@ -6,7 +6,8 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11" CACHE STRING "Minimum OS X deployment ve
 project (outliner C CXX) # Your project name
 
 if (NOT LIB_PLATFORM)
-    message(FATAL_ERROR "No LIB_PLATFORM is set.")
+    message("No LIB_PLATFORM is set, defaulting to works/sevana/platform/libraries")
+    set (LIB_PLATFORM ${CMAKE_CURRENT_SOURCE_DIR}/../../../sevana/platform/libraries)
 endif()
 
 include (${LIB_PLATFORM}/platform_libs.cmake)
@@ -25,19 +26,7 @@ set (CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run uic automatically when needed.
 set (CMAKE_AUTOUIC ON)
 
-set (APP_SKIP_BUILD_NUMBER OFF CACHE BOOL "Skip Sevana HASQ build number increase.")
-
-# Use pvqa2 library also
-set (USE_PVQA2_LIBRARY OFF CACHE BOOL "Integrate PVQA2.")
-
-# Avoid increasing PVQA/AQuA library build numbers
-set (SKIP_BUILD_NUMBER ON)
-
-# Special build for audiologists
-set (AUDIOLOGY_EDITION OFF CACHE BOOL "Make special build for audiologists")
-
-# Special build with live capture
-set (LIVE_PVQA_EDITION OFF CACHE BOOL "Make special build with live capture")
+set (APP_SKIP_BUILD_NUMBER OFF CACHE BOOL "Skip Litt build number increase.")
 
 # This will find the Qt5 files. You will need a QT5_DIR env variable
 find_package (Qt5Core REQUIRED)
@@ -87,7 +76,7 @@ if(TARGET_OSX)
     set (BUILD_NUMBER_SCRIPT build_number.sh)
     set (ADDITIONAL_EXE_OPTIONS MACOSX_BUNDLE)
 
-    set (MACOS_ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/../icons/sound_ruler.icns)
+    set (MACOS_ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/icons/appicon-osx.icns)
 endif()
 
 if (TARGET_WIN)
@@ -124,6 +113,7 @@ endif()
 
 # This will create you executable
 set (EXE_NAME Litt)
+set (PRODUCT_NAME Litt)
 
 add_executable(${EXE_NAME}
     ${ADDITIONAL_EXE_OPTIONS}
