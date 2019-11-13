@@ -6,6 +6,7 @@ option (FERVOR_BUILD_TESTS "Should the tests be built" OFF)
 
 find_package (Qt5Core REQUIRED)
 find_package (Qt5Gui REQUIRED)
+find_package (Qt5Network REQUIRED)
 
 set (QT_USE_QTNETWORK true)
 set (QT_USE_QTWEBKIT true)

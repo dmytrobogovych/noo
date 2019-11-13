@@ -33,6 +33,7 @@ find_package (Qt5Core REQUIRED)
 find_package (Qt5Widgets REQUIRED) # Equivalent of QT += widgets
 find_package (Qt5PrintSupport REQUIRED)
 find_package (Qt5OpenGL REQUIRED)
+find_package (Qt5Network REQUIRED)
 
 if (Qt5OpenGL_FOUND)
     message("Qt5 OpenGL found")
@@ -128,12 +129,14 @@ add_executable(${EXE_NAME}
     ${RESOURCE_FILES}
     ${WINDOWS_RESOURCE_PATH})
 
+message("OpenSSL include: ${OPENSSL_INCLUDE}")
+
 target_include_directories(${EXE_NAME} SYSTEM BEFORE
-    #PUBLIC ${UUID_INCLUDE}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/sqlitecpp/include
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/sqlitecpp/sqlite3/include
     PUBLIC ${OPENSSL_INCLUDE}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../lib/uuid/include
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/fervor
     )
 
 

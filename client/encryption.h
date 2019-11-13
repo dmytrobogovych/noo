@@ -2,8 +2,8 @@
 #define ENCRYPTION_H
 
 #include <QByteArray>
-#include <openssl/blowfish.h">
-#include <openssl/sha.h>
+#include "openssl/blowfish.h"
+#include "openssl/sha.h"
 #include "twofish.h"
 
 class BlowfishCipher

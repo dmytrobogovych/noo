@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QLayout>
+#include <QFileInfo>
+#include <QDir>
 #include "settings.h"
 #include "helper.h"
 
@@ -20,14 +22,14 @@ int main(int argc, char *argv[])
     Storage::instance().setPath(path);
 
     // Check if file exists at all
-    if (!QFile::exists(path))
+    /*if (!QFile::exists(path))
     {
         // Show dialog that requests database path
     }
     else
     {
         // Check if password is available
-        if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
+        if (Settings::instance().data()[KEY_AUTOSAVE_PASSWORD].toBool())
         {
             QString password = helper::password::load();
             if (password.isEmpty())
@@ -47,7 +49,7 @@ int main(int argc, char *argv[])
         }
         else
             askDbPassword(QString());
-    }
+    }*/
 
 
     MainWindow w;
