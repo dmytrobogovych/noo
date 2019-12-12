@@ -871,12 +871,14 @@ void MainWindow::buildOpenOrCreateView()
 // Ask password
 void MainWindow::askDbPassword(const QString& message)
 {
-    mStackedViews->setCurrentIndex(0);
+    if (mStackedViews)
+        mStackedViews->setCurrentIndex(0);
 }
 
 void MainWindow::askNewDbPassword()
 {
-    mStackedViews->setCurrentIndex(1);
+    if (mStackedViews)
+        mStackedViews->setCurrentIndex(1);
 }
 
 void MainWindow::startOrStopTracking()

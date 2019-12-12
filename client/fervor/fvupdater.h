@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QUrl>
 #include <QXmlStreamReader>
+
 class FvUpdateWindow;
 class FvUpdateConfirmDialog;
 class FvAvailableUpdate;

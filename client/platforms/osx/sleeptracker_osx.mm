@@ -1,10 +1,10 @@
 #include "sleeptracker_osx.h"
-#include <CoreFoundation/CoreFoundation.h>
-#include <Cocoa/Cocoa.h>
+#import <CoreFoundation/CoreFoundation.h>
+#import <Cocoa/Cocoa.h>
 
 @interface SleepNotificationHandler: NSObject
 {
-  SleepTracker* mTracker;
+                                         SleepTracker* mTracker;
 }
 
 - (id)initWithTracker:(SleepTracker*)tracker;
@@ -20,55 +20,55 @@
 
 - (id)initWithTracker:(SleepTracker*)tracker
 {
-  if (![super init])
-    return nil;
+    if (![super init])
+        return nil;
 
-  mTracker = tracker;
-  return self;
+    mTracker = tracker;
+    return self;
 }
 
 - (void)dealloc
 {
-  [super dealloc];
+    [super dealloc];
 }
 
 - (void)install
 {
-  NSNotificationCenter *center = [[NSWorkspace sharedWorkspace] notificationCenter];
-  [center addObserver:self
-             selector:@selector(appWillSleep:)
-                 name:NSWorkspaceWillSleepNotification
-               object:NULL];
+    NSNotificationCenter *center = [[NSWorkspace sharedWorkspace] notificationCenter];
+    [center addObserver:self
+                        selector:@selector(appWillSleep:)
+      name:NSWorkspaceWillSleepNotification
+      object:NULL];
 
-  [center addObserver:self
-             selector:@selector(appDidWake:)
-                 name:NSWorkspaceDidWakeNotification
-               object:NULL];
+    [center addObserver:self
+                        selector:@selector(appDidWake:)
+      name:NSWorkspaceDidWakeNotification
+      object:NULL];
 }
 
 - (void)uninstall
 {
-  NSNotificationCenter *center = [[NSWorkspace sharedWorkspace] notificationCenter];
-  [center removeObserver: self];
+    NSNotificationCenter *center = [[NSWorkspace sharedWorkspace] notificationCenter];
+    [center removeObserver: self];
 }
 
 - (void)appWillSleep:(NSNotification*)notification
 {
-  if (self->mTracker)
-    self->mTracker->onAppWillSleep();
+    if (self->mTracker)
+        self->mTracker->onAppWillSleep();
 }
 
 - (void)appDidWake:(NSNotification*)notification
 {
-  if (self->mTracker)
-    self->mTracker->onAppDidWake();
+    if (self->mTracker)
+        self->mTracker->onAppDidWake();
 }
 @end
 
 SleepTracker STSharedInstance;
 
 SleepTracker::SleepTracker(QObject *parent)
-  :QObject(parent), mHandler(nullptr)
+    :QObject(parent), mHandler(nullptr)
 
 {
 
@@ -81,30 +81,30 @@ SleepTracker::~SleepTracker()
 
 void SleepTracker::install()
 {
-  if (!mHandler)
-  {
-    mHandler = [[SleepNotificationHandler alloc] initWithTracker: this];
-    [(id)mHandler install];
-  }
+    if (!mHandler)
+    {
+        mHandler = [[SleepNotificationHandler alloc] initWithTracker: this];
+        [(id)mHandler install];
+    }
 }
 
 void SleepTracker::uninstall()
 {
-  if (mHandler)
-  {
-    [(id)mHandler uninstall];
-    [(id)mHandler release];
-    mHandler = nullptr;
-  }
+    if (mHandler)
+    {
+        [(id)mHandler uninstall];
+        [(id)mHandler release];
+        mHandler = nullptr;
+    }
 }
 
 void SleepTracker::onAppWillSleep()
 {
-  emit onSystemSleep();
+    emit onSystemSleep();
 }
 
 void SleepTracker::onAppDidWake()
 {
-  emit onSystemResume();
+    emit onSystemResume();
 }
 

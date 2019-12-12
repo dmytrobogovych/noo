@@ -1,26 +1,26 @@
-cmake_minimum_required(VERSION 2.8.11)
-project(qtkeychain)
+cmake_minimum_required (VERSION 2.8.11)
+project (qtkeychain)
 
-include(FindPkgConfig)
-
-###
-
-set(QTKEYCHAIN_VERSION 0.9.90)
-set(QTKEYCHAIN_SOVERSION 1)
+include (FindPkgConfig)
 
 ###
 
-set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${PROJECT_SOURCE_DIR}/cmake/Modules")
-include(GNUInstallDirs)
-include(GenerateExportHeader)
-include(ECMPackageConfigHelpers)
-include(ECMSetupVersion)
-include(ECMGeneratePriFile)
+set (QTKEYCHAIN_VERSION 0.9.90)
+set (QTKEYCHAIN_SOVERSION 1)
 
-option(BUILD_WITH_QT4 "Build qtkeychain with Qt4 no matter if Qt5 was found" OFF)
-option(BUILD_TEST_APPLICATION "Build test application" OFF)
-option(BUILD_TRANSLATIONS "Build translations" ON)
-option(QTKEYCHAIN_STATIC "Build static library" ON)
+###
+
+set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${PROJECT_SOURCE_DIR}/cmake/Modules")
+include (GNUInstallDirs)
+include (GenerateExportHeader)
+include (ECMPackageConfigHelpers)
+include (ECMSetupVersion)
+include (ECMGeneratePriFile)
+
+option (BUILD_WITH_QT4 "Build qtkeychain with Qt4 no matter if Qt5 was found" OFF)
+option (BUILD_TEST_APPLICATION "Build test application" OFF)
+option (BUILD_TRANSLATIONS "Build translations" ON)
+option (QTKEYCHAIN_STATIC "Build static library" ON)
 
 if(CMAKE_SYSTEM_NAME STREQUAL Android)
     set(ANDROID 1)
@@ -66,7 +66,7 @@ if (Qt5Core_FOUND AND NOT BUILD_WITH_QT4)
     endmacro()
 
     set(QTCORE_LIBRARIES ${Qt5Core_LIBRARIES})
-    include_directories(${Qt5Core_INCLUDE_DIRS})
+    include_directories (${Qt5Core_INCLUDE_DIRS})
 
     if (NOT Qt5Core_VERSION VERSION_LESS "5.7.0")
         if (CMAKE_COMPILER_IS_GNUCXX)

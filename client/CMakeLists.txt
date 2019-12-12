@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required (VERSION 3.5)
 
 # This directive is ignored for non OSX environments
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11" CACHE STRING "Minimum OS X deployment version")
+set (CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum OS X deployment version")
 
 project (outliner C CXX) # Your project name
 
@@ -42,10 +42,98 @@ else (Qt5OpenGL_FOUND)
 endif(Qt5OpenGL_FOUND)
 
 # List all source files in project directory
-file (GLOB SOURCES      "*.cpp")
-file (GLOB C_SOURCES    "*.c")
-file (GLOB HEADERS      "*.h")
-file (GLOB UI           "*.ui")
+set (SOURCES
+    aboutdlg.cpp
+    appevents.cpp
+    attachmentsdialog.cpp
+    attachmentslist.cpp
+    browserwidget.cpp
+    connectdb_widget.cpp
+    encryption.cpp
+    finddialog.cpp
+    findsupport.cpp
+    helper.cpp
+    initial_ui.cpp
+    logger.cpp
+    main.cpp
+    mainwindow.cpp
+    newpassworddlg.cpp
+    openorcreatedb_widget.cpp
+    passworddlg.cpp
+    preferencesdlg.cpp
+    qrc_mainwindow.cpp
+    qrc_media.cpp
+    qrc_style.cpp
+    settings.cpp
+    startworkdialog.cpp
+    stopworkdialog.cpp
+    storage.cpp
+    task.cpp
+    taskaction.cpp
+    tasktreemodel.cpp
+    timeintervaldlg.cpp
+    timereportwizard.cpp
+    timetreedlg.cpp
+    timetreemodel.cpp
+    twofish.cpp
+    )
+
+set (C_SOURCES
+    sqlite3.c
+    )
+
+set (HEADERS
+    aboutdlg.h
+    appevents.h
+    attachmentsdialog.h
+    attachmentslist.h
+    browserwidget.h
+    config.h
+    connectdb_widget.h
+    encryption.h
+    finddialog.h
+    findsupport.h
+    helper.h
+    initial_ui.h
+    logger.h
+    mainwindow.h
+    moc_predefs.h
+    newpassworddlg.h
+    openorcreatedb_widget.h
+    passworddlg.h
+    preferencesdlg.h
+    settings.h
+    sqlite3.h
+    sqlite3ext.h
+    startworkdialog.h
+    stopworkdialog.h
+    storage.h
+    task.h
+    taskaction.h
+    tasktreemodel.h
+    timeintervaldlg.h
+    timereportwizard.h
+    timetreedlg.h
+    timetreemodel.h
+    twofish.h
+    )
+
+set (UI
+    aboutdlg.ui
+    attachmentsdialog.ui
+    attachmentslist.ui
+    browserwidget.ui
+    connectdb_widget.ui
+    finddialog.ui
+    mainwindow.ui
+    newpassworddlg.ui
+    openorcreatedb_widget.ui
+    passworddlg.ui
+    preferencesdlg.ui
+    startworkdialog.ui
+    stopworkdialog.ui
+    timeintervaldlg.ui
+    timetreedlg.ui)
 
 if (CMAKE_SYSTEM MATCHES "Windows*")
     add_definitions(-DTARGET_WIN)
@@ -78,6 +166,21 @@ if(TARGET_OSX)
     set (ADDITIONAL_EXE_OPTIONS MACOSX_BUNDLE)
 
     set (MACOS_ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/icons/appicon-osx.icns)
+    set (SOURCE_FILES    ${CMAKE_CURRENT_SOURCE_DIR}/platforms/osx/sleeptracker_osx.h
+                         ${CMAKE_CURRENT_SOURCE_DIR}/platforms/osx/sleeptracker_osx.mm
+                         ${CMAKE_CURRENT_SOURCE_DIR}/platforms/osx/hidtrackerimpl_osx.h
+                         ${CMAKE_CURRENT_SOURCE_DIR}/platforms/osx/hidtrackerimpl_osx.mm
+                         )
+
+
+     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+     find_library(COCOA Cocoa)
+     find_library(IOKIT_LIBRARY IOKit)
+     find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
+     find_library(COREAUDIO_LIBRARY CoreAudio)
+     find_library(CARBON_LIBRARY Carbon)
+     set (PLATFORM_LIBS ${COCOA} ${COREFOUNDATION_LIBRARY} ${IOKIT_LIBRARY} ${AUDIOTOOLBOX_LIBRARY} ${COREAUDIO_LIBRARY} ${CARBON_LIBRARY})
+
 endif()
 
 if (TARGET_WIN)
@@ -124,6 +227,8 @@ add_executable(${EXE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/qmarkdowntextedit/qplaintexteditsearchwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/hidtracker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/hidtrackerimpl.cpp
+    ${SOURCE_FILES}
+    ${PLATFORM_LIBS}
     ${UI_RESOURCES}
     ${MACOS_ICON_FILE}
     ${RESOURCE_FILES}
@@ -135,7 +240,7 @@ target_include_directories(${EXE_NAME} SYSTEM BEFORE
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/sqlitecpp/include
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/sqlitecpp/sqlite3/include
     PUBLIC ${OPENSSL_INCLUDE}
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../lib/uuid/include
+    # PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../lib/uuid/include
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/fervor
     )
 
@@ -157,9 +262,10 @@ endif()
 target_link_libraries(${EXE_NAME}
     SQLiteCpp
     qtkeychain
+    Fervor
     ${UUID_LIB}
     ${OPENSSL_CRYPTO}
-    Qt5::Core Qt5::Widgets Qt5::PrintSupport Qt5::OpenGL                # Qt
+    Qt5::Core Qt5::Widgets Qt5::PrintSupport Qt5::OpenGL Qt5::Network   # Qt
     ${PLATFORM_LIBS}                                                    # System specific libraries
     )
 
@@ -192,3 +298,8 @@ if (NOT APP_SKIP_BUILD_NUMBER)
                         COMMAND ${SCRIPT_PROCESSOR} ${CMAKE_CURRENT_SOURCE_DIR}/build-number/${BUILD_NUMBER_SCRIPT}
                         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build-number/ )
 endif(NOT APP_SKIP_BUILD_NUMBER)
+
+get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+foreach(dir ${dirs})
+  message(STATUS "dir='${dir}'")
+endforeach()
