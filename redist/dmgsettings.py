@@ -1,4 +1,4 @@
-files=[ '../client/Litt.app' ]
+files=[ 'client/build/Litt.app' ]
 symlinks={ 'Applications': '/Applications' }
 volume_name='Litt application'
 format='UDZO'

@@ -21,6 +21,7 @@ set (CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Instruct CMake to run moc automatically when needed.
 set (CMAKE_AUTOMOC ON)
+set (CMAKE_AUTORCC ON)
 set (CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Instruct CMake to run uic automatically when needed.
@@ -61,9 +62,9 @@ set (SOURCES
     openorcreatedb_widget.cpp
     passworddlg.cpp
     preferencesdlg.cpp
-    qrc_mainwindow.cpp
-    qrc_media.cpp
-    qrc_style.cpp
+    #qrc_mainwindow.cpp
+    #qrc_media.cpp
+    #qrc_style.cpp
     settings.cpp
     startworkdialog.cpp
     stopworkdialog.cpp
@@ -97,7 +98,7 @@ set (HEADERS
     initial_ui.h
     logger.h
     mainwindow.h
-    moc_predefs.h
+    #moc_predefs.h
     newpassworddlg.h
     openorcreatedb_widget.h
     passworddlg.h
@@ -204,7 +205,6 @@ endif()
 
 # List resources
 qt5_add_resources(UI_RESOURCES resources/qdarkstyle/style.qrc)
-
 # Global defines
 add_definitions(-DQTKEYCHAIN_NO_EXPORT -DSQLITE_HAS_CODEC -DSQLITE_OMIT_LOAD_EXTENSION)
 
@@ -232,7 +232,9 @@ add_executable(${EXE_NAME}
     ${UI_RESOURCES}
     ${MACOS_ICON_FILE}
     ${RESOURCE_FILES}
-    ${WINDOWS_RESOURCE_PATH})
+    ${WINDOWS_RESOURCE_PATH}
+    mainwindow.qrc
+    )
 
 message("OpenSSL include: ${OPENSSL_INCLUDE}")
 
@@ -254,7 +256,7 @@ if (TARGET_OSX)
     set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_LONG_VERSION_STRING "0.7.8")
 
     set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE TRUE
-                                                    MACOSX_BUNDLE_GUI_IDENTIFIER "biz.sevana.hasq"
+                                                    MACOSX_BUNDLE_GUI_IDENTIFIER "com.satorilight.litt"
                                                     RESOURCE "${RESOURCE_FILES}")
 endif()
 

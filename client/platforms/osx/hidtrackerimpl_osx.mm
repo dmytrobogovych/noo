@@ -1,4 +1,4 @@
-#import "Config.h"
+#import "config.h"
 #import "hidtrackerimpl_osx.h"
 #include <CoreFoundation/CoreFoundation.h>
 #include <Cocoa/Cocoa.h>
@@ -17,7 +17,7 @@ HIDTrackerImplOSX::~HIDTrackerImplOSX()
 
 bool HIDTrackerImplOSX::isPossible()
 {
-    if (AXIsProcessTrustedWithOptions != NULL)
+    if (AXIsProcessTrustedWithOptions != nullptr)
     {
         // 10.9 and later
         const void * keys[] = { kAXTrustedCheckOptionPrompt };
