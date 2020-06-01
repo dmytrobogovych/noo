@@ -11,7 +11,7 @@ find_package (Qt5Network REQUIRED)
 set (QT_USE_QTNETWORK true)
 set (QT_USE_QTWEBKIT true)
 
-set (FERVOR_APP_VERSION "0.9.2")
+set (FERVOR_APP_VERSION "${APP_VERSION}")
 set (FERVOR_APP_NAME "Litt")
 
 # Instruct CMake to run moc automatically when needed.

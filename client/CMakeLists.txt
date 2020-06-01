@@ -29,6 +29,13 @@ set (CMAKE_AUTOUIC ON)
 
 set (APP_SKIP_BUILD_NUMBER OFF CACHE BOOL "Skip Litt build number increase.")
 
+# App version is expected as APP_VERSION variable
+if (NOT APP_VERSION)
+    message(FATAL "Requires APP_VERSION to be set")
+endif()
+
+add_definitions(-DAPP_VERSION="\"${APP_VERSION}\"")
+
 # This will find the Qt5 files. You will need a QT5_DIR env variable
 find_package (Qt5Core REQUIRED)
 find_package (Qt5Widgets REQUIRED) # Equivalent of QT += widgets
@@ -159,6 +166,7 @@ if (TARGET_LINUX)
 endif()
 
 if(TARGET_OSX)
+    message("MacOS build target")
     # OS X Specific flags
     add_definitions(-DTARGET_OSX)
 
@@ -166,7 +174,9 @@ if(TARGET_OSX)
     set (BUILD_NUMBER_SCRIPT build_number.sh)
     set (ADDITIONAL_EXE_OPTIONS MACOSX_BUNDLE)
 
-    set (MACOS_ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/icons/appicon-osx.icns)
+    set (MACOS_ICON_FILENAME appicon-osx.icns)
+    set (MACOS_ICON_PATH     ${CMAKE_CURRENT_SOURCE_DIR}/icons/${MACOS_ICON_FILENAME})
+
     set (SOURCE_FILES    ${CMAKE_CURRENT_SOURCE_DIR}/platforms/osx/sleeptracker_osx.h
                          ${CMAKE_CURRENT_SOURCE_DIR}/platforms/osx/sleeptracker_osx.mm
                          ${CMAKE_CURRENT_SOURCE_DIR}/platforms/osx/hidtrackerimpl_osx.h
@@ -230,7 +240,7 @@ add_executable(${EXE_NAME}
     ${SOURCE_FILES}
     ${PLATFORM_LIBS}
     ${UI_RESOURCES}
-    ${MACOS_ICON_FILE}
+    ${MACOS_ICON_PATH}
     ${RESOURCE_FILES}
     ${WINDOWS_RESOURCE_PATH}
     mainwindow.qrc
@@ -246,14 +256,14 @@ target_include_directories(${EXE_NAME} SYSTEM BEFORE
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/fervor
     )
 
-
+message("App version: ${APP_VERSION}")
 if (TARGET_OSX)
-    set_source_files_properties( ${MACOS_ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
-    set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_ICON_FILE ${MACOS_ICON_FILE} )
+    set_source_files_properties( ${MACOS_ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+    set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_ICON_FILE ${MACOS_ICON_FILENAME} )
     set_target_properties( ${EXE_NAME} PROPERTIES   OUTPUT_NAME ${PRODUCT_NAME})
     set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_BUNDLE_NAME ${PRODUCT_NAME} )
-    set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_SHORT_VERSION_STRING "0.7.8")
-    set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_LONG_VERSION_STRING "0.7.8")
+    set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_SHORT_VERSION_STRING "${APP_VERSION}")
+    set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_LONG_VERSION_STRING "${APP_VERSION}")
 
     set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE TRUE
                                                     MACOSX_BUNDLE_GUI_IDENTIFIER "com.satorilight.litt"
