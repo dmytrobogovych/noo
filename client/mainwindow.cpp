@@ -64,12 +64,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadGeometry();
 
+    this->setUpdatesEnabled(true);
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+    //delete mCurrentIntervalLabel;
+}
+
+
+void MainWindow::attachDatabase()
+{
     // Find default database file exists
     QString path = helper::path::pathToDatabase();
 
     // Find optional custom path to database
     if (mSettings->data()[KEY_DB_FILENAME_SPECIFIED].toBool())
+    {
         path = mSettings->data()[KEY_DB_FILENAME].toString();
+        if (path.contains("~"))
+            path.replace("~", QDir::homePath());
+    }
 
     QString folder = QFileInfo(path).absoluteDir().path();
     Storage::instance().setPath(path);
@@ -97,26 +113,6 @@ MainWindow::MainWindow(QWidget *parent) :
         else
             askDbPassword(QString());
     }
-    this->setUpdatesEnabled(true);
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-    //delete mCurrentIntervalLabel;
-}
-
-
-void MainWindow::attachDatabase()
-{
-    // Open database
-    QString path = helper::path::pathToDatabase();
-
-    if (mSettings->data()[KEY_DB_FILENAME_SPECIFIED].toBool())
-        path = mSettings->data()[KEY_DB_FILENAME].toString();
-
-    QString folder = QFileInfo(path).absoluteDir().path();
-    Storage::instance().setPath(path);
 
     this->setUpdatesEnabled(true);
 }
@@ -261,6 +257,8 @@ void MainWindow::initClient()
 #endif
     mTimeFrameHeight = 64;//ui->mTimeFrame->height();
     ui->mStartRecentTaskMenu->setEnabled(false);
+
+    buildOpenOrCreateView();
 }
 
 void MainWindow::save()

@@ -6,8 +6,8 @@ set (CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum OS X deployment v
 project (outliner C CXX) # Your project name
 
 if (NOT LIB_PLATFORM)
-    message("No LIB_PLATFORM is set, defaulting to works/sevana/platform/libraries")
-    set (LIB_PLATFORM ${CMAKE_CURRENT_SOURCE_DIR}/../../../sevana/platform/libraries)
+    message("No LIB_PLATFORM is set, defaulting to works/sevana/libraries")
+    set (LIB_PLATFORM ${CMAKE_CURRENT_SOURCE_DIR}/../../../sevana/libraries)
 endif()
 
 include (${LIB_PLATFORM}/platform_libs.cmake)
@@ -61,7 +61,7 @@ set (SOURCES
     finddialog.cpp
     findsupport.cpp
     helper.cpp
-    initial_ui.cpp
+    # initial_ui.cpp
     logger.cpp
     main.cpp
     mainwindow.cpp
@@ -102,7 +102,7 @@ set (HEADERS
     finddialog.h
     findsupport.h
     helper.h
-    initial_ui.h
+    # initial_ui.h
     logger.h
     mainwindow.h
     #moc_predefs.h
@@ -166,7 +166,7 @@ if (TARGET_LINUX)
 endif()
 
 if(TARGET_OSX)
-    message("MacOS build target")
+    message ("MacOS build target")
     # OS X Specific flags
     add_definitions(-DTARGET_OSX)
 
