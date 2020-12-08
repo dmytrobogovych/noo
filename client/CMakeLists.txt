@@ -6,8 +6,8 @@ set (CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum OS X deployment v
 project (outliner C CXX) # Your project name
 
 if (NOT LIB_PLATFORM)
-    message("No LIB_PLATFORM is set, defaulting to works/sevana/libraries")
-    set (LIB_PLATFORM ${CMAKE_CURRENT_SOURCE_DIR}/../../../sevana/libraries)
+    message("No LIB_PLATFORM is set, defaulting to works/sevana/platform/libraries")
+    set (LIB_PLATFORM ${CMAKE_CURRENT_SOURCE_DIR}/../../../sevana/platform/libraries)
 endif()
 
 include (${LIB_PLATFORM}/platform_libs.cmake)
@@ -163,6 +163,9 @@ if (TARGET_LINUX)
     set (PLATFORM_LIBS pthread m z dl)
     set (SCRIPT_PROCESSOR "/bin/bash")
     set (BUILD_NUMBER_SCRIPT build_number.sh)
+
+    # Override UUID library from 'platform/libraries' to avoid problem when linking
+    set(UUID_LIB uuid)
 endif()
 
 if(TARGET_OSX)
@@ -184,14 +187,17 @@ if(TARGET_OSX)
                          )
 
 
-     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
-     find_library(COCOA Cocoa)
-     find_library(IOKIT_LIBRARY IOKit)
-     find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
-     find_library(COREAUDIO_LIBRARY CoreAudio)
-     find_library(CARBON_LIBRARY Carbon)
-     set (PLATFORM_LIBS ${COCOA} ${COREFOUNDATION_LIBRARY} ${IOKIT_LIBRARY} ${AUDIOTOOLBOX_LIBRARY} ${COREAUDIO_LIBRARY} ${CARBON_LIBRARY})
+     find_library(COREFOUNDATION_LIBRARY    CoreFoundation)
+     find_library(COCOA                     Cocoa)
+     find_library(IOKIT_LIBRARY             IOKit)
+     find_library(AUDIOTOOLBOX_LIBRARY      AudioToolbox)
+     find_library(COREAUDIO_LIBRARY         CoreAudio)
+     find_library(CARBON_LIBRARY            Carbon)
 
+     set (PLATFORM_LIBS
+         ${COCOA} ${COREFOUNDATION_LIBRARY} ${IOKIT_LIBRARY}
+         ${AUDIOTOOLBOX_LIBRARY} ${COREAUDIO_LIBRARY}
+         ${CARBON_LIBRARY} Fervor)
 endif()
 
 if (TARGET_WIN)
@@ -238,7 +244,6 @@ add_executable(${EXE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/hidtracker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/platforms/hidtrackerimpl.cpp
     ${SOURCE_FILES}
-    ${PLATFORM_LIBS}
     ${UI_RESOURCES}
     ${MACOS_ICON_PATH}
     ${RESOURCE_FILES}
@@ -274,7 +279,6 @@ endif()
 target_link_libraries(${EXE_NAME}
     SQLiteCpp
     qtkeychain
-    Fervor
     ${UUID_LIB}
     ${OPENSSL_CRYPTO}
     Qt5::Core Qt5::Widgets Qt5::PrintSupport Qt5::OpenGL Qt5::Network   # Qt

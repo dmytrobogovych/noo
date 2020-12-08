@@ -65,6 +65,9 @@ MainWindow::MainWindow(QWidget *parent) :
     loadGeometry();
 
     this->setUpdatesEnabled(true);
+
+    // init event
+    QApplication::postEvent(this, new UiInitEvent());
 }
 
 MainWindow::~MainWindow()
@@ -177,6 +180,10 @@ void MainWindow::alertBox(const QString &title, const QString &text, AlertType a
 
 void MainWindow::initClient()
 {
+    // Avoid double initialization
+    if (!mStackedViews->children().empty())
+        return;
+
     mFindStartIndex = 0;
 
     // Open settings
@@ -259,6 +266,7 @@ void MainWindow::initClient()
     ui->mStartRecentTaskMenu->setEnabled(false);
 
     buildOpenOrCreateView();
+    buildPasswordView();
 }
 
 void MainWindow::save()
@@ -824,6 +832,7 @@ void MainWindow::setupMainUi()
     // Construct main UI
     ui = new Ui::MainWindow();
     ui->setupUi(this);
+    this->mStackedViews = ui->mStackedViews;
 
     // Hide Find line edit for now
     ui->mFindFrame->setVisible(false);
@@ -870,13 +879,13 @@ void MainWindow::buildOpenOrCreateView()
 void MainWindow::askDbPassword(const QString& message)
 {
     if (mStackedViews)
-        mStackedViews->setCurrentIndex(0);
+        mStackedViews->setCurrentIndex(ViewIndex_DbPassword);
 }
 
 void MainWindow::askNewDbPassword()
 {
     if (mStackedViews)
-        mStackedViews->setCurrentIndex(1);
+        mStackedViews->setCurrentIndex(ViewIndex_OpenOrCreateDb);
 }
 
 void MainWindow::startOrStopTracking()
