@@ -52,4 +52,6 @@
 #define ACTION_STOP_ICON_NAME ":/icons/icons/process-stop.png"
 //#endif
 
+#define USE_ENCRYPTED_DB
+
 #endif
