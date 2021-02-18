@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
-    <height>508</height>
+    <width>1206</width>
+    <height>522</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -253,8 +253,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>647</width>
-     <height>29</height>
+     <width>1206</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="mFileMenu">
@@ -1269,6 +1269,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>moveUp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>323</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mPreferencesAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>preferences()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

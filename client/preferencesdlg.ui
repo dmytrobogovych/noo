@@ -59,13 +59,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="mCustomDatabaseFileCheckbox">
-     <property name="text">
-      <string>Use database at custom location (requires app restart)</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QPushButton" name="mSelectDatabaseButton">
      <property name="text">
       <string>Select file...</string>

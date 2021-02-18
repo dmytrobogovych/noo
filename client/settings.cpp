@@ -56,6 +56,21 @@ void Settings::load()
         mData[KEY_SHOW_SECONDS] = true;
 }
 
+QString Settings::getDatabasePath()
+{
+    // Path to settings file
+    QString path = helper::path::pathToSettings();
+
+    QString stored_path = data()[KEY_DB_FILENAME].toString();
+    if (!stored_path.isEmpty())
+        path = stored_path;
+
+    if (path.contains("~"))
+        path.replace("~", QDir::homePath());
+
+    return path;
+}
+
 static Settings* GInstance = nullptr;
 Settings& Settings::instance()
 {

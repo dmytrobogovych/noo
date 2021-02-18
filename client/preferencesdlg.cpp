@@ -35,11 +35,7 @@ PreferencesDlg::PreferencesDlg(QWidget *parent, Settings& settings) :
     ui->mDarkThemeCheckbox->setChecked(settings.data().value(KEY_DARK_THEME).toBool());
 
     // Use custom database path ?
-    ui->mCustomDatabaseFileCheckbox->setChecked(settings.data().value(KEY_DB_FILENAME_SPECIFIED).toBool());
-    if (settings.data().value(KEY_DB_FILENAME_SPECIFIED).toBool())
-        ui->mDatabaseLocation->setText(settings.data().value(KEY_DB_FILENAME).toString());
-    else
-        ui->mDatabaseLocation->setText(helper::path::pathToDatabase());
+    ui->mDatabaseLocation->setText(settings.data().value(KEY_DB_FILENAME).toString());
 
     // Use stop on idle ?
     ui->mSmartStopTracking->setChecked(GET_BOOL(KEY_SMART_STOP));
@@ -83,7 +79,6 @@ void PreferencesDlg::accepted()
 
     mSettings.data()[KEY_SHOW_SECONDS] = ui->mShowSecondsCheckbox->isChecked();
     mSettings.data()[KEY_ASK_BEFORE_DELETE] = ui->mAskBeforeDeleteCheckbox->isChecked();
-    mSettings.data()[KEY_DB_FILENAME_SPECIFIED] = ui->mCustomDatabaseFileCheckbox->isChecked();
     mSettings.data()[KEY_DB_FILENAME] = ui->mDatabaseLocation->text();
     mSettings.data()[KEY_SMART_STOP] = ui->mSmartStopTracking->isChecked();
     mSettings.data()[KEY_SMART_STOP_MINUTES] = ui->mSmartStopIntervalInMinutes->text().toInt();

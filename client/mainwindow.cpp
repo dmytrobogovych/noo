@@ -39,9 +39,9 @@
 
 #define SETTINGS mSettings->data()
 
-const int ViewIndex_Main = 0;
-const int ViewIndex_OpenOrCreateDb = 1;
-const int ViewIndex_DbPassword = 2;
+const int ViewIndex_Main            = 0;
+const int ViewIndex_OpenOrCreateDb  = 1;
+const int ViewIndex_DbPassword      = 2;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -80,15 +80,7 @@ MainWindow::~MainWindow()
 void MainWindow::attachDatabase()
 {
     // Find default database file exists
-    QString path = helper::path::pathToDatabase();
-
-    // Find optional custom path to database
-    if (mSettings->data()[KEY_DB_FILENAME_SPECIFIED].toBool())
-    {
-        path = mSettings->data()[KEY_DB_FILENAME].toString();
-        if (path.contains("~"))
-            path.replace("~", QDir::homePath());
-    }
+    QString path = mSettings->getDatabasePath();
 
     QString folder = QFileInfo(path).absoluteDir().path();
     Storage::instance().setPath(path);
@@ -173,6 +165,9 @@ void MainWindow::alertBox(const QString &title, const QString &text, AlertType a
     case AlertType_Warning:
         connect(mAlertBox, SIGNAL(finished(int)), this, SLOT(warningAlertFinished(int)));
         break;
+
+    case AlertType_CannotOpen:
+        break;
     }
 
     mAlertBox->show();
@@ -181,7 +176,7 @@ void MainWindow::alertBox(const QString &title, const QString &text, AlertType a
 void MainWindow::initClient()
 {
     // Avoid double initialization
-    if (!mStackedViews->children().empty())
+    if (mStackedViews->children().size() > 2)
         return;
 
     mFindStartIndex = 0;
@@ -226,35 +221,39 @@ void MainWindow::initClient()
     connect(mActivityTracker.data(), SIGNAL(activityDetected()), this, SLOT(activityDetected()));
 
     // Configure toolbar
-    connect(ui->mMainToolbar, SIGNAL(visibilityChanged(bool)), this, SLOT(toolbarVisibilityChanged(bool)));
-    QWidget *spacerWidget = new QWidget(this);
-    spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    spacerWidget->setVisible(true);
-    ui->mMainToolbar->addWidget(spacerWidget);
+    if (nullptr == mAttachmentsAction)
+    {
+        connect(ui->mMainToolbar, SIGNAL(visibilityChanged(bool)), this, SLOT(toolbarVisibilityChanged(bool)));
+        QWidget *spacerWidget = new QWidget(this);
+        spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        spacerWidget->setVisible(true);
+        ui->mMainToolbar->addWidget(spacerWidget);
 
-    mAttachmentsAction = new QAction(this);
-    mAttachmentsAction->setIcon(QIcon(":/icons/icons/mail-attachment.png"));
-    mAttachmentsAction->setText(tr("Attachments"));
-    //ui->mMainToolbar->addAction(mAttachmentsAction);
-    connect(mAttachmentsAction, SIGNAL(triggered()), this, SLOT(showAttachments()));
+        mAttachmentsAction = new QAction(this);
+        mAttachmentsAction->setIcon(QIcon(":/icons/icons/mail-attachment.png"));
+        mAttachmentsAction->setText(tr("Attachments"));
+        //ui->mMainToolbar->addAction(mAttachmentsAction);
+        connect(mAttachmentsAction, SIGNAL(triggered()), this, SLOT(showAttachments()));
 
-    mAttachmentsLabel = new QLabel(this);
-    mAttachmentsLabel->setMargin(5);
-    mAttachmentsLabel->setOpenExternalLinks(false);
-    QFont f = mAttachmentsLabel->font();
-    f.setUnderline(true);
-    mAttachmentsLabel->setFont(f);
-    mAttachmentsLabel->setTextFormat(Qt::RichText);
-    //mAttachmentsLabel->setStyleSheet("QLabel { color:rgb(142,178,218); }");
+        mAttachmentsLabel = new QLabel(this);
+        mAttachmentsLabel->setMargin(5);
+        mAttachmentsLabel->setOpenExternalLinks(false);
 
-    QPalette newPal(palette());
-    newPal.setColor(QPalette::Link, QColor(0x100, 0x100, 0x100));
-    newPal.setColor(QPalette::LinkVisited, QColor(0x100, 0x100, 0x100));
-    mAttachmentsLabel->setPalette(newPal);
+        QFont f = mAttachmentsLabel->font();
+        f.setUnderline(true);
+        mAttachmentsLabel->setFont(f);
+        mAttachmentsLabel->setTextFormat(Qt::RichText);
+        //mAttachmentsLabel->setStyleSheet("QLabel { color:rgb(142,178,218); }");
 
-    ui->mMainToolbar->addWidget(mAttachmentsLabel);
-    connect(mAttachmentsLabel, SIGNAL(linkActivated(QString)), this, SLOT(showAttachments()));
-    updateAttachmentsLabel(PTask());
+        QPalette newPal(palette());
+        newPal.setColor(QPalette::Link, QColor(0x100, 0x100, 0x100));
+        newPal.setColor(QPalette::LinkVisited, QColor(0x100, 0x100, 0x100));
+        mAttachmentsLabel->setPalette(newPal);
+
+        ui->mMainToolbar->addWidget(mAttachmentsLabel);
+        connect(mAttachmentsLabel, SIGNAL(linkActivated(QString)), this, SLOT(showAttachments()));
+        updateAttachmentsLabel(PTask());
+    }
 
 #ifdef TARGET_OSX
     mSleepTracker.install();
@@ -724,9 +723,9 @@ void MainWindow::taskIndexChanged(const QModelIndex& current, const QModelIndex&
         emit onTimeChanged();
 
         // Set new timeline tree model
-        /*int w = ui->mTaskTimeTree->columnWidth(0);
-    ui->mTaskTimeTree->setModel(new TimeTreeModel(task->timeline(), *mSettings));
-    ui->mTaskTimeTree->setColumnWidth(0, w);*/
+        /* int w = ui->mTaskTimeTree->columnWidth(0);
+           ui->mTaskTimeTree->setModel(new TimeTreeModel(task->timeline(), *mSettings));
+           ui->mTaskTimeTree->setColumnWidth(0, w); */
 
         // Show or hide time table depending on type of loaded task
         handleTrackableState(task);
@@ -876,7 +875,7 @@ void MainWindow::buildOpenOrCreateView()
 }
 
 // Ask password
-void MainWindow::askDbPassword(const QString& message)
+void MainWindow::askDbPassword(const QString& /*message*/)
 {
     if (mStackedViews)
         mStackedViews->setCurrentIndex(ViewIndex_DbPassword);
@@ -1656,7 +1655,7 @@ void MainWindow::stopOnActivity()
     stopTracking(TSR_Manual);
 }
 
-void MainWindow::trayWindowDestroyed(QObject *object)
+void MainWindow::trayWindowDestroyed(QObject */*object*/)
 {
     mTrayWindow = nullptr;
 }
@@ -1707,7 +1706,6 @@ void MainWindow::onNewDbPasswordEntered(const QString& password)
 void MainWindow::onDatabaseChanged(const QString& path)
 {
     // Bind to specific database
-    mSettings->data()[KEY_DB_FILENAME_SPECIFIED] = true;
     mSettings->data()[KEY_DB_FILENAME] = path;
     mSettings->save();
     Storage::instance().setPath(path);

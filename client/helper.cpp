@@ -245,6 +245,10 @@ QString path::pathToDatabaseTemplate()
 #ifdef TARGET_OSX
     return QCoreApplication::applicationDirPath() + "/../Resources/" + DATABASENAME;
 #endif
+
+#ifdef TARGET_LINUX
+    return QCoreApplication::applicationDirPath() + "/" + DATABASENAME;
+#endif
 }
 
 QString path::pathToLog()

@@ -11,12 +11,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     helper::theme::applyCurrent(Settings::instance());
 
-    // Check if database / password are available
-    QString path = helper::path::pathToDatabase();
+    // Path to database.
+    QString path = Settings::instance().getDatabasePath();
 
-    // Find optional custom path to database
-    if (Settings::instance().data()[KEY_DB_FILENAME_SPECIFIED].toBool())
-        path = Settings::instance().data()[KEY_DB_FILENAME].toString();
 
     QString folder = QFileInfo(path).absoluteDir().path();
     Storage::instance().setPath(path);

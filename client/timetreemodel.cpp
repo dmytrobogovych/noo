@@ -372,6 +372,9 @@ TimeRecord TimeTreeModel::findInterval(const QModelIndex &index)
     case Level_Time:
         mTimeLine->getTime(year, month, day, &intervals);
         return intervals[index.row()];
+
+    default:
+        return TimeRecord();
     }
 }
 

@@ -10,7 +10,6 @@
 #define KEY_PASSWORD                    "Password"
 #define KEY_SHOW_SECONDS                "ShowSeconds"
 #define KEY_DB_FILENAME                 "DbFilename"
-#define KEY_DB_FILENAME_SPECIFIED       "DbFilenameSpecified"
 #define KEY_TIMECOUNTER_TYPE            "TimecounterType"
 
 #define KEY_LEFT                        "Left"
@@ -47,17 +46,18 @@
 class Settings
 {
 public:
-  Settings();
-  ~Settings();
+    Settings();
+    ~Settings();
 
-  void load();
-  void save();
-  QVariantMap& data();
+    void load();
+    void save();
+    QVariantMap& data();
 
-  static Settings& instance();
+    QString getDatabasePath();
+    static Settings& instance();
 
 protected:
-  QVariantMap mData;
+    QVariantMap mData;
 };
 
 #endif // SETTINGS_H
