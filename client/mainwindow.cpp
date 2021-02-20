@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setUpdatesEnabled(true);
 
     // init event
-    QApplication::postEvent(this, new UiInitEvent());
+    QApplication::postEvent(this, new ClientEvent<UiInitId>());
 }
 
 MainWindow::~MainWindow()
@@ -102,7 +102,7 @@ void MainWindow::attachDatabase()
                     askDbPassword(tr("Invalid password, please try again."));
                 }
                 else
-                    QApplication::postEvent(this, new UiInitEvent());
+                    QApplication::postEvent(this, new ClientEvent<UiInitId>());
             }
         }
         else
@@ -430,13 +430,18 @@ void MainWindow::customEvent(QEvent *ev)
 
     case static_cast<QEvent::Type>(UiInitId):
         setupMainUi();
-        connectUiToDatabase();
         loadGeometry();
         break;
 
     default:
         break;
     }
+}
+
+void MainWindow::onDatabaseAvailable()
+{
+    connectUiToDatabase();
+    mStackedViews->setCurrentIndex(ViewIndex_Main);
 }
 
 void MainWindow::preferences()
@@ -845,7 +850,7 @@ void MainWindow::setupMainUi()
     FvUpdater::sharedUpdater()->SetFeedURL("http://satorilight.com/LittAppCast.xml");
 #endif
     initClient();
-    QApplication::postEvent(this, new AttachDatabaseEvent());
+    QApplication::postEvent(this, new ClientEvent<AttachDatabaseId>());
 }
 
 void MainWindow::buildPasswordView()
@@ -1442,7 +1447,7 @@ void MainWindow::showTimeReport()
 
 void MainWindow::criticalAlertFinished(int /*status*/)
 {
-    QApplication::postEvent(this, new ClientCloseEvent());
+    QApplication::postEvent(this, new ClientEvent<ClientCloseId>());
 }
 
 void MainWindow::warningAlertFinished(int /*status*/)
@@ -1674,7 +1679,7 @@ void MainWindow::onDbPasswordEntered(const QString& password)
         askDbPassword(tr("Invalid password, please try again."));
     }
     else
-        QApplication::postEvent(this, new UiInitEvent());
+        onDatabaseAvailable();
 }
 
 void MainWindow::onDbPasswordCancelled()
@@ -1700,7 +1705,7 @@ void MainWindow::onNewDbPasswordEntered(const QString& password)
         showFatal(tr("Failed to create new database. Exiting."));
     }
     else
-        QApplication::postEvent(this, new UiInitEvent());
+        onDatabaseAvailable();
 }
 
 void MainWindow::onDatabaseChanged(const QString& path)
@@ -1710,6 +1715,7 @@ void MainWindow::onDatabaseChanged(const QString& path)
     mSettings->save();
     Storage::instance().setPath(path);
 
+    // Try to open database
     askDbPassword();
 }
 

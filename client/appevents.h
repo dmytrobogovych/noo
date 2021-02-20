@@ -12,39 +12,30 @@ enum
     UiInitId
 };
 
-class ClientInitEvent: public QEvent
+template <int N>
+class ClientEvent: public QEvent
 {
+private:
+    int mType = N;
 public:
-    ClientInitEvent();
+    ClientEvent<N>()
+        :QEvent(static_cast<QEvent::Type>(N))
+    {}
 };
 
-class ClientCloseEvent: public QEvent
+class SelectTaskEvent: public ClientEvent<SelectTaskId>
 {
 public:
-    ClientCloseEvent();
-};
+    SelectTaskEvent(PTask task) {
+        mTask = task;
+    }
 
-class AttachDatabaseEvent: public QEvent
-{
-public:
-    AttachDatabaseEvent();
-};
-
-class SelectTaskEvent: public QEvent
-{
-public:
-    SelectTaskEvent(PTask task);
-    PTask task();
+    PTask task() {
+        return mTask;
+    }
 
 protected:
     PTask mTask;
 };
-
-class UiInitEvent: public QEvent
-{
-public:
-    UiInitEvent();
-};
-
 
 #endif // APPEVENTS_H

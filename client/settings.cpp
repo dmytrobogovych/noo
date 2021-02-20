@@ -59,7 +59,7 @@ void Settings::load()
 QString Settings::getDatabasePath()
 {
     // Path to settings file
-    QString path = helper::path::pathToSettings();
+    QString path;// = helper::path::pathToSettings();
 
     QString stored_path = data()[KEY_DB_FILENAME].toString();
     if (!stored_path.isEmpty())

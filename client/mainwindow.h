@@ -159,6 +159,7 @@ private:
     void buildOpenOrCreateView();
     void buildMainView();
 
+    void onDatabaseAvailable();
 signals:
     void onTimeFormatChanged();
     void onTimeChanged();
