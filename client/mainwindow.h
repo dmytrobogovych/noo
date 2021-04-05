@@ -235,6 +235,9 @@ public slots:
     void onDbPasswordCancelled();
     void onNewDbPasswordEntered(const QString& password);
     void onDatabaseChanged(const QString& path);
+
+    void onIncreaseFontSize();
+    void onDecreaseFontSize();
 };
 
 #endif // MAINWINDOW_H

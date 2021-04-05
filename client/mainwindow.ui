@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1206</width>
-    <height>522</height>
+    <height>630</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -734,6 +734,28 @@
     <string>Ctrl+Shift+Down</string>
    </property>
   </action>
+  <action name="mIncreaseFontSizeAction">
+   <property name="text">
+    <string>Increase font size</string>
+   </property>
+   <property name="toolTip">
+    <string>Increase font size</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+=</string>
+   </property>
+  </action>
+  <action name="mDecreaseFontSize">
+   <property name="text">
+    <string>Decrease font size</string>
+   </property>
+   <property name="toolTip">
+    <string>Decrease font size</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -1296,6 +1318,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mIncreaseFontSizeAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onIncreaseFontSize()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>602</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mDecreaseFontSize</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onDecreaseFontSize()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>602</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>save()</slot>
@@ -1334,5 +1388,7 @@
   <slot>newSibling()</slot>
   <slot>moveUp()</slot>
   <slot>moveDown()</slot>
+  <slot>onIncreaseFontSize()</slot>
+  <slot>onDecreaseFontSize()</slot>
  </slots>
 </ui>

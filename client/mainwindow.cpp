@@ -264,6 +264,9 @@ void MainWindow::initClient()
     mTimeFrameHeight = 64;//ui->mTimeFrame->height();
     ui->mStartRecentTaskMenu->setEnabled(false);
 
+    // connect(ui->mIncreaseLevelAction, SIGNAL(triggered()), this, SLOT(onIncreaseFontSize()));
+    // connect(ui->mDecreaseLevelAction, SIGNAL(triggered()), this, SLOT(onDecreaseFontSize()));
+
     buildOpenOrCreateView();
     buildPasswordView();
 }
@@ -1723,4 +1726,16 @@ void MainWindow::showFatal(const QString& message)
 {
     std::cerr << message.toStdString() << std::endl;
     exit(EXIT_FAILURE);
+}
+
+void MainWindow::onIncreaseFontSize()
+{
+    QFont f = QApplication::font("QWidget");
+    f.setPixelSize(f.pixelSize() + 1);
+    QApplication::setFont(f, "QWidget");
+}
+
+void MainWindow::onDecreaseFontSize()
+{
+
 }
