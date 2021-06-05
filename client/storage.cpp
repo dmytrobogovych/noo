@@ -135,36 +135,68 @@ bool Storage::create()
         // Synctime & timestamp are always milliseconds from the start of UNIX epoch.
 
         // Timeline
-        mDatabase->exec("CREATE TABLE timeline (id INTEGER PRIMARY KEY, removed INTEGER, "
-                        "taskid INTEGER, starttime TEXT, endtime TEXT, timestamp INTEGER)");
+        mDatabase->exec("CREATE TABLE timeline ("
+                        "id         INTEGER PRIMARY KEY, "
+                        "removed    INTEGER, "
+                        "taskid     INTEGER, "
+                        "starttime  TEXT, "
+                        "endtime    TEXT, "
+                        "timestamp  INTEGER)");
         mDatabase->exec("CREATE INDEX timeline_taskid_index ON timeline(taskid ASC)");
 
         // Tasks tree
-        mDatabase->exec("CREATE TABLE task (type INTEGER, removed INTEGER, "
-                        "id INTEGER PRIMARY KEY, parentid INTEGER, orderid INTEGER, title TEXT, html TEXT, "
-                        "flags INTEGER, timestamp INTEGER)");
+        mDatabase->exec("CREATE TABLE task ("
+                        "type       INTEGER, "
+                        "removed    INTEGER, "
+                        "id         INTEGER PRIMARY KEY, "
+                        "parentid   INTEGER, "
+                        "orderid    INTEGER, "
+                        "title      TEXT, "
+                        "html       TEXT, "
+                        "flags      INTEGER, "
+                        "timestamp  INTEGER)");
+
         mDatabase->exec("CREATE INDEX task_parentid_index ON task(parentid ASC)");
 
         // Tasks history
-        mDatabase->exec("CREATE TABLE history_task (removed_old INTEGER, removed_new INTEGER, "
-                        "timestamp_old INTEGER, timestamp_new INTEGER, "
-                        "id INTEGER PRIMARY KEY, "
-                        "parent_id_old INTEGER, parent_id_new INTEGER, "
-                        "order_id_old INTEGER, order_id_new INTEGER, "
-                        "diff_title TEXT, diff_html TEXT, "
-                        "flags_old INTEGER, flags_new INTEGER)");
+        mDatabase->exec("CREATE TABLE history_task ("
+                        "removed_old    INTEGER, "
+                        "removed_new    INTEGER, "
+                        "timestamp_old  INTEGER, "
+                        "timestamp_new  INTEGER, "
+                        "id             INTEGER PRIMARY KEY, "
+                        "parent_id_old  INTEGER, "
+                        "parent_id_new  INTEGER, "
+                        "order_id_old   INTEGER, "
+                        "order_id_new   INTEGER, "
+                        "diff_title     TEXT, "
+                        "diff_html      TEXT, "
+                        "flags_old      INTEGER, "
+                        "flags_new      INTEGER)");
 
         // Attachments
-        mDatabase->exec("CREATE TABLE file (id INTEGER PRIMARY KEY, removed INTEGER, taskid INTEGER, "
-                        "filename TEXT, content BLOB, orderid INTEGER, timestamp INTEGER)");
+        mDatabase->exec("CREATE TABLE file ("
+                        "id         INTEGER PRIMARY KEY, "
+                        "removed    INTEGER, "
+                        "taskid     INTEGER, "
+                        "filename   TEXT, "
+                        "content    BLOB, "
+                        "orderid    INTEGER, "
+                        "timestamp  INTEGER)");
 
-        mDatabase->exec("CREATE TABLE history_file (id INTEGER PRIMARY KEY, "
-                        "removed_old INTEGER, removed_new INTEGER, "
-                        "taskid_old INTEGER, taskid_new INTEGER, "
-                        "filename_old TEXT, filename_new TEXT,"
-                        "content BLOB, "
-                        "order_id_old INTEGER, order_id_new INTEGER, "
-                        "timestamp_old INTEGER, timestamp_new INTEGER)");
+        mDatabase->exec("CREATE TABLE history_file ("
+                        "id             INTEGER PRIMARY KEY, "
+                        "removed_old    INTEGER, "
+                        "removed_new    INTEGER, "
+                        "taskid_old     INTEGER, "
+                        "taskid_new     INTEGER, "
+                        "filename_old   TEXT, "
+                        "filename_new   TEXT,"
+                        "content        BLOB, "
+                        "order_id_old   INTEGER, "
+                        "order_id_new   INTEGER, "
+                        "timestamp_old  INTEGER, "
+                        "timestamp_new  INTEGER)");
 
         mDatabase->exec("CREATE INDEX file_taskid_index ON file(taskid ASC)");
 
@@ -319,17 +351,17 @@ bool Storage::upgradeFromVersion0()
     return true;
 }
 
-bool Storage::encryptTask(PTask task)
+bool Storage::encryptTask(PTask /*task*/)
 {
     return false;
 }
 
-bool Storage::encryptTaskContent(PTask task)
+bool Storage::encryptTaskContent(PTask /*task*/)
 {
     return false;
 }
 
-bool Storage::encryptTaskAttachment(PAttachment attachment)
+bool Storage::encryptTaskAttachment(PAttachment /*attachment*/)
 {
     return false;
 }
@@ -347,8 +379,9 @@ PTask Storage::createTask(int index)
     if (insertQuery.exec())
     {
         PTask result(new Task());
-        result->setId(database().getLastInsertRowid());
-        result->setIndex(index);
+        result->setId(database().getLastInsertRowid())
+               .setIndex(index);
+
         mTaskModelIdMap[result->modelId()] = result;
         mTaskIdMap[result->id()] = result;
         if (index > mTopTasks.size())
@@ -359,8 +392,8 @@ PTask Storage::createTask(int index)
             // Assign new indexes for top tasks
             for (int i=0; i<mTopTasks.size(); i++)
             {
-                mTopTasks[i]->setIndex(i);
-                mTopTasks[i]->save();
+                mTopTasks[i]->setIndex(i)
+                             .save();
             }
         }
         return result;
@@ -369,7 +402,7 @@ PTask Storage::createTask(int index)
         return PTask();
 }
 
-PTask Storage::createTask(PTask parent, int index)
+PTask Storage::createTask(const PTask& parent, int index)
 {
     if (!parent)
         return createTask(index);
@@ -394,8 +427,8 @@ PTask Storage::createTask(PTask parent, int index)
             parent->children().insert(parent->children().begin() + index, result);
             for (int i=0; i<parent->children().size(); i++)
             {
-                parent->children()[i]->setIndex(i);
-                parent->children()[i]->save();
+                parent->children()[i]->setIndex(i)
+                                      .save();
             }
         }
 
@@ -470,8 +503,8 @@ bool Storage::moveTask(PTask task, PTask newParent, int indexToInsert)
 
         for (int i=0; i<topOfTaskTree().size(); i++)
         {
-            topOfTaskTree()[i]->setIndex(i);
-            topOfTaskTree()[i]->save();
+            topOfTaskTree()[i]->setIndex(i)
+                               .save();
         }
     }
 
@@ -504,6 +537,15 @@ void Storage::saveSingleTask(PTask task)
     task->save();
 }
 
+void Storage::loadTaskRecord(Task& t, SQLite::Statement& q)
+{
+    t.mId               = q.getColumn(0).getInt64();
+    t.mTitle            = q.getColumn(1).getText();
+    t.mIndex            = q.getColumn(2).getInt();
+    t.mFlags            = q.getColumn(3).getInt();
+    t.mAttachmentCount  = q.getColumn(4).getInt();
+}
+
 void Storage::loadTaskTree()
 {
     mTopTasks.clear();
@@ -513,7 +555,7 @@ void Storage::loadTaskTree()
     while(q.executeStep())
     {
         PTask t(new Task());
-        t->load(q);
+        loadTaskRecord(*t, q);
         t->setIndex(currentIndex++);
         mTaskModelIdMap[t->modelId()] = t;
         mTaskIdMap[t->id()] = t;
@@ -532,9 +574,10 @@ void Storage::loadTaskChildren(PTask task)
     while (q.executeStep())
     {
         PTask t(new Task());
-        t->load(q);
-        t->setIndex(currentIndex++);
-        t->setParent(task, false);
+        loadTaskRecord(*t, q);
+        t->setIndex(currentIndex++)
+          .setParent(task, false);
+
         loadTaskChildren(t);
         mTaskModelIdMap[t->modelId()] = t;
         mTaskIdMap[t->id()] = t;
@@ -580,10 +623,10 @@ void Storage::loadAttachments(PTask task, AttachmentArray& output)
     while (q.executeStep())
     {
         PAttachment att(new Attachment());
-        att->setId(q.getColumn(0).getInt64());
-        att->setFilename(q.getColumn(1).getText());
-        att->setTaskId(task->id());
-        att->setIndex(q.getColumn(2).getInt());
+        att->setId(q.getColumn(0).getInt64())
+            .setFilename(q.getColumn(1).getText())
+            .setTaskId(task->id())
+            .setIndex(q.getColumn(2).getInt());
         output.push_back(att);
     }
 }
@@ -602,6 +645,114 @@ void Storage::undeleteAttachment(PAttachment att)
     q.exec();
 }
 
+Id Storage::saveMetadata(const Attachment &a)
+{
+    if (a.mId)
+    {
+        SQLite::Statement q(Storage::instance().database(), "update file set filename = :filename, orderid = :orderid where id = :id");
+        q.bind(":filename", a.mFilename.toStdString().c_str());
+        q.bind(":orderid", a.mIndex);
+        q.bind(":id", (sqlite3_int64)a.mId);
+
+        if (q.exec())
+            return a.mId;
+    }
+    else
+    {
+        SQLite::Statement q(Storage::instance().database(), "insert into file (filename, taskid, orderid, removed) values(:filename, :taskid, :orderid, 0)");
+        q.bind(":filename", a.mFilename.toStdString().c_str());
+        q.bind(":taskid", (sqlite3_int64)a.mTaskId);
+        q.bind(":orderid", a.mIndex);
+        if (q.exec())
+        {
+            return Storage::instance().database().getLastInsertRowid();
+        }
+    }
+
+    return Id(0);
+}
+
+void Storage::saveContent(const Attachment &a, const QByteArray& content)
+{
+    SQLite::Statement q(Storage::instance().database(), "update file set content = :content where id = :id");
+    q.bind(":content", content.data(), content.size());
+    q.bind(":id", (sqlite3_int64)a.mId);
+    if (q.exec())
+        ;
+}
+
+QByteArray Storage::loadContent(const Attachment &a)
+{
+    SQLite::Statement q(Storage::instance().database(), "select content from file where id = :id");
+    q.bind(":id", (sqlite3_int64)a.mId);
+    if (q.executeStep())
+        return QByteArray((const char*)q.getColumn(0).getBlob(), q.getColumn(0).size());
+    else
+        return QByteArray();
+}
+
+Id Storage::saveTimeRecord(const TimeRecord &r)
+{
+    if (!r.id())
+    {
+        SQLite::Statement q(Storage::instance().database(), "insert into timeline(id, starttime, endtime, taskid, removed) values (NULL, :starttime, :endtime, :taskid, :removed)");
+
+        q.bind(":starttime", helper::chrono::timeToStr(r.startTime()));
+        q.bind(":endtime", helper::chrono::timeToStr(r.endTime()));
+        q.bind(":taskid", static_cast<sqlite3_int64>(r.taskId()));
+        q.bind(":removed", 0);
+        if (q.exec())
+            return Storage::instance().database().getLastInsertRowid();
+    }
+    else
+    {
+        SQLite::Statement q(Storage::instance().database(),
+                            "update timeline set starttime = :starttime, endtime = :endtime, taskid = :taskid, removed = 0 where id = :id");
+        q.bind(":starttime", helper::chrono::timeToStr(r.startTime()));
+        q.bind(":endtime", helper::chrono::timeToStr(r.endTime()));
+        q.bind(":taskid", static_cast<sqlite3_int64>(r.taskId()));
+        q.bind(":id", static_cast<sqlite3_int64>(r.id()));
+        if (q.exec())
+            return r.id();
+    }
+    return (Id)0;
+}
+
+void Storage::deleteTimeRecord(const TimeRecord &r)
+{
+    SQLite::Statement q(Storage::instance().database(), "update timeline set removed = 1 where id = :id");
+    q.bind(":id", static_cast<sqlite3_int64>(r.id()));
+    q.exec();
+}
+
+void Storage::loadTimeLine(TimeLine& l)
+{
+    SQLite::Statement q(Storage::instance().database(), "select id, starttime, endtime from timeline where (taskid = :taskid) and ((removed is null) or (removed != 1)) order by id asc");
+    q.bind(":taskid", static_cast<sqlite3_int64>(l.taskId()));
+    while (q.executeStep())
+    {
+        time_t start = helper::chrono::strToTime(q.getColumn(1).getText());
+        time_t stop = helper::chrono::strToTime(q.getColumn(2).getText());
+
+        TimeRecord tr;
+        tr.setId(q.getColumn(0).getInt64())
+          .setStartTime(start)
+          .setEndTime(stop)
+          .setTaskId(l.taskId());
+        l.data().push_back(tr);
+    }
+
+    // Sort time intervals
+    l.sortData();
+
+    // Find current total time length
+    l.mTotalTime = l.findTotalTime();
+}
+
+void Storage::saveTimeLime(const TimeLine& l)
+{
+
+}
 
 Storage& Storage::instance()
 {
@@ -610,7 +761,7 @@ Storage& Storage::instance()
 }
 
 
-void Storage::deleteTask(PTask task, DeleteOption option)
+void Storage::deleteTask(const PTask& task, DeleteOption option)
 {
     if (option != DeleteOption_FromParent)
     {
@@ -651,7 +802,7 @@ void Storage::deleteTask(PTask task, DeleteOption option)
 #endif
 }
 
-void Storage::undeleteTask(PTask task)
+void Storage::undeleteTask(const PTask& task)
 {
     SQLite::Statement q(database(), "update task set removed = 0 where id = :id");
     q.bind(":id", (sqlite3_int64)task->id());
@@ -670,7 +821,7 @@ void Storage::undeleteTask(PTask task)
     mTaskIdMap[task->id()] = task;
 }
 
-void Storage::removeTask(PTask task)
+void Storage::removeTask(const PTask& task)
 {
     auto taskModelIter = mTaskModelIdMap.find(task->modelId());
     if (taskModelIter != mTaskModelIdMap.end())
@@ -681,3 +832,69 @@ void Storage::removeTask(PTask task)
         mTaskIdMap.erase(taskIter);
 }
 
+void Storage::loadTaskContent(Task& task)
+{
+    SQLite::Statement htmlQuery(Storage::instance().database(), "select html from task where id = :id");
+    htmlQuery.bind(":id", (sqlite3_int64)task.mId);
+    if (htmlQuery.executeStep())
+    {
+        task.mHtml = htmlQuery.getColumn(0).getText();
+        task.mHtmlLoaded = true;
+        task.mHtmlModified = false;
+    }
+
+    if (!task.mTimeLine)
+    {
+        task.mTimeLine = PTimeLine(new TimeLine());
+        task.mTimeLine->setTaskId(task.mId);
+        task.mTimeLine->load();
+    }
+}
+
+void Storage::saveTask(const Task& task, SaveOptions options)
+{
+    const Task& t = task;
+
+    if (!t.mTitleModified && !t.mHtmlModified && !t.mIndexModified && !t.mParentModified && options == Save_Automatic)
+        return;
+
+    const char* queryText = nullptr;
+    // Minimize changes to DB
+    if (t.mTitleModified && t.mHtmlModified)
+        queryText = "update task set parentid = :parentid, flags = :flags, title = :title, html = :html, orderid = :orderid where id = :id";
+    else
+    if (t.mTitleModified)
+        queryText = "update task set parentid = :parentid, flags = :flags, title = :title, orderid = :orderid where id = :id";
+    else
+    if (t.mHtmlModified)
+        queryText = "update task set parentid = :parentid, flags = :flags, html = :html, orderid = :orderid where id = :id";
+    else
+        queryText = "update task set parentid = :parentid, flags = :flags, orderid = :orderid where id = :id";
+
+    SQLite::Statement q(Storage::instance().database(), queryText);
+    if (t.mParent)
+        q.bind(":parentid", (sqlite3_int64)t.mParent->id());
+    else
+        q.bind(":parentid");
+
+    q.bind(":flags", t.mFlags);
+
+    if (t.mTitleModified)
+        q.bind(":title", t.mTitle.toStdString());
+    if (t.mHtmlModified)
+        q.bind(":html", t.mHtml.toStdString());
+
+    q.bind(":id", (sqlite3_int64)t.mId);
+    q.bind(":orderid", t.mIndex);
+    q.exec();
+}
+
+int Storage::findAttachmentCountOnTask(const Task &t)
+{
+    SQLite::Statement q(Storage::instance().database(), "select count(*) from file where (taskid = :taskid) and ((removed = 0) or (removed is null))");
+    q.bind(":taskid", (sqlite3_int64)t.id());
+    if (q.executeStep())
+        return q.getColumn(0).getInt();
+    else
+        return 0;
+}

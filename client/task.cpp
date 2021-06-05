@@ -86,9 +86,10 @@ time_t TimeRecord::endTime() const
     return mEndTime;
 }
 
-void TimeRecord::setEndTime(const time_t &endTime)
+TimeRecord& TimeRecord::setEndTime(const time_t &endTime)
 {
     mEndTime = endTime;
+    return *this;
 }
 
 time_t TimeRecord::startTime() const
@@ -96,9 +97,10 @@ time_t TimeRecord::startTime() const
     return mStartTime;
 }
 
-void TimeRecord::setStartTime(const time_t &startTime)
+TimeRecord& TimeRecord::setStartTime(const time_t &startTime)
 {
     mStartTime = startTime;
+    return *this;
 }
 
 int TimeRecord::length()
@@ -111,9 +113,10 @@ Id TimeRecord::id() const
     return mId;
 }
 
-void TimeRecord::setId(Id id)
+TimeRecord& TimeRecord::setId(Id id)
 {
     mId = id;
+    return *this;
 }
 
 Id TimeRecord::taskId() const
@@ -121,9 +124,10 @@ Id TimeRecord::taskId() const
     return mTaskId;
 }
 
-void TimeRecord::setTaskId(Id id)
+TimeRecord& TimeRecord::setTaskId(Id id)
 {
     mTaskId = id;
+    return *this;
 }
 
 WorldId TimeRecord::worldId() const
@@ -131,41 +135,22 @@ WorldId TimeRecord::worldId() const
     return mWorldId;
 }
 
-void TimeRecord::setWorldId(const WorldId& id)
+TimeRecord& TimeRecord::setWorldId(const WorldId& id)
 {
     mWorldId = id;
+    return *this;
 }
 
 void TimeRecord::save()
 {
-    if (!mId)
-    {
-        SQLite::Statement q(Storage::instance().database(), "insert into timeline(id, starttime, endtime, taskid, removed) values (NULL, :starttime, :endtime, :taskid, :removed)");
-
-        q.bind(":starttime", helper::chrono::timeToStr(mStartTime));
-        q.bind(":endtime", helper::chrono::timeToStr(mEndTime));
-        q.bind(":taskid", static_cast<sqlite3_int64>(mTaskId));
-        q.bind(":removed", 0);
-        if (q.exec())
-            mId = Storage::instance().database().getLastInsertRowid();
-    }
-    else
-    {
-        SQLite::Statement q(Storage::instance().database(),
-                            "update timeline set starttime = :starttime, endtime = :endtime, taskid = :taskid, removed = 0 where id = :id");
-        q.bind(":starttime", helper::chrono::timeToStr(mStartTime));
-        q.bind(":endtime", helper::chrono::timeToStr(mEndTime));
-        q.bind(":taskid", static_cast<sqlite3_int64>(mTaskId));
-        q.bind(":id", static_cast<sqlite3_int64>(mId));
-        q.exec();
-    }
+    auto id = Storage::instance().saveTimeRecord(*this);
+    if (id)
+        mId = id;
 }
 
 void TimeRecord::deleteRecord()
 {
-    SQLite::Statement q(Storage::instance().database(), "update timeline set removed = 1 where id = :id");
-    q.bind(":id", static_cast<sqlite3_int64>(mId));
-    q.exec();
+    Storage::instance().deleteTimeRecord(*this);
 }
 
 // -------------------- TimeLine --------------------
@@ -218,10 +203,10 @@ void TimeLine::start()
 TimeRecord* TimeLine::makeNewRecord(time_t beginTime, time_t endTime)
 {
     TimeRecord tr;
-    tr.setStartTime(beginTime);
-    tr.setEndTime(endTime);
-    tr.setTaskId(mTaskId);
-    tr.save();
+    tr.setStartTime(beginTime)
+      .setEndTime(endTime)
+      .setTaskId(mTaskId)
+      .save();
 
     mData.push_back(tr);
     Id intervalId = tr.id();
@@ -388,11 +373,13 @@ void TimeLine::cutInterval(const TimeRecord& interval)
                 // So cut interval will split it to 2 new intervals
                 // Also this operation will end loop
                 TimeRecord toInsert(*iter);  // Backup current interval
-                iter->setEndTime(interval.startTime() - 1);
-                iter->save();
-                toInsert.setStartTime(interval.endTime() + 1);
+                iter->setEndTime(interval.startTime() - 1)
+                     .save();
+
+                toInsert.setStartTime(interval.endTime() + 1)
+                        .save();
                 mData.insert(++iter, toInsert);
-                toInsert.save();
+
                 done = true;
                 break;
             }
@@ -407,8 +394,8 @@ void TimeLine::cutInterval(const TimeRecord& interval)
             else
             {
                 // Current interval starts before cut interval but finishes in cut interval
-                iter->setEndTime(interval.startTime() - 1);
-                iter->save();
+                iter->setEndTime(interval.startTime() - 1)
+                     .save();
                 done = true;
                 break;
             }
@@ -425,7 +412,10 @@ void TimeLine::cutInterval(const TimeRecord& interval)
                             [=] (const TimeRecord& tr)
                             { return tr.id() == interval.id();});
         if (iter != mData.end())
+        {
+            Storage::instance().deleteTimeRecord(*iter);
             mData.erase(iter);
+        }
     }
 }
 
@@ -465,8 +455,8 @@ void TimeLine::flush(bool saveToDb, time_t currentUtc)
         TimeRecord* tr = hasTimePoint(currentUtc);
         if (tr && tr != mActiveTimeRecord)
         {
-            mActiveTimeRecord->setEndTime(currentUtc);
-            mActiveTimeRecord->save();
+            mActiveTimeRecord->setEndTime(currentUtc)
+                              .save();
             mActiveTimeRecord = nullptr;
         }
         if (saveToDb && mActiveTimeRecord)
@@ -486,26 +476,7 @@ void TimeLine::flush(bool saveToDb, time_t currentUtc)
 
 void TimeLine::load()
 {
-    SQLite::Statement q(Storage::instance().database(), "select id, starttime, endtime from timeline where (taskid = :taskid) and ((removed is null) or (removed != 1)) order by id asc");
-    q.bind(":taskid", static_cast<sqlite3_int64>(mTaskId));
-    while (q.executeStep())
-    {
-        time_t start = helper::chrono::strToTime(q.getColumn(1).getText());
-        time_t stop = helper::chrono::strToTime(q.getColumn(2).getText());
-
-        TimeRecord tr;
-        tr.setId(q.getColumn(0).getInt64());
-        tr.setStartTime(start);
-        tr.setEndTime(stop);
-        tr.setTaskId(mTaskId);
-        mData.push_back(tr);
-    }
-
-    // Sort time intervals
-    sortData();
-
-    // Find current total time length
-    mTotalTime = findTotalTime();
+    Storage::instance().loadTimeLine(*this);
 }
 
 void TimeLine::save()
@@ -518,9 +489,10 @@ Id TimeLine::taskId()
     return mTaskId;
 }
 
-void TimeLine::setTaskId(Id id)
+TimeLine& TimeLine::setTaskId(Id id)
 {
     mTaskId = id;
+    return *this;
 }
 
 TimeArray& TimeLine::data()
@@ -668,10 +640,10 @@ int TimeLine::getTime(int year, int month, int day, std::vector<TimeRecord>* int
         if (intervals)
         {
             TimeRecord resultingRecord;
-            resultingRecord.setStartTime(dayBegin);
-            resultingRecord.setEndTime(dayEnd);
-            resultingRecord.setId(tr.id());
-            resultingRecord.setTaskId(tr.taskId());
+            resultingRecord.setStartTime(dayBegin)
+                           .setEndTime(dayEnd)
+                           .setId(tr.id())
+                           .setTaskId(tr.taskId());
             intervals->push_back(resultingRecord);
         }
         result++;
@@ -822,26 +794,17 @@ Task::Task()
 }
 
 Task::~Task()
-{
-}
-
-void Task::load(SQLite::Statement &q)
-{
-    mId = q.getColumn(0).getInt64();
-    mTitle = q.getColumn(1).getText();
-    mIndex = q.getColumn(2).getInt();
-    mFlags = q.getColumn(3).getInt();
-    mAttachmentCount = q.getColumn(4).getInt();
-}
+{}
 
 Task::Id Task::id() const
 {
     return mId;
 }
 
-void Task::setId(Id id)
+Task& Task::setId(Id id)
 {
     mId = id;
+    return *this;
 }
 
 Task::Id Task::parentId() const
@@ -849,13 +812,14 @@ Task::Id Task::parentId() const
     return mParentId;
 }
 
-void Task::setParentId(Id id)
+Task& Task::setParentId(Id id)
 {
     if (mParentId != id)
     {
         mParentModified = true;
         mParentId = id;
     }
+    return *this;
 }
 
 WorldId Task::worldId() const
@@ -863,9 +827,10 @@ WorldId Task::worldId() const
     return mWorldId;
 }
 
-void Task::setWorldId(const WorldId& id)
+Task& Task::setWorldId(const WorldId& id)
 {
     mWorldId = id;
+    return *this;
 }
 
 Task::ModelId Task::modelId() const
@@ -873,9 +838,10 @@ Task::ModelId Task::modelId() const
     return mModelId;
 }
 
-void Task::setModelId(ModelId id)
+Task& Task::setModelId(ModelId id)
 {
     mModelId = id;
+    return *this;
 }
 
 int Task::index() const
@@ -883,7 +849,7 @@ int Task::index() const
     return mIndex;
 }
 
-void Task::setIndex(int index, bool modified)
+Task& Task::setIndex(int index, bool modified)
 {
     if (index != mIndex)
     {
@@ -891,6 +857,7 @@ void Task::setIndex(int index, bool modified)
             mIndexModified = true;
         mIndex = index;
     }
+    return *this;
 }
 
 QString Task::html() const
@@ -898,13 +865,14 @@ QString Task::html() const
     return mHtml;
 }
 
-void Task::setHtml(const QString &html)
+Task& Task::setHtml(const QString &html)
 {
     if (mHtml != html)
     {
         mHtml = html;
         mHtmlModified = true;
     }
+    return *this;
 }
 
 QString Task::title() const
@@ -912,7 +880,7 @@ QString Task::title() const
     return mTitle;
 }
 
-void Task::setTitle(const QString &title, bool modified)
+Task& Task::setTitle(const QString &title, bool modified)
 {
     if (mTitle != title)
     {
@@ -920,61 +888,20 @@ void Task::setTitle(const QString &title, bool modified)
         if (modified)
             mTitleModified = true;
     }
+    return *this;
 }
 
-void Task::save(SaveOptions options)
+void Task::save()
 {
-    if (!mTitleModified && !mHtmlModified && !mIndexModified && !mParentModified && options == Save_Automatic)
-        return;
-
-    const char* queryText = NULL;
-
-    if (mTitleModified && mHtmlModified)
-        queryText = "update task set parentid = :parentid, flags = :flags, title = :title, html = :html, orderid = :orderid where id = :id";
-    else
-        if (mTitleModified)
-            queryText = "update task set parentid = :parentid, flags = :flags, title = :title, orderid = :orderid where id = :id";
-        else
-            if (mHtmlModified)
-                queryText = "update task set parentid = :parentid, flags = :flags, html = :html, orderid = :orderid where id = :id";
-            else
-                queryText = "update task set parentid = :parentid, flags = :flags, orderid = :orderid where id = :id";
-
-    SQLite::Statement q(Storage::instance().database(), queryText);
-    if (mParent)
-        q.bind(":parentid", (sqlite3_int64)mParent->id());
-    else
-        q.bind(":parentid");
-
-    q.bind(":flags", mFlags);
-
-    if (mTitleModified)
-        q.bind(":title", mTitle.toStdString());
-    if (mHtmlModified)
-        q.bind(":html", mHtml.toStdString());
-
-    q.bind(":id", (sqlite3_int64)mId);
-    q.bind(":orderid", mIndex);
-    q.exec();
+    Storage::instance().saveTask(*this);
     mIndexModified = mTitleModified = mHtmlModified = false;
 }
 
-/*void Task::load()
+void Task::saveAnyway()
 {
-  SQLite::Statement q(Storage::instance().database(), "select parentid, title, html, orderid from task where (id = :id) and (type = 0)");
-  q.bind(":id", (sqlite3_int64)mId);
-  if (q.executeStep())
-  {
-    mParentId = q.getColumn(0).getInt64();
-    mTitle = q.getColumn(1).getText();
-    mHtml = q.getColumn(2).getText();
-    mIndex = q.getColumn(3).getInt();
-  }
-  mTitleModified = mHtmlModified = false;
-  mHtmlLoaded = true;
-
-  checkAttachments();
-}*/
+    Storage::instance().saveTask(*this, Storage::Save_Forced);
+    mIndexModified = mTitleModified = mHtmlModified = false;
+}
 
 QString Task::path() const
 {
@@ -990,7 +917,7 @@ PTask Task::parent() const
     return mParent;
 }
 
-void Task::setParent(PTask task, bool modified)
+Task& Task::setParent(PTask task, bool modified)
 {
     if (mParent != task)
     {
@@ -1002,6 +929,7 @@ void Task::setParent(PTask task, bool modified)
         if (modified)
             mTitleModified = true; // To force save()
     }
+    return *this;
 }
 
 TaskArray& Task::children()
@@ -1011,21 +939,7 @@ TaskArray& Task::children()
 
 void Task::loadContent()
 {
-    SQLite::Statement htmlQuery(Storage::instance().database(), "select html from task where id = :id");
-    htmlQuery.bind(":id", (sqlite3_int64)mId);
-    if (htmlQuery.executeStep())
-    {
-        mHtml = htmlQuery.getColumn(0).getText();
-        mHtmlLoaded = true;
-        mHtmlModified = false;
-    }
-
-    if (!mTimeLine)
-    {
-        mTimeLine = PTimeLine(new TimeLine());
-        mTimeLine->setTaskId(mId);
-        mTimeLine->load();
-    }
+    Storage::instance().loadTaskContent(*this);
 }
 
 bool Task::isContentLoaded() const
@@ -1051,20 +965,15 @@ int Task::getAttachmentCount()
     return mAttachmentCount;
 }
 
-void Task::setAttachmentCount(int count)
+Task& Task::setAttachmentCount(int count)
 {
     mAttachmentCount = count;
+    return *this;
 }
 
-int Task::checkAttachments()
+int Task::preloadAttachmentCount()
 {
-    SQLite::Statement q(Storage::instance().database(), "select count(*) from file where (taskid = :taskid) and ((removed = 0) or (removed is null))");
-    q.bind(":taskid", (sqlite3_int64)mId);
-    if (q.executeStep())
-        mAttachmentCount = q.getColumn(0).getInt();
-    else
-        mAttachmentCount = 0;
-
+    mAttachmentCount = Storage::instance().findAttachmentCountOnTask(*this);
     return mAttachmentCount;
 }
 
@@ -1073,9 +982,10 @@ bool Task::isChecked() const
     return mChecked;
 }
 
-void Task::setChecked(bool checked)
+Task& Task::setChecked(bool checked)
 {
     mChecked = checked;
+    return *this;
 }
 
 int Task::getReportedTime() const
@@ -1083,9 +993,10 @@ int Task::getReportedTime() const
     return mReportedTime;
 }
 
-void Task::setReportedTime(int t)
+Task& Task::setReportedTime(int t)
 {
     mReportedTime = t;
+    return *this;
 }
 
 int Task::getChildrenReportedTime() const
@@ -1093,9 +1004,10 @@ int Task::getChildrenReportedTime() const
     return mChildrenReportedTime;
 }
 
-void Task::setChildrenReportedTime(int t)
+Task& Task::setChildrenReportedTime(int t)
 {
     mChildrenReportedTime = t;
+    return *this;
 }
 
 int Task::flags() const
@@ -1103,10 +1015,12 @@ int Task::flags() const
     return mFlags;
 }
 
-void Task::setFlags(int value)
+Task& Task::setFlags(int value)
 {
     mFlags = value;
-    save(Save_Forced);
+    saveAnyway();
+
+    return *this;
 }
 
 int Task::cursorPosition() const
@@ -1114,24 +1028,12 @@ int Task::cursorPosition() const
     return mCursorPosition;
 }
 
-void Task::setCursorPosition(int position)
+Task& Task::setCursorPosition(int position)
 {
     mCursorPosition = position;
+    return *this;
 }
 
-/*
-QTextDocument* Task::getTextDocument() const
-{
-  return mDocument;
-}
-
-void Task::setTextDocument(QTextDocument* doc)
-{
-  mDocument = doc;
-  if (mDocument)
-    mDocument->setParent(this);
-}
-*/
 // ----------- Attachment -------------
 Attachment::Attachment()
     :mId(0), mTaskId(0)
@@ -1149,9 +1051,10 @@ Task::Id Attachment::id()
     return mId;
 }
 
-void Attachment::setId(Task::Id id)
+Attachment& Attachment::setId(Task::Id id)
 {
     mId = id;
+    return *this;
 }
 
 Task::Id Attachment::taskId()
@@ -1159,9 +1062,10 @@ Task::Id Attachment::taskId()
     return mTaskId;
 }
 
-void Attachment::setTaskId(Task::Id id)
+Attachment& Attachment::setTaskId(Task::Id id)
 {
     mTaskId = id;
+    return *this;
 }
 
 WorldId Attachment::worldId() const
@@ -1169,9 +1073,10 @@ WorldId Attachment::worldId() const
     return mWorldId;
 }
 
-void Attachment::setWorldId(const WorldId& id)
+Attachment& Attachment::setWorldId(const WorldId& id)
 {
     mWorldId = id;
+    return *this;
 }
 
 int Attachment::index()
@@ -1179,34 +1084,28 @@ int Attachment::index()
     return mIndex;
 }
 
-void Attachment::setIndex(int index)
+Attachment& Attachment::setIndex(int index)
 {
     //TODO: introduce mIndexModified field and corresponding login in save()
     mIndex = index;
+    return *this;
 }
 
 QByteArray Attachment::loadContent()
 {
-    SQLite::Statement q(Storage::instance().database(), "select content from file where id = :id");
-    q.bind(":id", (sqlite3_int64)mId);
-    if (q.executeStep())
-        return QByteArray((const char*)q.getColumn(0).getBlob(), q.getColumn(0).size());
-    else
-        return QByteArray();
+    return Storage::instance().loadContent(*this);
 }
 
-void Attachment::saveContent(const QByteArray& content)
+Attachment& Attachment::saveContent(const QByteArray& content)
 {
-    SQLite::Statement q(Storage::instance().database(), "update file set content = :content where id = :id");
-    q.bind(":content", content.data(), content.size());
-    q.bind(":id", (sqlite3_int64)mId);
-    if (q.exec())
-        ;
+    Storage::instance().saveContent(*this, content);
+    return *this;
 }
 
-void Attachment::setFilename(const QString& filename)
+Attachment& Attachment::setFilename(const QString& filename)
 {
     mFilename = filename;
+    return *this;
 }
 
 QString Attachment::filename()
@@ -1214,33 +1113,16 @@ QString Attachment::filename()
     return mFilename;
 }
 
-//    mDatabase->exec("CREATE TABLE file (id INTEGER PRIMARY KEY, removed INTEGER, taskid INTEGER, filename TEXT, content BLOB, orderid INTEGER, synctime TEXT)");
-
-void Attachment::save()
+Attachment& Attachment::saveMetadata()
 {
-    if (mId)
-    {
-        SQLite::Statement q(Storage::instance().database(), "update file set filename = :filename, orderid = :orderid where id = :id");
-        q.bind(":filename", mFilename.toStdString().c_str());
-        q.bind(":orderid", mIndex);
-        q.bind(":id", (sqlite3_int64)mId);
+    auto id = Storage::instance().saveMetadata(*this);
+    if (id != 0)
+        mId = id;
 
-        if (q.exec())
-            ;
-    }
-    else
-    {
-        SQLite::Statement q(Storage::instance().database(), "insert into file (filename, taskid, orderid, removed) values(:filename, :taskid, :orderid, 0)");
-        q.bind(":filename", mFilename.toStdString().c_str());
-        q.bind(":taskid", (sqlite3_int64)mTaskId);
-        q.bind(":orderid", mIndex);
-        if (q.exec())
-        {
-            mId = Storage::instance().database().getLastInsertRowid();
-        }
-    }
+    return *this;
 }
 
-void Attachment::load()
+Attachment& Attachment::loadMetadata()
 {
+    return *this;
 }

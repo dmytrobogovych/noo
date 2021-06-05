@@ -11,9 +11,7 @@
 
 TaskTreeView::TaskTreeView(QWidget *widget)
     :QTreeView(widget)
-{
-
-}
+{}
 
 void TaskTreeView::dragMoveEvent(QDragMoveEvent* event)
 {
@@ -270,15 +268,17 @@ QVariant TaskTreeModel::headerData(int /*section*/, Qt::Orientation /*orientatio
 {
     return "";
 
-    /*if (orientation != Qt::Horizontal)
-    return QVariant();
+    /*
+    if (orientation != Qt::Horizontal)
+        return QVariant();
 
-  switch (role)
-  {
-  case Qt::DisplayRole:
-    return QString(tr("Tasks"));
-  }
-  return QVariant();*/
+    switch (role)
+    {
+    case Qt::DisplayRole:
+        return QString(tr("Tasks"));
+    }
+    return QVariant();
+    */
 }
 
 Qt::DropActions TaskTreeModel::supportedDropActions() const
@@ -419,7 +419,8 @@ bool TaskTreeModel::dropMimeData(const QMimeData *mimeData, Qt::DropAction actio
     return true;
 }
 
-bool TaskTreeModel::canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const
+bool TaskTreeModel::canDropMimeData(const QMimeData */*data*/, Qt::DropAction /*action*/,
+                                    int /*row*/, int /*column*/, const QModelIndex &/*parent*/) const
 {
     //qDebug() << "TaskTreeModel::canDropMimeData() called";
     return true;
@@ -432,7 +433,7 @@ bool TaskTreeModel::removeRows(int row, int count, const QModelIndex &parent)
     return true;
 
     // Called during drag and drop
-    if (parent.isValid())
+/*  if (parent.isValid())
     {
         PTask parentTask = getTask(parent);
         for (int i=0; i<count; i++)
@@ -461,6 +462,7 @@ bool TaskTreeModel::removeRows(int row, int count, const QModelIndex &parent)
     }
 
     return true;
+    */
 }
 
 bool TaskTreeModel::insertRows(int /*row*/, int /*count*/, const QModelIndex& /*parent*/)

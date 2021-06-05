@@ -40,16 +40,21 @@ public:
     ~TimeRecord();
 
     time_t startTime() const;
-    void setStartTime(const time_t& startTime);
+    TimeRecord& setStartTime(const time_t& startTime);
+
     time_t endTime() const;
-    void setEndTime(const time_t& endTime);
+    TimeRecord& setEndTime(const time_t& endTime);
+
     int length();
+
     Id id() const;
-    void setId(Id id);
+    TimeRecord& setId(Id id);
+
     Id taskId() const;
-    void setTaskId(Id id);
+    TimeRecord& setTaskId(Id id);
+
     WorldId worldId() const;
-    void setWorldId(const WorldId& id);
+    TimeRecord& setWorldId(const WorldId& id);
 
     // Save record to DB. If record is new - id() property will be set after this call.
     void save();
@@ -74,6 +79,7 @@ typedef std::map<int, QSharedPointer<MonthesMap> > YearsMap;
 
 class TimeLine
 {
+    friend class Storage;
 public:
     TimeLine();
     ~TimeLine();
@@ -91,7 +97,7 @@ public:
     void save();
 
     Id taskId();
-    void setTaskId(Id id);
+    TimeLine& setTaskId(Id id);
 
     // These methods work with local time
     // Returns set of available years in timeline
@@ -168,6 +174,8 @@ class Task: public QObject
 {
     Q_OBJECT
 public:
+    friend class Storage;
+
     typedef uint64_t Id;
     typedef uint32_t ModelId;
     enum Flag
@@ -181,37 +189,32 @@ public:
     void load(SQLite::Statement& q);
 
     Id id() const;
-    void setId(Id id);
+    Task& setId(Id id);
 
     Id parentId() const;
-    void setParentId(Id id);
+    Task& setParentId(Id id);
 
     WorldId worldId() const;
-    void setWorldId(const WorldId& id);
+    Task& setWorldId(const WorldId& id);
 
     ModelId modelId() const;
-    void setModelId(ModelId id);
+    Task& setModelId(ModelId id);
 
     int index() const;
-    void setIndex(int index, bool modified = true);
+    Task& setIndex(int index, bool modified = true);
 
-    enum SaveOptions
-    {
-        Save_Automatic,
-        Save_Forced
-    };
-
-    void save(SaveOptions options = Save_Automatic);
+    void save();
+    void saveAnyway();
 
     QString html() const;
-    void setHtml(const QString& html);
+    Task& setHtml(const QString& html);
     QString title() const;
-    void setTitle(const QString& title, bool modified = true);
+    Task& setTitle(const QString& title, bool modified = true);
 
     QString path() const;
 
     PTask parent() const;
-    void setParent(PTask task, bool modified = true);
+    Task& setParent(PTask task, bool modified = true);
 
     TaskArray& children();
 
@@ -226,24 +229,24 @@ public:
 
     // Returns true if task has attachments
     int getAttachmentCount();
-    void setAttachmentCount(int count);
-    int checkAttachments();
+    Task& setAttachmentCount(int count);
+    int preloadAttachmentCount();
 
     // Service properties used in time reporting
     bool isChecked() const;
-    void setChecked(bool checked);
+    Task& setChecked(bool checked);
 
     int getReportedTime() const;
-    void setReportedTime(int t);
+    Task& setReportedTime(int t);
 
     int getChildrenReportedTime() const;
-    void setChildrenReportedTime(int t);
+    Task& setChildrenReportedTime(int t);
 
     int flags() const;
-    void setFlags(int value);
+    Task& setFlags(int value);
 
     int cursorPosition() const;
-    void setCursorPosition(int position);
+    Task& setCursorPosition(int position);
 
     /*
   QUndoStack* getUndoStack() const;
@@ -270,30 +273,31 @@ protected:
 
 class Attachment
 {
+    friend class Storage;
 public:
     Attachment();
     ~Attachment();
 
     Task::Id id();
-    void setId(Task::Id id);
+    Attachment& setId(Task::Id id);
 
     Task::Id taskId();
-    void setTaskId(Task::Id id);
+    Attachment& setTaskId(Task::Id id);
 
     WorldId worldId() const;
-    void setWorldId(const WorldId& id);
+    Attachment& setWorldId(const WorldId& id);
 
     int index();
-    void setIndex(int index);
+    Attachment& setIndex(int index);
 
     QByteArray loadContent();
-    void saveContent(const QByteArray& content);
+    Attachment& saveContent(const QByteArray& content);
 
-    void setFilename(const QString& filename);
+    Attachment& setFilename(const QString& filename);
     QString filename();
 
-    void save();
-    void load();
+    Attachment& saveMetadata();
+    Attachment& loadMetadata();
 protected:
     Id mId, mTaskId;
     WorldId mWorldId;

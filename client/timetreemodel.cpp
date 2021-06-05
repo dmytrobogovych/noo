@@ -396,6 +396,7 @@ void TimeTreeModel::cutInterval(const QModelIndex& index)
 
     beginRemoveRows(index.parent(), index.row(), index.row());
     mTimeLine->cutInterval(t);
+    mTimeLine->save();
     endRemoveRows();
 }
 

@@ -75,7 +75,7 @@ void PreferencesDlg::accepted()
 {
     bool savePassword = ui->mAutosavePasswordCheckbox->isChecked();
     mSettings.data()[KEY_AUTOSAVE_PASSWORD] = savePassword;
-    helper::password::save(savePassword ? Storage::instance().key() : QString(""));
+    helper::password::saveToKeychain(savePassword ? Storage::instance().key() : QString(""));
 
     mSettings.data()[KEY_SHOW_SECONDS] = ui->mShowSecondsCheckbox->isChecked();
     mSettings.data()[KEY_ASK_BEFORE_DELETE] = ui->mAskBeforeDeleteCheckbox->isChecked();

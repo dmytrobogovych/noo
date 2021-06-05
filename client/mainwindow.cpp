@@ -91,19 +91,11 @@ void MainWindow::attachDatabase()
     {
         if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
         {
-            QString password = helper::password::load();
+            QString password = helper::password::loadFromKeychain();
             if (password.isEmpty())
                 askDbPassword();
             else
-            {
-                Storage::instance().setKey(password);
-                if (!Storage::instance().open())
-                {
-                    askDbPassword(tr("Invalid password, please try again."));
-                }
-                else
-                    QApplication::postEvent(this, new ClientEvent<UiInitId>());
-            }
+                onDbPasswordEntered(password);
         }
         else
             askDbPassword(QString());
@@ -465,7 +457,7 @@ void MainWindow::preferences()
         if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool() == false)
         {
             // Reset password in keychain
-            helper::password::save(QString(""));
+            helper::password::saveToKeychain(QString(""));
 
             //mSettings->data()[KEY_PASSWORD] = NOPASSWORDSTRING;
             mSettings->save();
@@ -1672,7 +1664,7 @@ void MainWindow::onDbPasswordEntered(const QString& password)
 {
     // Save password to keychain if needed
     if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
-        helper::password::save(password);
+        helper::password::saveToKeychain(password);
 
     // Try to open database
     Storage::instance().setKey(password);
@@ -1694,7 +1686,7 @@ void MainWindow::onNewDbPasswordEntered(const QString& password)
 {
     // Save password to keychain if needed
     if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
-        helper::password::save(password);
+        helper::password::saveToKeychain(password);
 
     // Configure storage
     Storage::instance().setKey(password);

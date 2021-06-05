@@ -180,23 +180,23 @@ void AttachmentsList::importFile()
       QByteArray compressed = qCompress(content);
 
       // Put it to Attachment instance
-      PAttachment att(new Attachment());
-      att->setTaskId(mTask->id());
-      att->setIndex(mModel->rowCount());
       QFileInfo fi(filename);
-      att->setFilename(fi.fileName());
+      PAttachment att(new Attachment());
+      att->setTaskId(mTask->id())
+          .setIndex(mModel->rowCount())
+          .setFilename(fi.fileName());
 
       // Save everything
-      att->save();
-      att->saveContent(compressed);
+      att->saveMetadata()
+          .saveContent(compressed);
 
       mModel->addItem(att);
     }
     f.close();
   }
 
-  // Refresh hasAttachments property on owner task
-  mTask->checkAttachments();
+  // Refresh AttachmentsCount property on owner task
+  mTask->preloadAttachmentCount();
 }
 
 void AttachmentsList::exportFile()
@@ -242,13 +242,13 @@ void AttachmentsList::deleteFile()
     for (int row = index.row() + 1; row < mModel->rowCount(); row++)
     {
       Attachment& att = *mModel->itemAt(row);
-      att.setIndex(att.index() - 1);
-      att.save();
+      att.setIndex(att.index() - 1)
+         .saveMetadata();
     }
   }
 
   // Refresh hasAttachment property value on task
-  mTask->checkAttachments();
+  mTask->preloadAttachmentCount();
 }
 
 void AttachmentsList::renameFile()

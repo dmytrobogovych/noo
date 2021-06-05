@@ -94,11 +94,12 @@ namespace helper
 
     };
 
+    // Keychain helper class
     class password
     {
     public:
-        static QString load();
-        static bool save(const QString& password);
+        static QString loadFromKeychain();
+        static bool saveToKeychain(const QString& password);
     };
 
     extern std::string app_version();

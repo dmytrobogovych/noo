@@ -18,37 +18,6 @@ int main(int argc, char *argv[])
     QString folder = QFileInfo(path).absoluteDir().path();
     Storage::instance().setPath(path);
 
-    // Check if file exists at all
-    /*if (!QFile::exists(path))
-    {
-        // Show dialog that requests database path
-    }
-    else
-    {
-        // Check if password is available
-        if (Settings::instance().data()[KEY_AUTOSAVE_PASSWORD].toBool())
-        {
-            QString password = helper::password::load();
-            if (password.isEmpty())
-            {
-                // Ask about password
-            }
-            else
-            {
-                Storage::instance().setKey(password);
-                if (!Storage::instance().open())
-                {
-                    askDbPassword(tr("Invalid password, please try again."));
-                }
-                else
-                    QApplication::postEvent(this, new UiInitEvent());
-            }
-        }
-        else
-            askDbPassword(QString());
-    }*/
-
-
     MainWindow w;
     w.layout()->invalidate();
 

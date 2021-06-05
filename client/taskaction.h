@@ -1,7 +1,7 @@
 #ifndef TASKACTION_H
 #define TASKACTION_H
 
-#include <task.h>
+#include "task.h"
 #include <QString>
 #include <QDataStream>
 #include <QModelIndexList>
@@ -9,12 +9,15 @@
 class TaskTreeModel;
 class AttachmentsListModel;
 
+// Base class for all actions
 class TaskAction
 {
   friend class ChangesHistory;
 public:
   TaskAction(PTask task);
   virtual ~TaskAction();
+
+  // Associated task
   PTask task() const;
 
 protected:
@@ -45,10 +48,10 @@ public:
 
   static ChangesHistory& instance();
 protected:
-  TaskTreeModel* mTaskModel;
-  AttachmentsListModel* mAttachmentsModel;
+  TaskTreeModel* mTaskModel = nullptr;
+  AttachmentsListModel* mAttachmentsModel = nullptr;
   QVector<PTaskAction> mActionList;
-  int mRollbackCount;
+  int mRollbackCount = 0;
 };
 
 #define MAKE_ACTION(X) ChangesHistory::instance().add(PTaskAction(X))
@@ -179,6 +182,17 @@ protected:
 
   bool commit(TaskTreeModel* taskModel, AttachmentsListModel* attModel);
   bool rollback(TaskTreeModel* taskModel, AttachmentsListModel* attModel);
+};
+
+class SaveTaskAction: public TaskAction
+{
+public:
+    SaveTaskAction(const PTask& task);
+    ~SaveTaskAction() override;
+
+protected:
+    bool commit(TaskTreeModel* taskModel, AttachmentsListModel* attModel);
+    bool rollback(TaskTreeModel* taskModel, AttachmentsListModel* attModel);
 };
 
 #endif // TASKACTION_H
