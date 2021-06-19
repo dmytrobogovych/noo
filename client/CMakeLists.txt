@@ -220,7 +220,7 @@ if (TARGET_WIN)
 endif()
 
 # List resources
-qt5_add_resources(UI_RESOURCES resources/qdarkstyle/style.qrc)
+qt5_add_resources(UI_RESOURCES resources/qdarkstyle/dark/style.qrc)
 # Global defines
 add_definitions(-DQTKEYCHAIN_NO_EXPORT -DSQLITE_HAS_CODEC -DSQLITE_OMIT_LOAD_EXTENSION)
 

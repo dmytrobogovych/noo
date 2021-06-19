@@ -58,5 +58,6 @@
         <file>icons/tree-add-root.png</file>
         <file>icons/clock-32x32.png</file>
         <file>icons/tree-add-sibling-small.png</file>
+        <file>icons/app_icon_linux_256.png</file>
     </qresource>
 </RCC>

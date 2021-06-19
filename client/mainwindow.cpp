@@ -181,7 +181,7 @@ void MainWindow::initClient()
     ui->mPreferencesAction->setMenuRole(QAction::PreferencesRole);
 
     connect(ui->mAboutAction, SIGNAL(triggered()), this, SLOT(about()));
-    connect(ui->mPreferencesAction, SIGNAL(triggered()), this, SLOT(preferences()));
+    //connect(ui->mPreferencesAction, SIGNAL(triggered()), this, SLOT(preferences()));
 
     // Add Check for update to OS X application menu
     ui->mCheckForUpdatesAction->setMenuRole(QAction::ApplicationSpecificRole);
@@ -189,6 +189,11 @@ void MainWindow::initClient()
     // Build tray icon if system support this one
     if (QSystemTrayIcon::isSystemTrayAvailable() && mSettings->data()[KEY_SHOW_TRAY_ICON].toBool())
         initTrayIcon();
+
+#if defined(TARGET_LINUX)
+    QIcon appicon(":/icons/app_icon_linux_256.png");
+    setWindowIcon(appicon);
+#endif
 
     loadGeometry();
 
@@ -472,6 +477,7 @@ void MainWindow::preferences()
 
         updateData();
     }
+
 }
 
 void MainWindow::about()
