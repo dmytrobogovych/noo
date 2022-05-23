@@ -54,18 +54,18 @@ private:
     TrackingStopReason mStopReason;
 
     Ui::MainWindow *ui = nullptr;
-    TaskTreeModel* mTaskTreeModel;
+    TaskTreeModel* mTaskTreeModel = nullptr;
     PTask mCurrentTask, mAutomaticTask;
-    QTimer* mUpdateTimer;
-    QLabel* mModifiedLabel;
-    QLabel* mCurrentIntervalLabel;
-    QLabel* mDuplicationSignalLabel;
-    QSystemTrayIcon *mTrayIcon;
+    QTimer* mUpdateTimer = nullptr;
+    QLabel* mModifiedLabel = nullptr;
+    QLabel* mCurrentIntervalLabel = nullptr;
+    QLabel* mDuplicationSignalLabel = nullptr;;
+    QSystemTrayIcon *mTrayIcon = nullptr;
     QSharedPointer<Settings> mSettings;
     bool mPasswordFailed;
-    PasswordDlg* mPasswordDlg;
-    NewPasswordDlg* mNewPasswordDlg;
-    QMessageBox* mAlertBox;
+    PasswordDlg* mPasswordDlg = nullptr;
+    NewPasswordDlg* mNewPasswordDlg = nullptr;
+    QMessageBox* mAlertBox = nullptr;
 
     // Time when current note was saved to DB last time
     QDateTime mLastTimelineFlush;
@@ -74,7 +74,7 @@ private:
     QAction* mAttachmentsAction;
 
     // Attachments label
-    QLabel* mAttachmentsLabel;
+    QLabel* mAttachmentsLabel = nullptr;
 
     // Delegate to draw task items in custom way
     TaskItemDelegate mTaskItemDelegate;
@@ -92,7 +92,7 @@ private:
 
     QDateTime mTextModificationTime;
     std::deque<PTask> mRecentTrackingTasks;
-    QMenu* mDockRecentMenu;
+    QMenu* mDockRecentMenu = nullptr;
     QDialog* mTrayWindow = nullptr;
     QString mPassword = NOPASSWORDSTRING;
     ConnectDbWidget* mConnectDbWidget = nullptr;

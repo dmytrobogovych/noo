@@ -271,12 +271,15 @@ void MainWindow::initClient()
 void MainWindow::save()
 {
     // Flush current task
-    PTask t = mTaskTreeModel->getTask(ui->mTaskTree->currentIndex());
-    if (t)
+    if (mTaskTreeModel)
     {
-        t->setHtml(ui->mNoteEdit->document()->toPlainText());
-        t->save();
-        mModifiedLabel->setText(tr("Saved"));
+        PTask t = mTaskTreeModel->getTask(ui->mTaskTree->currentIndex());
+        if (t)
+        {
+            t->setHtml(ui->mNoteEdit->document()->toPlainText());
+            t->save();
+            mModifiedLabel->setText(tr("Saved"));
+        }
     }
 
     try
