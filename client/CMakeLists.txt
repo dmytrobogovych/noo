@@ -1,9 +1,9 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required (VERSION 3.15)
 
 # This directive is ignored for non OSX environments
 set (CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum OS X deployment version")
 
-project (outliner C CXX) # Your project name
+project (Noo C CXX) # Your project name
 
 if (NOT LIB_PLATFORM)
     message("No LIB_PLATFORM is set, defaulting to works/sevana/platform/libraries")
@@ -12,8 +12,8 @@ endif()
 
 include (${LIB_PLATFORM}/platform_libs.cmake)
 
-# C++ 11 standard
-set (CMAKE_CXX_STANDARD 11)
+# C++ 20 standard
+set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find includes in corresponding build directories
@@ -30,11 +30,11 @@ set (CMAKE_AUTOUIC ON)
 set (APP_SKIP_BUILD_NUMBER OFF CACHE BOOL "Skip Litt build number increase.")
 
 # App version is expected as APP_VERSION variable
-if (NOT APP_VERSION)
-    message(FATAL "Requires APP_VERSION to be set")
-endif()
+#if (NOT APP_VERSION)
+#    message(FATAL "Requires APP_VERSION to be set")
+#endif()
 
-add_definitions(-DAPP_VERSION="\"${APP_VERSION}\"")
+#add_definitions(-DAPP_VERSION="\"${APP_VERSION}\"")
 
 # This will find the Qt5 files. You will need a QT5_DIR env variable
 find_package (Qt5Core REQUIRED)
@@ -232,8 +232,8 @@ if (TARGET_OSX)
 endif()
 
 # This will create you executable
-set (EXE_NAME Litt)
-set (PRODUCT_NAME Litt)
+set (EXE_NAME noo)
+set (PRODUCT_NAME Noo)
 
 add_executable(${EXE_NAME}
     ${ADDITIONAL_EXE_OPTIONS}
@@ -261,13 +261,13 @@ target_include_directories(${EXE_NAME} SYSTEM BEFORE
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/fervor
     )
 
-message("App version: ${APP_VERSION}")
+# message("App version: ${APP_VERSION}")
 if (TARGET_OSX)
     set_source_files_properties( ${MACOS_ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
     set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_ICON_FILE ${MACOS_ICON_FILENAME} )
     set_target_properties( ${EXE_NAME} PROPERTIES   OUTPUT_NAME ${PRODUCT_NAME})
     set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_BUNDLE_NAME ${PRODUCT_NAME} )
-    set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_SHORT_VERSION_STRING "${APP_VERSION}")
+    # set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_SHORT_VERSION_STRING "${APP_VERSION}")
     set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_LONG_VERSION_STRING "${APP_VERSION}")
 
     set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE TRUE
