@@ -1,3 +1,4 @@
+#include "config.h"
 #include "mainwindow.h"
 #include <QApplication>
 #include <QLayout>
@@ -12,13 +13,13 @@ int main(int argc, char *argv[])
     helper::theme::applyCurrent(Settings::instance());
 
     QFont f = app.font();
-    f.setFamily("Monaco");
-    f.setPointSize(16);
+    // f.setFamily("Monaco");
+    f.setPointSize(14);
     app.setFont(f);
+    app.setApplicationName(APPNAME);
 
     // Path to database.
     QString path = Settings::instance().getDatabasePath();
-
 
     QString folder = QFileInfo(path).absoluteDir().path();
     Storage::instance().setPath(path);

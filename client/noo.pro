@@ -7,7 +7,7 @@
 QT += core gui widgets printsupport
 
 CONFIG += c++17
-TARGET = Noo
+TARGET = noo
 TEMPLATE = app
 
 # Send version to app
@@ -39,15 +39,15 @@ macx {
 unix {
     DEFINES += TARGET_LINUX
     ICON = icons/app/noo_128x128.png
-    LIBS += -ldl -luuid ../lib/openssl/linux_x64/libssl.a ../lib/openssl/linux_x64/libcrypto.a
-    INCLUDEPATH += ../lib/openssl/include
+    LIBS += -ldl -luuid $$PWD/../lib/openssl/linux_x64/libssl.a $$PWD/../lib/openssl/linux_x64/libcrypto.a
+    INCLUDEPATH += $$PWD/../lib/openssl/include
 }
 
 
 DEFINES += USE_ENCRYPTED_DB
 DEFINES += SQLITE_HAS_CODEC SQLITE_TEMP_STORE=2 SQLITE_THREADSAFE
-INCLUDEPATH += sqlitecpp/include
-INCLUDEPATH += ../lib/include
+INCLUDEPATH += $$PWD/sqlitecpp/include
+INCLUDEPATH += $$PWD/../lib/include
 
 
 SOURCES += main.cpp                 \

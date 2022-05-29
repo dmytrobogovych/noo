@@ -43,24 +43,25 @@ if platform.system() == 'Linux':
     print('Configure...')
 
     qt_home = Path(os.environ['QT_HOME']).resolve()
-    cmake_params = {
-            'Qt5Core_DIR':           qt_home / 'lib/cmake/Qt5Core',
-            'Qt5Widgets_DIR':        qt_home / 'lib/cmake/Qt5Widgets',
-            'Qt5DBus_DIR':           qt_home / 'lib/cmake/Qt5DBus',
-            'Qt5Gui_DIR':            qt_home / 'lib/cmake/Qt5Gui',
-            'Qt5LinguistTools_DIR':  qt_home / 'lib/cmake/Qt5LinguistTools',
-            'Qt5PrintSupport_DIR':   qt_home / 'lib/cmake/Qt5PrintSupport',
-            'Qt5OpenGL_DIR':         qt_home / 'lib/cmake/Qt5OpenGL',
-            'Qt5Network_DIR':        qt_home / 'lib/cmake/Qt5Network'
-            }
+    # cmake_params = {
+    #         'Qt5Core_DIR':           qt_home / 'lib/cmake/Qt5Core',
+    #         'Qt5Widgets_DIR':        qt_home / 'lib/cmake/Qt5Widgets',
+    #         'Qt5DBus_DIR':           qt_home / 'lib/cmake/Qt5DBus',
+    #         'Qt5Gui_DIR':            qt_home / 'lib/cmake/Qt5Gui',
+    #         'Qt5LinguistTools_DIR':  qt_home / 'lib/cmake/Qt5LinguistTools',
+    #         'Qt5PrintSupport_DIR':   qt_home / 'lib/cmake/Qt5PrintSupport',
+    #         'Qt5OpenGL_DIR':         qt_home / 'lib/cmake/Qt5OpenGL',
+    #         'Qt5Network_DIR':        qt_home / 'lib/cmake/Qt5Network'
+    #         }
 
-    cmake_cmd = 'cmake '
-    for k,v in cmake_params.items():
-        cmake_cmd = f'{cmake_cmd} -D{k}={v} '
-    cmake_cmd = f'{cmake_cmd} ../../client'
-    print(f'cmake command line: {cmake_cmd}')
+    # cmake_cmd = 'cmake '
+    # for k,v in cmake_params.items():
+    #     cmake_cmd = f'{cmake_cmd} -D{k}={v} '
+    # cmake_cmd = f'{cmake_cmd} ../../client'
+    # print(f'cmake command line: {cmake_cmd}')
 
-    retcode = os.system(f'{cmake_cmd} ../../client')
+    # retcode = os.system(f'{cmake_cmd} ../../client')
+    retcode = os.system(f'{qt_home}/bin/qmake ../../client')
     if retcode != 0:
         print(f'cmake call failed with code {retcode}')
         exit(retcode)
