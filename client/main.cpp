@@ -11,10 +11,10 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     helper::theme::applyCurrent(Settings::instance());
 
-    /* QFont f = app.font();
+    QFont f = app.font();
     f.setFamily("Monaco");
     f.setPointSize(16);
-    app.setFont(f); */
+    app.setFont(f);
 
     // Path to database.
     QString path = Settings::instance().getDatabasePath();
@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 
     w.setAttribute(Qt::WA_WState_ExplicitShowHide, false);
     w.setAttribute(Qt::WA_WState_Hidden, true);
+    w.setWindowIcon(MainWindow::getAppIcon());
     w.show();
 
     return app.exec();

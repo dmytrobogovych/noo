@@ -2,7 +2,7 @@
 #define __APP_CONFIG_H
 
 // Application name
-#define APPNAME "Litt"
+#define APPNAME "Noo"
 
 // Company name
 #define COMPANY "voipobjects.com"
@@ -11,7 +11,7 @@
 #define DATABASENAME "database.db"
 
 // Log file name
-#define LOGNAME "litt-log.txt"
+#define LOGNAME "noo-log.txt"
 
 // About text
 #define ABOUTTEXT "Tiny outliner with time tracking capabilities"
@@ -20,13 +20,13 @@
 #define NOTIMPLEMENTEDTEXT "Not implemented in this version"
 
 // Settings file name
-#define SETTINGS_FILENAME "litt.ini"
+#define SETTINGS_FILENAME "noo.ini"
 
 // No password string
 #define NOPASSWORDSTRING ""
 
 // Mime type of task items
-#define NODE_MIME_TYPE "application/litt-node"
+#define NODE_MIME_TYPE "application/noo-node"
 
 // Exit code to signal about problems with database
 #define EXITCODE_NO_DATABASE (1)
@@ -42,16 +42,18 @@
 #define APP_VERSION_SUFFIX 3
 
 //#ifdef TARGET_OSX
-#define TRAY_START_ICON_NAME ":/icons/icons/starttracking-osx.png"
-#define TRAY_STOP_ICON_NAME ":/icons/icons/stoptracking-osx.png"
+#define TRAY_START_ICON_NAME    ":/icons/icons/starttracking-osx.png"
+#define TRAY_STOP_ICON_NAME     ":/icons/icons/stoptracking-osx.png"
 
-#define TRAY_DEFAULT_ICON_NAME ":/icons/icons/tray-default.png"
-#define TRAY_RUNNING_ICON_NAME ":/icons/icons/tray-running.png"
+#define TRAY_DEFAULT_ICON_NAME  ":/icons/icons/tray-default.png"
+#define TRAY_RUNNING_ICON_NAME  ":/icons/icons/tray-running.png"
 
-#define ACTION_START_ICON_NAME ":/icons/icons/clock-32x32.png"
-#define ACTION_STOP_ICON_NAME ":/icons/icons/process-stop.png"
+#define ACTION_START_ICON_NAME  ":/icons/icons/clock-32x32.png"
+#define ACTION_STOP_ICON_NAME   ":/icons/icons/process-stop.png"
 //#endif
 
-#define USE_ENCRYPTED_DB
+#ifndef USE_ENCRYPTED_DB
+# define USE_ENCRYPTED_DB
+#endif
 
 #endif

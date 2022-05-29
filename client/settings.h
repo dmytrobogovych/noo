@@ -60,4 +60,24 @@ protected:
     QVariantMap mData;
 };
 
+class AppGeometry
+{
+public:
+    AppGeometry() = delete;
+    AppGeometry(Settings& settings);
+    ~AppGeometry();
+
+    bool isMaximized() const;
+    void setMaximized(bool);
+
+    QRect windowRect() const;
+    void setWindowRect(QRect);
+
+    std::tuple<int, int> splitterPos(int splitterIdx) const;
+    void setSplitterPos(int splitterIdx, std::tuple<int, int>);
+
+private:
+    Settings& mSettings;
+};
+
 #endif // SETTINGS_H

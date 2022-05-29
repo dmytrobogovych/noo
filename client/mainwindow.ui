@@ -83,32 +83,44 @@
         </property>
         <layout class="QGridLayout" name="gridLayout">
          <property name="leftMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
          <item row="0" column="0">
           <widget class="QSplitter" name="mTimeSplitter">
-           <property name="minimumSize">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
             <size>
-             <width>0</width>
-             <height>0</height>
+             <width>16777215</width>
+             <height>4000</height>
             </size>
            </property>
            <property name="lineWidth">
             <number>0</number>
            </property>
            <property name="orientation">
-            <enum>Qt::Vertical</enum>
+            <enum>Qt::Horizontal</enum>
            </property>
            <widget class="QFrame" name="mEditFrame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -199,10 +211,22 @@
             </layout>
            </widget>
            <widget class="QFrame" name="mTimeFrame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>70</height>
+              <height>4000</height>
              </size>
             </property>
             <property name="frameShape">

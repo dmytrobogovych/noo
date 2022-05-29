@@ -190,10 +190,7 @@ void MainWindow::initClient()
     if (QSystemTrayIcon::isSystemTrayAvailable() && mSettings->data()[KEY_SHOW_TRAY_ICON].toBool())
         initTrayIcon();
 
-#if defined(TARGET_LINUX)
-    QIcon appicon(":/icons/app_icon_linux_256.png");
-    setWindowIcon(appicon);
-#endif
+    setWindowIcon(getAppIcon());
 
     loadGeometry();
 
@@ -303,24 +300,11 @@ QSharedPointer<QByteArray> MainWindow::getUndoStack() const
 
 void MainWindow::saveGeometry()
 {
-    QRect geom = this->geometry();
-    mSettings->data()[KEY_LEFT] = geom.left(); // "left"
-    mSettings->data()[KEY_TOP] = geom.top(); // "top"
-    mSettings->data()[KEY_WIDTH] = geom.width(); // "width"
-    mSettings->data()[KEY_HEIGHT] = geom.height(); // "height"
-    mSettings->data()[KEY_MAXIMIZED] = isMaximized(); // "maximized"
-    QList<int> sizes = ui->mSplitter->sizes();
-    if (!sizes.empty())
-    {
-        mSettings->data()[KEY_SPLITTEROFFSET1] = sizes[0]; // ("splitter_offset1", sizes[0]);
-        mSettings->data()[KEY_SPLITTEROFFSET2] = sizes[1]; //("splitter_offset2", sizes[1]);
-    }
-    sizes = ui->mTimeSplitter->sizes();
-    if (!sizes.empty())
-    {
-        SETTINGS[KEY_TIMESPLITTER_OFFSET1] = sizes[0];
-        SETTINGS[KEY_TIMESPLITTER_OFFSET2] = sizes[1];
-    }
+    AppGeometry g(*mSettings);
+    g.setMaximized(isMaximized());
+    g.setWindowRect(this->geometry());
+    g.setSplitterPos(0, {ui->mSplitter->sizes().front(), ui->mSplitter->sizes().back()});
+    g.setSplitterPos(1, {ui->mTimeSplitter->sizes().front(), ui->mTimeSplitter->sizes().back()});
 
     if (mTaskTreeModel)
     {
@@ -340,39 +324,25 @@ void MainWindow::saveGeometry()
 
 void MainWindow::loadGeometry()
 {
-    QVariantMap& settings = mSettings->data();
+    auto g = AppGeometry(*mSettings);
 
-    QRect geom = this->geometry();
-    if (settings.value(KEY_MAXIMIZED).toBool())
+    if (g.isMaximized())
         this->showMaximized();
-    else
-    {
-        if (settings.contains(KEY_LEFT))
-            geom.setLeft(settings.value("left").toInt());
-        if (settings.contains(KEY_TOP))
-            geom.setTop(settings.value("top").toInt());
-        if (settings.contains(KEY_WIDTH))
-            geom.setWidth(settings.value(KEY_WIDTH).toInt());
-        if (settings.contains(KEY_HEIGHT))
-            geom.setHeight(settings.value(KEY_HEIGHT).toInt());
-        setGeometry(geom);
-    }
+    else if (!g.windowRect().isEmpty())
+        setGeometry(g.windowRect());
 
     // Set splitter position
-    if (settings.contains(KEY_SPLITTEROFFSET1) && settings.contains(KEY_SPLITTEROFFSET2) && ui)
+    if (ui)
     {
-        QList<int> sizes = ui->mSplitter->sizes();
-        sizes[0] = settings.value(KEY_SPLITTEROFFSET1).toInt();
-        sizes[1] = settings.value(KEY_SPLITTEROFFSET2).toInt();
-        ui->mSplitter->setSizes(sizes);
-    }
+        auto [main_offset_1, main_offset_2] = g.splitterPos(0);
 
-    if (settings.contains(KEY_TIMESPLITTER_OFFSET1) && settings.contains(KEY_TIMESPLITTER_OFFSET2) && ui)
-    {
-        QList<int> sizes = ui->mTimeSplitter->sizes();
-        sizes[0] = settings.value(KEY_TIMESPLITTER_OFFSET1).toInt();
-        sizes[1] = settings.value(KEY_TIMESPLITTER_OFFSET2).toInt();
-        ui->mTimeSplitter->setSizes(sizes);
+        if (main_offset_1 && main_offset_2 && ui)
+            ui->mSplitter->setSizes({main_offset_1, main_offset_2});
+
+        auto [time_offset_1, time_offset_2] = g.splitterPos(1);
+
+        if (time_offset_1 && time_offset_2)
+            ui->mTimeSplitter->setSizes({time_offset_1, time_offset_2});
     }
 }
 
@@ -881,6 +851,13 @@ void MainWindow::buildOpenOrCreateView()
         int index = mStackedViews->addWidget(mOpenOrCreateDbWidget);
         assert (index == ViewIndex_OpenOrCreateDb);
     }
+}
+
+QIcon MainWindow::getAppIcon()
+{
+    QIcon app_icon(QPixmap(QString(":/icons/icons/noo_128x128.png")));
+
+    return app_icon;
 }
 
 // Ask password

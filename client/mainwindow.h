@@ -37,6 +37,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    static QIcon getAppIcon();
+
 protected:
     void closeEvent(QCloseEvent *);
     void customEvent(QEvent *);
