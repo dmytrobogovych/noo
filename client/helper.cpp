@@ -271,7 +271,7 @@ bool activityTracker::ensureSmartTrackingIsPossible()
     if (!result && QSysInfo::MacintoshVersion <= QSysInfo::MV_10_8)
     {
         QMessageBox msgbox(QMessageBox::Question, QT_TR_NOOP("Permission required"),
-                           QT_TR_NOOP("To use smart time tracking Litt needs access to OS X accessibility features.\
+                           QT_TR_NOOP("To use smart time tracking Noo needs access to OS X accessibility features.\
                                       Please grant access in Security & Privacy preferences, location in System Preferences."),
                                       QMessageBox::NoButton, nullptr);
                 msgbox.addButton(QT_TR_NOOP("Open System Preferences"), QMessageBox::AcceptRole);

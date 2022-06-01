@@ -72,6 +72,8 @@ SOURCES += main.cpp                 \
     timereportwizard.cpp            \
     platforms/hidtracker.cpp        \
     platforms/hidtrackerimpl.cpp    \
+    platforms/linux/autostart.cpp   \
+    platforms/linux/idle_tracking.cpp \
     logger.cpp                      \
     timeintervaldlg.cpp             \
     aboutdlg.cpp                    \
@@ -84,7 +86,9 @@ SOURCES += main.cpp                 \
     startworkdialog.cpp             \
     twofish.cpp                     \
     openorcreatedb_widget.cpp       \
-    connectdb_widget.cpp
+    connectdb_widget.cpp            \
+    runguard.cpp                    \
+
 
 HEADERS  += mainwindow.h            \
     storage.h                       \
@@ -113,6 +117,8 @@ HEADERS  += mainwindow.h            \
     sqlite3ext.h                                \
     platforms/hidtracker.h                      \
     platforms/hidtrackerimpl.h                  \
+    platforms/linux/autostart.h                 \
+    platforms/linux/idle_tracking.h             \
     logger.h                                    \
     timeintervaldlg.h                           \
     aboutdlg.h                                  \
@@ -125,7 +131,8 @@ HEADERS  += mainwindow.h            \
     startworkdialog.h                           \
     twofish.h                                   \
     openorcreatedb_widget.h                     \
-    connectdb_widget.h
+    connectdb_widget.h                          \
+    runguard.h
 
 macx {
     HEADERS += platforms/osx/hidtrackerimpl_osx.h

@@ -64,7 +64,7 @@ private:
     QLabel* mDuplicationSignalLabel = nullptr;;
     QSystemTrayIcon *mTrayIcon = nullptr;
     QSharedPointer<Settings> mSettings;
-    bool mPasswordFailed;
+    bool mPasswordFailed = false;
     PasswordDlg* mPasswordDlg = nullptr;
     NewPasswordDlg* mNewPasswordDlg = nullptr;
     QMessageBox* mAlertBox = nullptr;
@@ -73,7 +73,7 @@ private:
     QDateTime mLastTimelineFlush;
 
     // Attachments action
-    QAction* mAttachmentsAction;
+    QAction* mAttachmentsAction = nullptr;
 
     // Attachments label
     QLabel* mAttachmentsLabel = nullptr;
@@ -160,6 +160,8 @@ private:
     void buildPasswordView();
     void buildOpenOrCreateView();
     void buildMainView();
+
+    void setupAppMenu();
 
     void onDatabaseAvailable();
 signals:

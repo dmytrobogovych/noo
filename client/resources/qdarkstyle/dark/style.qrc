@@ -211,6 +211,6 @@
     <file>rc/window_undock_pressed@2x.png</file>
   </qresource>
   <qresource prefix="qdarkstyle/dark">
-      <file>darkstyle.qss</file>
+      <file>style.qss</file>
   </qresource>
 </RCC>

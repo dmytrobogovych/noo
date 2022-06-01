@@ -43,6 +43,7 @@
 #define KEY_DARK_THEME                  "DarkTheme"
 #define KEY_ASK_BEFORE_DELETE           "AskBeforeDelete"
 
+
 class Settings
 {
 public:

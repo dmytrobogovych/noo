@@ -45,7 +45,7 @@ void OpenOrCreateDbWidget::handleEnteredPasswords()
 
 void OpenOrCreateDbWidget::askForDatabase()
 {
-    QString path = QFileDialog::getOpenFileName(this, "Please select existing database", QString(), "*.litt");
+    QString path = QFileDialog::getOpenFileName(this, "Please select existing database", QString(), "*.noo");
     if (path.size())
     {
         mDbPath = path;

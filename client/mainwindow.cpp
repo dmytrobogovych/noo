@@ -33,6 +33,9 @@
 #include "connectdb_widget.h"
 #include "openorcreatedb_widget.h"
 #include "qtkeychain/keychain.h"
+#if defined(TARGET_LINUX)
+# include "platforms/linux/autostart.h"
+#endif
 
 #include <QDesktopWidget>
 #include <iostream>
@@ -49,24 +52,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     mSettings = QSharedPointer<Settings>(new Settings());
 
+    // Dark theme if needed
     helper::theme::applyCurrent(*mSettings);
 
-    mAttachmentsAction = nullptr;
-    mAttachmentsLabel = nullptr;
-
-    this->setUpdatesEnabled(false);
-
-    mDuplicationSignalLabel = nullptr;
-    mCurrentIntervalLabel = nullptr;
-    mTrayIcon = nullptr;
-
-    QCoreApplication::setApplicationName(APPNAME);
-
+    // Restore window size & position from last run
+    setUpdatesEnabled(false);
     loadGeometry();
+    setUpdatesEnabled(true);
 
-    this->setUpdatesEnabled(true);
-
-    // init event
+    // Other initialization will run in next event loop iteration
     QApplication::postEvent(this, new ClientEvent<UiInitId>());
 }
 
@@ -402,6 +396,7 @@ void MainWindow::customEvent(QEvent *ev)
     }
 
     case static_cast<QEvent::Type>(UiInitId):
+        setupAppMenu();
         setupMainUi();
         loadGeometry();
         break;
@@ -445,8 +440,8 @@ void MainWindow::preferences()
         if (mSettings->data()[KEY_SHOW_TRAY_ICON].toBool() && !mTrayIcon && QSystemTrayIcon::isSystemTrayAvailable())
             initTrayIcon();
         else
-            if (!mSettings->data()[KEY_SHOW_TRAY_ICON].toBool() && mTrayIcon)
-                removeTrayIcon();
+        if (!mSettings->data()[KEY_SHOW_TRAY_ICON].toBool() && mTrayIcon)
+            removeTrayIcon();
 
         updateData();
     }
@@ -1336,7 +1331,7 @@ void MainWindow::showTimeForTrackingTask()
 
         if (mTrayIcon)
         {
-            QString tooltip = tr("Litt is tracking ") + mCurrentTask->title() + ".\n" +
+            QString tooltip = tr("Noo is tracking ") + mCurrentTask->title() + ".\n" +
                     tr("Time spent today for this task is ") + timeString;
 
             mTrayIcon->setToolTip(tooltip);
@@ -1351,7 +1346,7 @@ void MainWindow::initTrayIcon()
         mTrayIcon = new QSystemTrayIcon();
         connect(mTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
         updateTrayIcon(Tray_ShowMessage);
-
+        mTrayIcon->setIcon(getAppIcon());
         mTrayIcon->setVisible(true);
     }
 }
@@ -1376,33 +1371,33 @@ void MainWindow::updateTrayIcon(TrayShowMessage flag)
         bool showSeconds = mSettings->data()[KEY_SHOW_SECONDS].toBool();
         int spentSecondsToday = mCurrentTask->timeline()->today();
         QString timeString = QString::fromStdString(helper::chrono::secondsToDisplay(spentSecondsToday, showSeconds));
-        tooltip = tr("Litt is tracking ") + mCurrentTask->title() + ".\n" +
+        tooltip = tr("Noo is tracking ") + mCurrentTask->title() + ".\n" +
                 tr("Time spent today for this task is ") + timeString;
     }
     else
     {
-        tooltip = tr("Litt is not tracking now.");
+        tooltip = tr("Noo is not tracking now.");
     }
 
     mTrayIcon->setToolTip(tooltip);
 
     if (mCurrentTask)
     {
-        QIcon icon(TRAY_RUNNING_ICON_NAME);
+        /*QIcon icon(TRAY_RUNNING_ICON_NAME);
 #if defined(TARGET_OSX)
         icon.setIsMask(true);
 #endif
-        mTrayIcon->setIcon(icon);
+        mTrayIcon->setIcon(icon);*/
         if (flag == Tray_ShowMessage)
             mTrayIcon->showMessage(tr("Time tracking started"), mCurrentTask->path());
     }
     else
     {
-        QIcon icon(TRAY_DEFAULT_ICON_NAME);
+        /*QIcon icon(TRAY_DEFAULT_ICON_NAME);
 #if defined(TARGET_OSX)
         icon.setIsMask(true);
 #endif
-        mTrayIcon->setIcon(icon);
+        mTrayIcon->setIcon(icon);*/
     }
 }
 
@@ -1610,6 +1605,13 @@ void MainWindow::showMainWindow()
     eFlags &= ~Qt::WindowStaysOnTopHint;
     setWindowFlags(eFlags);
     show();
+#endif
+}
+
+void MainWindow::setupAppMenu()
+{
+#if defined(TARGET_LINUX)
+    appmenu::install(QCoreApplication::applicationFilePath().toStdString());
 #endif
 }
 
