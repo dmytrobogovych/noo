@@ -29,7 +29,7 @@ private slots:
     void smartStartSettingChanged(bool);
     void smartStopWayChanged();
     void allowStartAfterIdleControls();
-
+    void onChangeAppFont();
 };
 
 #endif // PREFERENCESDLG_H

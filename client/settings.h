@@ -42,7 +42,7 @@
 
 #define KEY_DARK_THEME                  "DarkTheme"
 #define KEY_ASK_BEFORE_DELETE           "AskBeforeDelete"
-
+#define KEY_APP_FONT                    "AppFont"
 
 class Settings
 {

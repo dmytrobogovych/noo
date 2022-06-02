@@ -133,7 +133,7 @@ QVariant TaskTreeModel::data(const QModelIndex &index, int role) const
         return task->title();
 
     case Qt::DecorationRole:
-        return QIcon(":/icons/icons/text-x-generic.png");
+        return NAMED_BUTTON("text-x-generic.png");
 
     case Qt::CheckStateRole:
         if (mAllowCheckboxes)
@@ -563,7 +563,7 @@ void TaskItemDelegate::paint( QPainter * painter,
 
     if (task->getAttachmentCount())
     {
-        QIcon attachmentIcon = QIcon(":/icons/icons/mail-attachment.png");
+        QIcon attachmentIcon = NAMED_BUTTON("mail-attachment.png");
         QPixmap attachmentPixmap = attachmentIcon.pixmap(option.decorationSize);
         QRect r = option.rect;
         QRect titleRect = r; titleRect.setWidth(r.width() - 24);

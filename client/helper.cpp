@@ -34,10 +34,12 @@ namespace helper {
 
 void theme::applyCurrent(Settings& settings)
 {
+    return;
+
     // Dark theme
     if (settings.data()[KEY_DARK_THEME].toBool())
     {
-        QFile f(":qdarkstyle/style.qss");
+        QFile f(":/assets/qdarkstyle/style.qss");
         if (f.exists())
         {
             f.open(QFile::ReadOnly | QFile::Text);

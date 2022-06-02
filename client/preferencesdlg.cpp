@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QSysInfo>
 #include <QTextStream>
+#include <QFontDialog>
 
 #define GET_BOOL(KEY) settings.data().value(KEY).toBool()
 
@@ -125,6 +126,16 @@ void PreferencesDlg::allowStartAfterIdleControls()
     ui->mSmartStartTracking->setEnabled(stopEnabled && automaticStopEnabled);
     ui->mAskQuestionOnStopRadiobutton->setEnabled(stopEnabled);
     ui->mAutomaticallyOnStopRadiobutton->setEnabled(stopEnabled);
+}
+
+void PreferencesDlg::onChangeAppFont()
+{
+    QFontDialog dlg;
+    dlg.setCurrentFont(qApp->font());
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        //
+    }
 }
 
 void PreferencesDlg::applyTheme()

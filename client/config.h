@@ -42,14 +42,17 @@
 #define APP_VERSION_SUFFIX 3
 
 //#ifdef TARGET_OSX
-#define TRAY_START_ICON_NAME    ":/icons/icons/starttracking-osx.png"
-#define TRAY_STOP_ICON_NAME     ":/icons/icons/stoptracking-osx.png"
+#define ICONS                   ":/assets/images"
+#define ICONS_BUTTONS           ":/assets/images/buttons"
+#define NAMED_BUTTON(X)         QIcon(":/assets/images/buttons/" #X)
+#define TRAY_START_ICON_NAME    ":/assets/images/buttons/starttracking-osx.png"
+#define TRAY_STOP_ICON_NAME     ":/assets/images/buttons/stoptracking-osx.png"
 
-#define TRAY_DEFAULT_ICON_NAME  ":/icons/icons/tray-default.png"
-#define TRAY_RUNNING_ICON_NAME  ":/icons/icons/tray-running.png"
+#define TRAY_DEFAULT_ICON_NAME  ":/assets/images/buttons/tray-default.png"
+#define TRAY_RUNNING_ICON_NAME  ":/assets/images/buttons/tray-running.png"
 
-#define ACTION_START_ICON_NAME  ":/icons/icons/clock-32x32.png"
-#define ACTION_STOP_ICON_NAME   ":/icons/icons/process-stop.png"
+#define ACTION_START_ICON_NAME  ":/assets/images/buttons/clock-32x32.png"
+#define ACTION_STOP_ICON_NAME   ":/assets/images/buttons/process-stop.png"
 //#endif
 
 #ifndef USE_ENCRYPTED_DB

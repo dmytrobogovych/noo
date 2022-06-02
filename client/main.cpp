@@ -13,7 +13,6 @@ int main(int argc, char *argv[])
     helper::theme::applyCurrent(Settings::instance());
 
     QFont f = app.font();
-    // f.setFamily("Monaco");
     f.setPointSize(14);
     app.setFont(f);
     app.setApplicationName(APPNAME);

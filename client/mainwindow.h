@@ -190,7 +190,7 @@ public slots:
     void startTracking();
     void startTrackingRecent();
 
-    void stopTracking(TrackingStopReason reason, time_t current_utc = time(nullptr));
+    void stopTracking(MainWindow::TrackingStopReason reason, time_t current_utc = time(nullptr));
     void updateData();
     void add10Mins();
 
@@ -239,9 +239,6 @@ public slots:
     void onDbPasswordCancelled();
     void onNewDbPasswordEntered(const QString& password);
     void onDatabaseChanged(const QString& path);
-
-    void onIncreaseFontSize();
-    void onDecreaseFontSize();
 };
 
 #endif // MAINWINDOW_H

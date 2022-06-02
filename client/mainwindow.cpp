@@ -38,6 +38,7 @@
 #endif
 
 #include <QDesktopWidget>
+#include <QDebug>
 #include <iostream>
 
 #define SETTINGS mSettings->data()
@@ -218,7 +219,7 @@ void MainWindow::initClient()
         ui->mMainToolbar->addWidget(spacerWidget);
 
         mAttachmentsAction = new QAction(this);
-        mAttachmentsAction->setIcon(QIcon(":/icons/icons/mail-attachment.png"));
+        mAttachmentsAction->setIcon(NAMED_BUTTON("mail-attachment.png"));
         mAttachmentsAction->setText(tr("Attachments"));
         //ui->mMainToolbar->addAction(mAttachmentsAction);
         connect(mAttachmentsAction, SIGNAL(triggered()), this, SLOT(showAttachments()));
@@ -850,7 +851,7 @@ void MainWindow::buildOpenOrCreateView()
 
 QIcon MainWindow::getAppIcon()
 {
-    QIcon app_icon(QPixmap(QString(":/icons/icons/noo_128x128.png")));
+    QIcon app_icon(QPixmap(QString(":/assets/images/app_icon/linux/noo_128x128.png")));
 
     return app_icon;
 }
@@ -1209,7 +1210,7 @@ void MainWindow::trayContextualMenu()
     QMenu* menu = new QMenu();
     menu->addAction(ui->mStartOrStopTrackingAction);
     QMenu* recentMenu = menu->addMenu(ui->mStartRecentTaskMenu->title());
-    recentMenu->setIcon(QIcon(":/icons/icons/empty.png"));
+    recentMenu->setIcon(NAMED_BUTTON("empty.png"));
     prepareRecentTasksMenu(recentMenu);
     menu->addAction(ui->mShowLittAction);
     //menu->addAction(ui->mPreferencesAction);
@@ -1275,7 +1276,7 @@ void MainWindow::installDockMenu()
     QMenu* menu = new QMenu();
     menu->addAction(ui->mStartOrStopTrackingAction);
     mDockRecentMenu = menu->addMenu(ui->mStartRecentTaskMenu->title());
-    mDockRecentMenu->setIcon(QIcon(":/icons/icons/empty.png"));
+    mDockRecentMenu->setIcon(NAMED_ICON("empty.png"));
     prepareRecentTasksMenu(mDockRecentMenu);
 
     qt_mac_set_dock_menu(menu);
@@ -1706,16 +1707,4 @@ void MainWindow::showFatal(const QString& message)
 {
     std::cerr << message.toStdString() << std::endl;
     exit(EXIT_FAILURE);
-}
-
-void MainWindow::onIncreaseFontSize()
-{
-    QFont f = QApplication::font("QWidget");
-    f.setPixelSize(f.pixelSize() + 1);
-    QApplication::setFont(f, "QWidget");
-}
-
-void MainWindow::onDecreaseFontSize()
-{
-
 }

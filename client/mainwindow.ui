@@ -327,7 +327,7 @@
      </property>
      <property name="icon">
       <iconset resource="mainwindow.qrc">
-       <normaloff>:/icons/icons/empty.png</normaloff>:/icons/icons/empty.png</iconset>
+       <normaloff>:/assets/images/buttons/empty.png</normaloff>:/assets/images/buttons/empty.png</iconset>
      </property>
     </widget>
     <addaction name="mActionSearchInTasks"/>
@@ -381,7 +381,7 @@
    </property>
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/network-receive.png</normaloff>:/icons/icons/network-receive.png</iconset>
+     <normaloff>:/assets/images/buttons/network-receive.png</normaloff>:/assets/images/buttons/network-receive.png</iconset>
    </property>
    <property name="text">
     <string>S&amp;ync...</string>
@@ -393,7 +393,7 @@
   <action name="mPrintAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/document-print.png</normaloff>:/icons/icons/document-print.png</iconset>
+     <normaloff>:/assets/images/buttons/document-print.png</normaloff>:/assets/images/buttons/document-print.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Print...</string>
@@ -412,7 +412,7 @@
   <action name="mSaveAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/document-save.png</normaloff>:/icons/icons/document-save.png</iconset>
+     <normaloff>:/assets/images/buttons/document-save.png</normaloff>:/assets/images/buttons/document-save.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Save</string>
@@ -424,7 +424,7 @@
   <action name="mDeleteTaskAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/list-remove.png</normaloff>:/icons/icons/list-remove.png</iconset>
+     <normaloff>:/assets/images/buttons/list-remove.png</normaloff>:/assets/images/buttons/list-remove.png</iconset>
    </property>
    <property name="text">
     <string>Delete task</string>
@@ -436,7 +436,7 @@
   <action name="mRenameTaskAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/empty.png</normaloff>:/icons/icons/empty.png</iconset>
+     <normaloff>:/assets/images/buttons/empty.png</normaloff>:/assets/images/buttons/empty.png</iconset>
    </property>
    <property name="text">
     <string>Rename task</string>
@@ -445,7 +445,7 @@
   <action name="mNewTaskAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/tree-add-child-small.png</normaloff>:/icons/icons/tree-add-child-small.png</iconset>
+     <normaloff>:/assets/images/buttons/tree-add-child-small.png</normaloff>:/assets/images/buttons/tree-add-child-small.png</iconset>
    </property>
    <property name="text">
     <string>New child task</string>
@@ -463,7 +463,7 @@
   <action name="mNewRootTaskAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/tree-add-root-small.png</normaloff>:/icons/icons/tree-add-root-small.png</iconset>
+     <normaloff>:/assets/images/buttons/tree-add-root-small.png</normaloff>:/assets/images/buttons/tree-add-root-small.png</iconset>
    </property>
    <property name="text">
     <string>New root task</string>
@@ -475,7 +475,7 @@
   <action name="mStartOrStopTrackingAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/clock-32x32.png</normaloff>:/icons/icons/clock-32x32.png</iconset>
+     <normaloff>:/assets/images/buttons/clock-32x32.png</normaloff>:/assets/images/buttons/clock-32x32.png</iconset>
    </property>
    <property name="text">
     <string>Start tracking</string>
@@ -487,7 +487,7 @@
   <action name="mUndoEditAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/edit-undo.png</normaloff>:/icons/icons/edit-undo.png</iconset>
+     <normaloff>:/assets/images/buttons/edit-undo.png</normaloff>:/assets/images/buttons/edit-undo.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
@@ -499,7 +499,7 @@
   <action name="mRedoEditAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/edit-redo.png</normaloff>:/icons/icons/edit-redo.png</iconset>
+     <normaloff>:/assets/images/buttons/edit-redo.png</normaloff>:/assets/images/buttons/edit-redo.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
@@ -511,7 +511,7 @@
   <action name="mCutEditAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/edit-cut.png</normaloff>:/icons/icons/edit-cut.png</iconset>
+     <normaloff>:/assets/images/buttons/edit-cut.png</normaloff>:/assets/images/buttons/edit-cut.png</iconset>
    </property>
    <property name="text">
     <string>Cut</string>
@@ -523,7 +523,7 @@
   <action name="mCopyEditAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/edit-copy.png</normaloff>:/icons/icons/edit-copy.png</iconset>
+     <normaloff>:/assets/images/buttons/edit-copy.png</normaloff>:/assets/images/buttons/edit-copy.png</iconset>
    </property>
    <property name="text">
     <string>Copy</string>
@@ -535,7 +535,7 @@
   <action name="mPasteEditAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/edit-paste.png</normaloff>:/icons/icons/edit-paste.png</iconset>
+     <normaloff>:/assets/images/buttons/edit-paste.png</normaloff>:/assets/images/buttons/edit-paste.png</iconset>
    </property>
    <property name="text">
     <string>Paste</string>
@@ -547,7 +547,7 @@
   <action name="mDeleteEditAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/edit-clear.png</normaloff>:/icons/icons/edit-clear.png</iconset>
+     <normaloff>:/assets/images/buttons/edit-clear.png</normaloff>:/assets/images/buttons/edit-clear.png</iconset>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -556,7 +556,7 @@
   <action name="mSelectAllEditAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/edit-select-all.png</normaloff>:/icons/icons/edit-select-all.png</iconset>
+     <normaloff>:/assets/images/buttons/edit-select-all.png</normaloff>:/assets/images/buttons/edit-select-all.png</iconset>
    </property>
    <property name="text">
     <string>Select all note</string>
@@ -573,7 +573,7 @@
   <action name="mTimelineAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/office-calendar.png</normaloff>:/icons/icons/office-calendar.png</iconset>
+     <normaloff>:/assets/images/buttons/office-calendar.png</normaloff>:/assets/images/buttons/office-calendar.png</iconset>
    </property>
    <property name="text">
     <string>Timeline...</string>
@@ -582,7 +582,7 @@
   <action name="mTimeReportAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/appointment-new.png</normaloff>:/icons/icons/appointment-new.png</iconset>
+     <normaloff>:/assets/images/buttons/appointment-new.png</normaloff>:/assets/images/buttons/appointment-new.png</iconset>
    </property>
    <property name="text">
     <string>Time report...</string>
@@ -597,7 +597,7 @@
    </property>
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/empty.png</normaloff>:/icons/icons/empty.png</iconset>
+     <normaloff>:/assets/images/buttons/empty.png</normaloff>:/assets/images/buttons/empty.png</iconset>
    </property>
    <property name="text">
     <string>Show toolbar</string>
@@ -606,7 +606,7 @@
   <action name="mAttachmentsAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/empty.png</normaloff>:/icons/icons/empty.png</iconset>
+     <normaloff>:/assets/images/buttons/empty.png</normaloff>:/assets/images/buttons/empty.png</iconset>
    </property>
    <property name="text">
     <string>Attachments</string>
@@ -626,7 +626,7 @@
    </property>
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/accessories-calculator.png</normaloff>:/icons/icons/accessories-calculator.png</iconset>
+     <normaloff>:/assets/images/buttons/accessories-calculator.png</normaloff>:/assets/images/buttons/accessories-calculator.png</iconset>
    </property>
    <property name="text">
     <string>Time trackable</string>
@@ -635,7 +635,7 @@
   <action name="mActionSearchInTasks">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/folder-saved-search.png</normaloff>:/icons/icons/folder-saved-search.png</iconset>
+     <normaloff>:/assets/images/buttons/folder-saved-search.png</normaloff>:/assets/images/buttons/folder-saved-search.png</iconset>
    </property>
    <property name="text">
     <string>Find in tasks...</string>
@@ -647,7 +647,7 @@
   <action name="mActionSearch">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/edit-find.png</normaloff>:/icons/icons/edit-find.png</iconset>
+     <normaloff>:/assets/images/buttons/edit-find.png</normaloff>:/assets/images/buttons/edit-find.png</iconset>
    </property>
    <property name="text">
     <string>Find...</string>
@@ -659,7 +659,7 @@
   <action name="mShowLittAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/format-justify-fill.png</normaloff>:/icons/icons/format-justify-fill.png</iconset>
+     <normaloff>:/assets/images/buttons/format-justify-fill.png</normaloff>:/assets/images/buttons/format-justify-fill.png</iconset>
    </property>
    <property name="text">
     <string>Show Litt window</string>
@@ -671,7 +671,7 @@
   <action name="mFocusTaskTreeAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/empty.png</normaloff>:/icons/icons/empty.png</iconset>
+     <normaloff>:/assets/images/buttons/empty.png</normaloff>:/assets/images/buttons/empty.png</iconset>
    </property>
    <property name="text">
     <string>Switch to task tree</string>
@@ -683,7 +683,7 @@
   <action name="mFocusTaskTextAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/empty.png</normaloff>:/icons/icons/empty.png</iconset>
+     <normaloff>:/assets/images/buttons/empty.png</normaloff>:/assets/images/buttons/empty.png</iconset>
    </property>
    <property name="text">
     <string>Switch to task text</string>
@@ -695,7 +695,7 @@
   <action name="mAddSiblingAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/tree-add-sibling-small.png</normaloff>:/icons/icons/tree-add-sibling-small.png</iconset>
+     <normaloff>:/assets/images/buttons/tree-add-sibling-small.png</normaloff>:/assets/images/buttons/tree-add-sibling-small.png</iconset>
    </property>
    <property name="text">
     <string>Add sibling</string>
@@ -707,7 +707,7 @@
   <action name="mDecreaseLevelAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/empty.png</normaloff>:/icons/icons/empty.png</iconset>
+     <normaloff>:/assets/images/buttons/empty.png</normaloff>:/assets/images/buttons/empty.png</iconset>
    </property>
    <property name="text">
     <string>Decrease level</string>
@@ -719,7 +719,7 @@
   <action name="mIncreaseLevelAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/empty.png</normaloff>:/icons/icons/empty.png</iconset>
+     <normaloff>:/assets/images/buttons/empty.png</normaloff>:/assets/images/buttons/empty.png</iconset>
    </property>
    <property name="text">
     <string>Increase level</string>
@@ -731,7 +731,7 @@
   <action name="mMoveUpAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/empty.png</normaloff>:/icons/icons/empty.png</iconset>
+     <normaloff>:/assets/images/buttons/empty.png</normaloff>:/assets/images/buttons/empty.png</iconset>
    </property>
    <property name="text">
     <string>Move up</string>
@@ -746,7 +746,7 @@
   <action name="mMoveDownAction">
    <property name="icon">
     <iconset resource="mainwindow.qrc">
-     <normaloff>:/icons/icons/empty.png</normaloff>:/icons/icons/empty.png</iconset>
+     <normaloff>:/assets/images/buttons/empty.png</normaloff>:/assets/images/buttons/empty.png</iconset>
    </property>
    <property name="text">
     <string>Move down</string>
@@ -756,28 +756,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+Down</string>
-   </property>
-  </action>
-  <action name="mIncreaseFontSizeAction">
-   <property name="text">
-    <string>Increase font size</string>
-   </property>
-   <property name="toolTip">
-    <string>Increase font size</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+=</string>
-   </property>
-  </action>
-  <action name="mDecreaseFontSize">
-   <property name="text">
-    <string>Decrease font size</string>
-   </property>
-   <property name="toolTip">
-    <string>Decrease font size</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+-</string>
    </property>
   </action>
  </widget>
@@ -1342,38 +1320,6 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>mIncreaseFontSizeAction</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>onIncreaseFontSize()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>602</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>mDecreaseFontSize</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>onDecreaseFontSize()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>602</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
   <slot>save()</slot>
@@ -1412,7 +1358,5 @@
   <slot>newSibling()</slot>
   <slot>moveUp()</slot>
   <slot>moveDown()</slot>
-  <slot>onIncreaseFontSize()</slot>
-  <slot>onDecreaseFontSize()</slot>
  </slots>
 </ui>

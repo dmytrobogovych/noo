@@ -163,7 +163,7 @@ FORMS    += mainwindow.ui       \
     openorcreatedb_widget.ui    \
     connectdb_widget.ui
 
-RESOURCES = mainwindow.qrc resources/qdarkstyle/dark/style.qrc
+RESOURCES = mainwindow.qrc assets/qdarkstyle/dark/style.qrc
 
 macx {
     OBJECTIVE_SOURCES +=                        \

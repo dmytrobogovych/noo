@@ -59,6 +59,23 @@
     </widget>
    </item>
    <item>
+    <widget class="QPushButton" name="mChangeAppFont">
+     <property name="text">
+      <string>Change app font...</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="mAppFontExampleLabel">
+     <property name="text">
+      <string>Example of used app font.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QPushButton" name="mSelectDatabaseButton">
      <property name="text">
       <string>Select file...</string>

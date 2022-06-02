@@ -16,11 +16,11 @@
 
 namespace fs = std::filesystem;
 
-#define QBREAK_DESKTOP_NAME "qbreak.desktop"
+#define NOO_DESKTOP_NAME "noo.desktop"
 
 static std::string read_desktop_file()
 {
-    QFile f(":/assets/misc/qbreak.desktop");
+    QFile f(":/assets/misc/noo.desktop");
     f.open(QFile::ReadOnly);
     auto bytes = f.readAll();
     return bytes.toStdString();
@@ -59,7 +59,7 @@ static fs::path autostart_dir()
 
 static fs::path autostart_path()
 {
-    return autostart_dir() / QBREAK_DESKTOP_NAME;
+    return autostart_dir() / NOO_DESKTOP_NAME;
 }
 
 void autostart::enable(const std::string& path_to_me)
@@ -99,7 +99,7 @@ static fs::path appmenu_install_dir()
 void appmenu::install(const std::string& path_to_me)
 {
     // Put .desktop file to ~/.config/autostart
-    std::ofstream ofs(appmenu_install_dir() / QBREAK_DESKTOP_NAME);
+    std::ofstream ofs(appmenu_install_dir() / NOO_DESKTOP_NAME);
     if (ofs.is_open())
     {
         ofs << fixup_desktop_file(read_desktop_file(), path_to_me);
@@ -119,8 +119,8 @@ void appmenu::install(const std::string& path_to_me)
             // Copy icons from resources
             for (auto& icon_suffix: icons)
             {
-                QString icon_src = QString(":/assets/images/coffee_cup/icon_") + icon_suffix + ".png",
-                        icon_dst = target_dir + "/" + icon_suffix + "/apps/qbreak.png";
+                QString icon_src = QString(":/assets/images/app_icon/icon_") + icon_suffix + ".png",
+                        icon_dst = target_dir + "/" + icon_suffix + "/apps/noo.png";
                 QFile::copy(icon_src, icon_dst);
             }
         }
@@ -130,11 +130,11 @@ void appmenu::install(const std::string& path_to_me)
 void appmenu::uninstall()
 {
     if (is_installed())
-        fs::remove(appmenu_install_dir() / QBREAK_DESKTOP_NAME);
+        fs::remove(appmenu_install_dir() / NOO_DESKTOP_NAME);
 }
 
 bool appmenu::is_installed()
 {
-    return fs::exists(appmenu_install_dir() / QBREAK_DESKTOP_NAME);
+    return fs::exists(appmenu_install_dir() / NOO_DESKTOP_NAME);
 }
 #endif
