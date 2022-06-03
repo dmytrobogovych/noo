@@ -295,27 +295,5 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>buttonGroup</sender>
-   <signal>buttonClicked(int)</signal>
-   <receiver>PreferencesDlg</receiver>
-   <slot>smartStopWayChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>215</x>
-     <y>162</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
- <slots>
-  <slot>smartStopWayChanged()</slot>
- </slots>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>

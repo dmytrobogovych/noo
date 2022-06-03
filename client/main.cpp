@@ -12,13 +12,17 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     helper::theme::applyCurrent(Settings::instance());
 
-    QFont f = app.font();
-    f.setPointSize(14);
-    app.setFont(f);
     app.setApplicationName(APPNAME);
+    auto& settings = Settings::instance();
+    QFont f;
+    if (settings.data().count(KEY_APP_FONT) > 0)
+    {
+        if (f.fromString(settings.data()[KEY_APP_FONT].toString()))
+            app.setFont(f);
+    }
 
     // Path to database.
-    QString path = Settings::instance().getDatabasePath();
+    QString path = settings.getDatabasePath();
 
     QString folder = QFileInfo(path).absoluteDir().path();
     Storage::instance().setPath(path);

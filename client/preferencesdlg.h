@@ -27,7 +27,6 @@ private slots:
     void rejected();
 
     void onPauseOnIdle(bool v);
-    void onAskQuestionWhenResume(bool v);
     void onChangeAppFont();
     void onChangeDatabasePath();
 };

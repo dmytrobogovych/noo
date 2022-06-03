@@ -23,7 +23,7 @@ PreferencesDlg::PreferencesDlg(QWidget *parent, Settings& settings) :
 
     connect(ui->mChangePathButton, SIGNAL(clicked()), this, SLOT(onChangeDatabasePath()));
     connect(ui->mPauseOnIdleCheckbox, SIGNAL(toggled(bool)), this, SLOT(onPauseOnIdle(bool)));
-    connect(ui->mAskQuestionOnResumeCheckbox, SIGNAL(toggled(bool)), this, SLOT(smartStartSettingChanged(bool)));
+    connect(ui->mChangeAppFontButton, SIGNAL(clicked()), this, SLOT(onChangeAppFont()));
 
     // Autosave password
     ui->mAutosavePasswordCheckbox->setChecked(settings.data().value(KEY_AUTOSAVE_PASSWORD).toBool());
@@ -41,19 +41,15 @@ PreferencesDlg::PreferencesDlg(QWidget *parent, Settings& settings) :
     ui->mPathToDatabaseLabel->setText(settings.data().value(KEY_DB_FILENAME).toString());
 
     // Use stop on idle ?
-    ui->mSmartStopTracking->setChecked(GET_BOOL(KEY_SMART_STOP));
-    ui->mSmartStopIntervalInMinutes->setText(settings.data().value(KEY_SMART_STOP_MINUTES).toString());
-    ui->mAskQuestionOnStopRadiobutton->setChecked(GET_BOOL(KEY_ASK_STOP));
-    ui->mAutomaticallyOnStopRadiobutton->setChecked(!GET_BOOL(KEY_ASK_STOP));
-
-    // Use start after idle ?
-    ui->mSmartStartTracking->setChecked(GET_BOOL(KEY_SMART_START));
-    //ui->mAskQuestionOnStartRadiobutton->setChecked(GET_BOOL(KEY_ASK_START));
-    //ui->mAutomaticallyOnStartRadiobutton->setChecked(!GET_BOOL(KEY_ASK_START));
-
-    allowStartAfterIdleControls();
+    ui->mPauseOnIdleCheckbox->setChecked(GET_BOOL(KEY_SMART_STOP));
+    ui->mIdleTimeoutEdit->setText(settings.data().value(KEY_SMART_STOP_MINUTES).toString());
+    ui->mAskQuestionOnResumeCheckbox->setChecked(GET_BOOL(KEY_ASK_STOP));
 
     ui->mShowTrayIconCheckbox->setChecked(GET_BOOL(KEY_SHOW_TRAY_ICON));
+
+    QFont f = qApp->font();
+    ui->mAppFontLabel->setText(QString("%1 %2pt").arg(f.family()).arg(f.pointSize()));
+    ui->mAppFontLabel->setFont(f);
 }
 
 
@@ -62,7 +58,7 @@ PreferencesDlg::~PreferencesDlg()
     delete ui;
 }
 
-void PreferencesDlg::selectDatabase()
+void PreferencesDlg::onChangeDatabasePath()
 {
     QFileDialog dlg(this, tr("Select database to use"), helper::path::pathToDesktop());
     dlg.setAcceptMode(QFileDialog::AcceptSave);
@@ -70,7 +66,29 @@ void PreferencesDlg::selectDatabase()
     if (dlg.exec() == QDialog::Accepted)
     {
         QString filename = dlg.selectedFiles().front();
-        ui->mDatabaseLocation->setText(filename);
+        ui->mPathToDatabaseLabel->setText(filename);
+    }
+}
+
+void PreferencesDlg::onPauseOnIdle(bool value)
+{
+    if (value)
+    {
+        // It is possible to check idle time at all ?
+        if (!helper::activityTracker::ensureSmartTrackingIsPossible())
+            ui->mPauseOnIdleCheckbox->setChecked(false);
+    }
+}
+
+void PreferencesDlg::onChangeAppFont()
+{
+    QFontDialog dlg;
+    dlg.setCurrentFont(qApp->font());
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        QFont f = dlg.currentFont();
+        ui->mAppFontLabel->setText(QString("%1 %2pt").arg(f.family()).arg(f.pointSize()));
+        ui->mAppFontLabel->setFont(f);
     }
 }
 
@@ -82,60 +100,21 @@ void PreferencesDlg::accepted()
 
     mSettings.data()[KEY_SHOW_SECONDS] = ui->mShowSecondsCheckbox->isChecked();
     mSettings.data()[KEY_ASK_BEFORE_DELETE] = ui->mAskBeforeDeleteCheckbox->isChecked();
-    mSettings.data()[KEY_DB_FILENAME] = ui->mDatabaseLocation->text();
-    mSettings.data()[KEY_SMART_STOP] = ui->mSmartStopTracking->isChecked();
-    mSettings.data()[KEY_SMART_STOP_MINUTES] = ui->mSmartStopIntervalInMinutes->text().toInt();
-    mSettings.data()[KEY_SMART_START] = ui->mSmartStartTracking->isChecked();
+    mSettings.data()[KEY_DB_FILENAME] = ui->mPathToDatabaseLabel->text();
+    mSettings.data()[KEY_SMART_STOP] = ui->mPauseOnIdleCheckbox->isChecked();
+    mSettings.data()[KEY_SMART_STOP_MINUTES] = ui->mIdleTimeoutEdit->text().toInt();
     mSettings.data()[KEY_SHOW_TRAY_ICON] = ui->mShowTrayIconCheckbox->isChecked();
-    mSettings.data()[KEY_ASK_STOP] = ui->mAskQuestionOnStopRadiobutton->isChecked();
+    mSettings.data()[KEY_ASK_STOP] = ui->mAskQuestionOnResumeCheckbox->isChecked();
 
     if (mSettings.data()[KEY_DARK_THEME].toBool() != ui->mDarkThemeCheckbox->isChecked()) {
         mSettings.data()[KEY_DARK_THEME] = ui->mDarkThemeCheckbox->isChecked();
-        applyTheme();
+        helper::theme::applyCurrent(mSettings);
     }
+
+    mSettings.data()[KEY_APP_FONT] = ui->mAppFontLabel->font().toString();
+    mSettings.save();
 }
 
-
-void PreferencesDlg::smartStopSettingChanged(bool v)
+void PreferencesDlg::rejected()
 {
-    if (v)
-    {
-        if (!helper::activityTracker::ensureSmartTrackingIsPossible())
-            ui->mSmartStopTracking->setChecked(false);
-    }
-    allowStartAfterIdleControls();
-}
-
-
-void PreferencesDlg::onPauseOnIdle(bool value)
-{
-}
-
-void PreferencesDlg::allowStartAfterIdleControls()
-{
-    bool stopEnabled = ui->mSmartStopTracking->isChecked() && ui->mSmartStopIntervalInMinutes->text().toInt() > 0;
-    bool startEnabled = ui->mSmartStartTracking->isChecked();
-    bool automaticStopEnabled = ui->mAutomaticallyOnStopRadiobutton->isChecked();
-    //ui->mAskQuestionOnStartRadiobutton->setEnabled(stopEnabled && startEnabled);
-    //ui->mAutomaticallyOnStartRadiobutton->setEnabled(stopEnabled && startEnabled);
-    if (!stopEnabled || !automaticStopEnabled)
-        ui->mSmartStartTracking->setChecked(false);
-    ui->mSmartStartTracking->setEnabled(stopEnabled && automaticStopEnabled);
-    ui->mAskQuestionOnStopRadiobutton->setEnabled(stopEnabled);
-    ui->mAutomaticallyOnStopRadiobutton->setEnabled(stopEnabled);
-}
-
-void PreferencesDlg::onChangeAppFont()
-{
-    QFontDialog dlg;
-    dlg.setCurrentFont(qApp->font());
-    if (dlg.exec() == QDialog::Accepted)
-    {
-        //
-    }
-}
-
-void PreferencesDlg::applyTheme()
-{
-    helper::theme::applyCurrent(mSettings);
 }

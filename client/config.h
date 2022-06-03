@@ -2,7 +2,7 @@
 #define __APP_CONFIG_H
 
 // Application name
-#define APPNAME "Noo"
+#define APPNAME "noo"
 
 // Company name
 #define COMPANY "voipobjects.com"

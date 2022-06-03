@@ -31,6 +31,7 @@ void Settings::save()
     {
         settings.setValue(e, data().value(e));
     }
+    settings.sync();
 }
 
 void Settings::load()
