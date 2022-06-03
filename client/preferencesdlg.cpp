@@ -18,10 +18,12 @@ PreferencesDlg::PreferencesDlg(QWidget *parent, Settings& settings) :
     mSettings(settings)
 {
     ui->setupUi(this);
-    connect(ui->mSelectDatabaseButton, SIGNAL(clicked()), this, SLOT(selectDatabase()));
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accepted()));
-    connect(ui->mSmartStopTracking, SIGNAL(toggled(bool)), this, SLOT(smartStopSettingChanged(bool)));
-    connect(ui->mSmartStartTracking, SIGNAL(toggled(bool)), this, SLOT(smartStartSettingChanged(bool)));
+    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(rejected()));
+
+    connect(ui->mChangePathButton, SIGNAL(clicked()), this, SLOT(onChangeDatabasePath()));
+    connect(ui->mPauseOnIdleCheckbox, SIGNAL(toggled(bool)), this, SLOT(onPauseOnIdle(bool)));
+    connect(ui->mAskQuestionOnResumeCheckbox, SIGNAL(toggled(bool)), this, SLOT(smartStartSettingChanged(bool)));
 
     // Autosave password
     ui->mAutosavePasswordCheckbox->setChecked(settings.data().value(KEY_AUTOSAVE_PASSWORD).toBool());
@@ -36,7 +38,7 @@ PreferencesDlg::PreferencesDlg(QWidget *parent, Settings& settings) :
     ui->mDarkThemeCheckbox->setChecked(settings.data().value(KEY_DARK_THEME).toBool());
 
     // Use custom database path ?
-    ui->mDatabaseLocation->setText(settings.data().value(KEY_DB_FILENAME).toString());
+    ui->mPathToDatabaseLabel->setText(settings.data().value(KEY_DB_FILENAME).toString());
 
     // Use stop on idle ?
     ui->mSmartStopTracking->setChecked(GET_BOOL(KEY_SMART_STOP));
@@ -104,14 +106,9 @@ void PreferencesDlg::smartStopSettingChanged(bool v)
     allowStartAfterIdleControls();
 }
 
-void PreferencesDlg::smartStartSettingChanged(bool/* v */)
-{
-    allowStartAfterIdleControls();
-}
 
-void PreferencesDlg::smartStopWayChanged()
+void PreferencesDlg::onPauseOnIdle(bool value)
 {
-    allowStartAfterIdleControls();
 }
 
 void PreferencesDlg::allowStartAfterIdleControls()

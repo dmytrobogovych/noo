@@ -23,13 +23,13 @@ private:
     void applyTheme();
 
 private slots:
-    void selectDatabase();
     void accepted();
-    void smartStopSettingChanged(bool v);
-    void smartStartSettingChanged(bool);
-    void smartStopWayChanged();
-    void allowStartAfterIdleControls();
+    void rejected();
+
+    void onPauseOnIdle(bool v);
+    void onAskQuestionWhenResume(bool v);
     void onChangeAppFont();
+    void onChangeDatabasePath();
 };
 
 #endif // PREFERENCESDLG_H
