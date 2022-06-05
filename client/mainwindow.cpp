@@ -41,8 +41,6 @@
 #include <QDebug>
 #include <iostream>
 
-#define SETTINGS mSettings->data()
-
 const int ViewIndex_Main            = 0;
 const int ViewIndex_OpenOrCreateDb  = 1;
 const int ViewIndex_DbPassword      = 2;
@@ -51,10 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     mPasswordFailed(false), mFindInTasksDlg(this), mDockRecentMenu(nullptr)
 {
-    mSettings = QSharedPointer<Settings>(new Settings());
-
     // Dark theme if needed
-    helper::theme::applyCurrent(*mSettings);
+    helper::theme::applyCurrent(SETTINGS);
 
     // Restore window size & position from last run
     setUpdatesEnabled(false);
@@ -75,7 +71,7 @@ MainWindow::~MainWindow()
 void MainWindow::attachDatabase()
 {
     // Find default database file exists
-    QString path = mSettings->getDatabasePath();
+    QString path = SETTINGS.getDatabasePath();
 
     QString folder = QFileInfo(path).absoluteDir().path();
     Storage::instance().setPath(path);
@@ -84,7 +80,7 @@ void MainWindow::attachDatabase()
         askNewDbPassword();
     else
     {
-        if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
+        if (SETTINGS.data()[KEY_AUTOSAVE_PASSWORD].toBool())
         {
             QString password = helper::password::loadFromKeychain();
             if (password.isEmpty())
@@ -120,11 +116,11 @@ void MainWindow::connectUiToDatabase()
     if (mTaskTreeModel->hasChildren())
         ui->mTaskTree->setCurrentIndex(mTaskTreeModel->index(0,0, QModelIndex()));
 
-    mTaskTreeModel->setExpandedState(mSettings->data()[KEY_EXPANDED_TASKS].toString(), *ui->mTaskTree);
-    mTaskTreeModel->setSelected(mSettings->data()[KEY_SELECTED_TASKS].toString(), *ui->mTaskTree);
+    mTaskTreeModel->setExpandedState(SETTINGS.data()[KEY_EXPANDED_TASKS].toString(), *ui->mTaskTree);
+    mTaskTreeModel->setSelected(SETTINGS.data()[KEY_SELECTED_TASKS].toString(), *ui->mTaskTree);
 
     // Load recent tasks
-    QString recent = mSettings->data()[KEY_RECENT_TASKS].toString();
+    QString recent = SETTINGS.data()[KEY_RECENT_TASKS].toString();
     QStringList recentList = recent.split(";", QString::SkipEmptyParts);
     for (QString& s: recentList)
     {
@@ -182,7 +178,7 @@ void MainWindow::initClient()
     ui->mCheckForUpdatesAction->setMenuRole(QAction::ApplicationSpecificRole);
 
     // Build tray icon if system support this one
-    if (QSystemTrayIcon::isSystemTrayAvailable() && mSettings->data()[KEY_SHOW_TRAY_ICON].toBool())
+    if (QSystemTrayIcon::isSystemTrayAvailable() && SETTINGS.data()[KEY_SHOW_TRAY_ICON].toBool())
         initTrayIcon();
 
     setWindowIcon(getAppIcon());
@@ -295,7 +291,7 @@ QSharedPointer<QByteArray> MainWindow::getUndoStack() const
 
 void MainWindow::saveGeometry()
 {
-    AppGeometry g(*mSettings);
+    AppGeometry g(SETTINGS);
     g.setMaximized(isMaximized());
     g.setWindowRect(this->geometry());
     g.setSplitterPos(0, {ui->mSplitter->sizes().front(), ui->mSplitter->sizes().back()});
@@ -303,8 +299,8 @@ void MainWindow::saveGeometry()
 
     if (mTaskTreeModel)
     {
-        mSettings->data()[KEY_EXPANDED_TASKS] = this->mTaskTreeModel->getExpandedState(*ui->mTaskTree);
-        mSettings->data()[KEY_SELECTED_TASKS] = this->mTaskTreeModel->getSelected(*ui->mTaskTree);
+        SETTINGS.data()[KEY_EXPANDED_TASKS] = this->mTaskTreeModel->getExpandedState(*ui->mTaskTree);
+        SETTINGS.data()[KEY_SELECTED_TASKS] = this->mTaskTreeModel->getSelected(*ui->mTaskTree);
     }
 
     // Save recent list
@@ -313,13 +309,13 @@ void MainWindow::saveGeometry()
     {
         recent += QString::number(t->id()) + ";";
     }
-    mSettings->data()[KEY_RECENT_TASKS] = recent;
-    mSettings->save();
+    SETTINGS.data()[KEY_RECENT_TASKS] = recent;
+    SETTINGS.save();
 }
 
 void MainWindow::loadGeometry()
 {
-    auto g = AppGeometry(*mSettings);
+    auto g = AppGeometry(SETTINGS);
 
     if (g.isMaximized())
         this->showMaximized();
@@ -415,7 +411,7 @@ void MainWindow::onDatabaseAvailable()
 
 void MainWindow::preferences()
 {
-    PreferencesDlg pref(this, *mSettings);
+    PreferencesDlg pref(this, SETTINGS);
 
     if (pref.exec() == QDialog::Accepted)
     {
@@ -428,20 +424,20 @@ void MainWindow::preferences()
         emit onTimeFormatChanged();
 
         // Delete autosaved password if needed
-        if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool() == false)
+        if (SETTINGS.data()[KEY_AUTOSAVE_PASSWORD].toBool() == false)
         {
             // Reset password in keychain
             helper::password::saveToKeychain(QString(""));
 
             //mSettings->data()[KEY_PASSWORD] = NOPASSWORDSTRING;
-            mSettings->save();
+            SETTINGS.save();
         }
 
         // Hide/Show tray icon if need
-        if (mSettings->data()[KEY_SHOW_TRAY_ICON].toBool() && !mTrayIcon && QSystemTrayIcon::isSystemTrayAvailable())
+        if (SETTINGS.data()[KEY_SHOW_TRAY_ICON].toBool() && !mTrayIcon && QSystemTrayIcon::isSystemTrayAvailable())
             initTrayIcon();
         else
-        if (!mSettings->data()[KEY_SHOW_TRAY_ICON].toBool() && mTrayIcon)
+        if (!SETTINGS.data()[KEY_SHOW_TRAY_ICON].toBool() && mTrayIcon)
             removeTrayIcon();
 
         updateData();
@@ -573,7 +569,7 @@ void MainWindow::deleteTask()
     }
     else
     {
-        if (mSettings->data()[KEY_ASK_BEFORE_DELETE].toBool())
+        if (SETTINGS.data()[KEY_ASK_BEFORE_DELETE].toBool())
         {
             auto reply = QMessageBox::question(this,
                                                tr("Are you sure?"),
@@ -714,9 +710,9 @@ void MainWindow::idleDetected()
     mActivityTracker->acceptIdleState();
 
     // Check if settings allow smart stop
-    if (SETTINGS[KEY_SMART_STOP].toBool() && SETTINGS[KEY_SMART_STOP_MINUTES].toInt() > 0)
+    if (SETTINGS.data()[KEY_SMART_STOP].toBool() && SETTINGS.data()[KEY_SMART_STOP_MINUTES].toInt() > 0)
     {
-        if (SETTINGS[KEY_ASK_STOP].toBool())
+        if (SETTINGS.data()[KEY_ASK_STOP].toBool())
         {
             // Stop activity tracker to not be confused with following user activity
             mActivityTracker->stop();
@@ -736,7 +732,7 @@ void MainWindow::activityDetected()
     mActivityTracker->acceptUserActiveState();
 
     // Check if settings allow smart start
-    if (SETTINGS[KEY_SMART_START].toBool() && mStopReason == TSR_Automatic)
+    if (SETTINGS.data()[KEY_SMART_START].toBool() && mStopReason == TSR_Automatic)
     {
         /*if (SETTINGS[KEY_ASK_START].toBool())
     {
@@ -902,9 +898,9 @@ void MainWindow::startTracking(PTask t)
     updateTrayIcon(Tray_ShowMessage);
 
     // Start activity tracker if needed
-    if (mSettings->data()[KEY_SMART_STOP].toBool() && mSettings->data()[KEY_SMART_STOP_MINUTES].toInt() > 0)
+    if (SETTINGS.data()[KEY_SMART_STOP].toBool() && SETTINGS.data()[KEY_SMART_STOP_MINUTES].toInt() > 0)
     {
-        mActivityTracker->setInterval(mSettings->data()[KEY_SMART_STOP_MINUTES].toInt() * 60);
+        mActivityTracker->setInterval(SETTINGS.data()[KEY_SMART_STOP_MINUTES].toInt() * 60);
         mActivityTracker->start();
     }
 }
@@ -917,7 +913,7 @@ void MainWindow::startTracking()
         return;
 
     // Trigger permission dialog if needed
-    if (mSettings->data()[KEY_SMART_STOP].toBool())
+    if (SETTINGS.data()[KEY_SMART_STOP].toBool())
     {
         if (!helper::activityTracker::ensureSmartTrackingIsPossible())
             mTrayIcon->showMessage(tr("No smart tracking stop/start"), tr("Problem with obtaining permissions"), QSystemTrayIcon::Warning);
@@ -1296,26 +1292,14 @@ void MainWindow::timeFormatChanged()
 void MainWindow::showTimeForSelectedTask()
 {
     PTask t = mTaskTreeModel->getTask(ui->mTaskTree->currentIndex());
-    bool showSeconds = mSettings->data()[KEY_SHOW_SECONDS].toBool();
-
-    // Show stats for current task
-    if (t)
-    {
-        if (!t->timeline())
-            t->loadContent();
-
-        int spentSecondsToday = t->timeline()->today();
-        int spentSecondsMonth = t->timeline()->month();
-        ui->mTodaySpentTimeLabel->setText(QString::fromStdString(helper::chrono::secondsToDisplay(spentSecondsToday, showSeconds)));
-        ui->mThisMonthSpentTimeLabel->setText(QString::fromStdString(helper::chrono::secondsToDisplay(spentSecondsMonth, showSeconds)));
-    }
+    ui->mProperties->setTask(t);
 }
 
 void MainWindow::showTimeForTrackingTask()
 {
     if (mCurrentTask)
     {
-        bool showSeconds = mSettings->data()[KEY_SHOW_SECONDS].toBool();
+        bool showSeconds = SETTINGS.data()[KEY_SHOW_SECONDS].toBool();
 
         // Update status bar
         QString path;
@@ -1369,7 +1353,7 @@ void MainWindow::updateTrayIcon(TrayShowMessage flag)
     QString tooltip;
     if (mCurrentTask)
     {
-        bool showSeconds = mSettings->data()[KEY_SHOW_SECONDS].toBool();
+        bool showSeconds = SETTINGS.data()[KEY_SHOW_SECONDS].toBool();
         int spentSecondsToday = mCurrentTask->timeline()->today();
         QString timeString = QString::fromStdString(helper::chrono::secondsToDisplay(spentSecondsToday, showSeconds));
         tooltip = tr("Noo is tracking ") + mCurrentTask->title() + ".\n" +
@@ -1408,7 +1392,7 @@ void MainWindow::showTimeline()
         return;
 
     PTask t = mTaskTreeModel->getTask(ui->mTaskTree->currentIndex());
-    TimeTreeDlg dlg(this, t->timeline(), *mSettings);
+    TimeTreeDlg dlg(this, t->timeline(), SETTINGS);
     dlg.exec();
 
     // Refresh current timeline stats
@@ -1417,7 +1401,7 @@ void MainWindow::showTimeline()
 
 void MainWindow::showTimeReport()
 {
-    TimeReportWizard trz(*mSettings, this);
+    TimeReportWizard trz(SETTINGS, this);
     trz.exec();
 }
 
@@ -1652,7 +1636,7 @@ void MainWindow::trayWindowDestroyed(QObject */*object*/)
 void MainWindow::onDbPasswordEntered(const QString& password)
 {
     // Save password to keychain if needed
-    if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
+    if (SETTINGS.data()[KEY_AUTOSAVE_PASSWORD].toBool())
         helper::password::saveToKeychain(password);
 
     // Try to open database
@@ -1674,7 +1658,7 @@ void MainWindow::onDbPasswordCancelled()
 void MainWindow::onNewDbPasswordEntered(const QString& password)
 {
     // Save password to keychain if needed
-    if (mSettings->data()[KEY_AUTOSAVE_PASSWORD].toBool())
+    if (SETTINGS.data()[KEY_AUTOSAVE_PASSWORD].toBool())
         helper::password::saveToKeychain(password);
 
     // Configure storage
@@ -1695,8 +1679,8 @@ void MainWindow::onNewDbPasswordEntered(const QString& password)
 void MainWindow::onDatabaseChanged(const QString& path)
 {
     // Bind to specific database
-    mSettings->data()[KEY_DB_FILENAME] = path;
-    mSettings->save();
+    SETTINGS.data()[KEY_DB_FILENAME] = path;
+    SETTINGS.save();
     Storage::instance().setPath(path);
 
     // Try to open database

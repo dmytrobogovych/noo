@@ -42,7 +42,8 @@ class AttachmentsList : public QWidget
 public:
   explicit AttachmentsList(QWidget *parent = 0);
   ~AttachmentsList();
-  void setTask(PTask task);
+  void setTask(const PTask& task);
+  PTask task() const;
   void setParentWidget(QWidget* w);
 
 private:

@@ -52,6 +52,7 @@ INCLUDEPATH += $$PWD/../lib/include
 
 SOURCES += main.cpp                 \
     mainwindow.cpp                  \
+    nodepropertieswidget.cpp \
     storage.cpp                     \
     task.cpp                        \
     tasktreemodel.cpp               \
@@ -91,6 +92,7 @@ SOURCES += main.cpp                 \
 
 
 HEADERS  += mainwindow.h            \
+    nodepropertieswidget.h \
     storage.h                       \
     task.h                          \
     tasktreemodel.h                 \
@@ -150,6 +152,7 @@ unix {
 
 FORMS    += mainwindow.ui       \
     newpassworddlg.ui           \
+    nodepropertieswidget.ui \
     passworddlg.ui              \
     preferencesdlg.ui           \
     timetreedlg.ui              \

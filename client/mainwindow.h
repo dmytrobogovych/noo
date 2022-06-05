@@ -63,7 +63,6 @@ private:
     QLabel* mCurrentIntervalLabel = nullptr;
     QLabel* mDuplicationSignalLabel = nullptr;;
     QSystemTrayIcon *mTrayIcon = nullptr;
-    QSharedPointer<Settings> mSettings;
     bool mPasswordFailed = false;
     PasswordDlg* mPasswordDlg = nullptr;
     NewPasswordDlg* mNewPasswordDlg = nullptr;

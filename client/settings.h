@@ -61,6 +61,8 @@ protected:
     QVariantMap mData;
 };
 
+#define SETTINGS Settings::instance()
+
 class AppGeometry
 {
 public:

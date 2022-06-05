@@ -81,36 +81,9 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QGridLayout" name="gridLayout">
-         <property name="leftMargin">
-          <number>2</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>2</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
           <widget class="QSplitter" name="mTimeSplitter">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>4000</height>
-            </size>
-           </property>
-           <property name="lineWidth">
-            <number>0</number>
-           </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -210,59 +183,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QFrame" name="mTimeFrame">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>4000</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <layout class="QFormLayout" name="formLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="mTodayTextLabel">
-               <property name="text">
-                <string>Today:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLabel" name="mTodaySpentTimeLabel">
-               <property name="text">
-                <string>0 hours 0 minutes</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="mThisMonthTextLabel">
-               <property name="text">
-                <string>This month:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLabel" name="mThisMonthSpentTimeLabel">
-               <property name="text">
-                <string>0 hours 0 minutes</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
+           <widget class="NodePropertiesWidget" name="mProperties" native="true"/>
           </widget>
          </item>
         </layout>
@@ -770,6 +691,12 @@
    <class>QMarkdownTextEdit</class>
    <extends>QPlainTextEdit</extends>
    <header>qmarkdowntextedit/qmarkdowntextedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>NodePropertiesWidget</class>
+   <extends>QWidget</extends>
+   <header>nodepropertieswidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
