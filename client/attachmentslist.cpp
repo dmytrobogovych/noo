@@ -5,13 +5,14 @@
 
 #include <QMenu>
 #include <QFileDialog>
+#include <QDropEvent>
 
 AttachmentsListModel::AttachmentsListModel(PTask task, ChangesHistory& history, const AttachmentArray &items, QObject *parent)
     :QAbstractListModel(parent), mTask(task), mHistory(history), mData(items)
 {
 }
 
-int AttachmentsListModel::rowCount(const QModelIndex &parent) const
+int AttachmentsListModel::rowCount(const QModelIndex &/*parent*/) const
 {
     return mData.size();
 }
@@ -41,7 +42,7 @@ QVariant AttachmentsListModel::data(const QModelIndex& index, int role) const
 }
 
 
-Qt::ItemFlags AttachmentsListModel::flags(const QModelIndex &index) const
+Qt::ItemFlags AttachmentsListModel::flags(const QModelIndex &/*index*/) const
 {
     Qt::ItemFlags result = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;// | Qt::ItemIsDropEnabled;
     //if (index.isValid())
@@ -143,6 +144,7 @@ void AttachmentsList::setParentWidget(QWidget *w)
 void AttachmentsList::updateActionsState()
 {
     bool hasSelectedItem = ui->mListView->currentIndex().isValid();
+
     ui->mRenameAction->setEnabled(hasSelectedItem);
     ui->mDeleteAction->setEnabled(hasSelectedItem);
     ui->mExportAction->setEnabled(hasSelectedItem);
@@ -152,14 +154,15 @@ void AttachmentsList::contextualMenu(const QPoint& point)
 {
     updateActionsState();
 
-    QMenu* menu = new QMenu();
+    QMenu* menu = new QMenu(this);
     menu->addAction(ui->mRenameAction);
     menu->addAction(ui->mDeleteAction);
     menu->addAction(ui->mExportAction);
     menu->addAction(ui->mImportAction);
 
     //menu->addAction(tr("Add 10 mins to timeline"), this, SLOT(add10Mins()));
-    menu->exec(this->window()->mapToGlobal(point));
+    menu->exec(this->mapToGlobal(point));
+    //menu->exec(point);
 }
 
 void AttachmentsList::importFile()
@@ -264,4 +267,9 @@ void AttachmentsList::renameFile()
     QModelIndex index = ui->mListView->currentIndex();
     if (index.isValid())
         ui->mListView->edit(index);
+}
+
+void AttachmentsList::dropEvent(QDropEvent *ev)
+{
+    ev->accept();
 }

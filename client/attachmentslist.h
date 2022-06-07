@@ -54,6 +54,10 @@ private:
   ChangesHistory mHistory;
 
   void updateActionsState();
+
+protected:
+  void dropEvent(QDropEvent *ev) override;
+
 public slots:
   void contextualMenu(const QPoint& point);
   void importFile();

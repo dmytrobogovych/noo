@@ -19,7 +19,7 @@ void NodePropertiesWidget::setTask(const PTask& task)
     if (mTask != task)
     {
         mTask = task;
-        update();
+        refresh();
     }
 }
 
