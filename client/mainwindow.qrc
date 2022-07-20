@@ -59,7 +59,11 @@
         <file>assets/images/buttons/tree-add-root-small.png</file>
         <file>assets/images/buttons/tree-add-root.png</file>
         <file>assets/images/buttons/tree-add-sibling-small.png</file>
+        <file>assets/images/app_icon/linux/noo_16x16.png</file>
+        <file>assets/images/app_icon/linux/noo_32x32.png</file>
+        <file>assets/images/app_icon/linux/noo_64x64.png</file>
         <file>assets/images/app_icon/linux/noo_128x128.png</file>
+        <file>assets/images/app_icon/linux/noo_256x256.png</file>
         <file>assets/misc/noo.desktop</file>
     </qresource>
 </RCC>

@@ -110,7 +110,7 @@ void appmenu::install(const std::string& path_to_me)
 
     // Install latest icons
     {
-        auto icons = {"16x16", "32x32", "64x64", "128x128", "512x512"};
+        auto icons = {"16x16", "32x32", "64x64", "128x128", "256x256"};
 
         // Here Qt part
         auto target_dir = QFileInfo(QDir::homePath() + "/.local/share/icons/hicolor").absoluteFilePath();
@@ -119,9 +119,10 @@ void appmenu::install(const std::string& path_to_me)
             // Copy icons from resources
             for (auto& icon_suffix: icons)
             {
-                QString icon_src = QString(":/assets/images/app_icon/icon_") + icon_suffix + ".png",
+                QString icon_src = QString(":/assets/images/app_icon/linux/noo_") + icon_suffix + ".png",
                         icon_dst = target_dir + "/" + icon_suffix + "/apps/noo.png";
-                QFile::copy(icon_src, icon_dst);
+                if (QFile::exists(icon_src))
+                    QFile::copy(icon_src, icon_dst);
             }
         }
     }
