@@ -1,7 +1,7 @@
 [Desktop Entry]
 GenericName=App to make notes
 Name=Noo
-Version=0.9.3
+Version=0.9.4
 Exec=/usr/bin/noo
 Comment=App to make notes
 Icon=noo

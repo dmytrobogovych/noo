@@ -219,25 +219,6 @@ void MainWindow::initClient()
         mAttachmentsAction->setText(tr("Attachments"));
         //ui->mMainToolbar->addAction(mAttachmentsAction);
         connect(mAttachmentsAction, SIGNAL(triggered()), this, SLOT(showAttachments()));
-
-        mAttachmentsLabel = new QLabel(this);
-        mAttachmentsLabel->setMargin(5);
-        mAttachmentsLabel->setOpenExternalLinks(false);
-
-        QFont f = mAttachmentsLabel->font();
-        f.setUnderline(true);
-        mAttachmentsLabel->setFont(f);
-        mAttachmentsLabel->setTextFormat(Qt::RichText);
-        //mAttachmentsLabel->setStyleSheet("QLabel { color:rgb(142,178,218); }");
-
-        QPalette newPal(palette());
-        newPal.setColor(QPalette::Link, QColor(0x100, 0x100, 0x100));
-        newPal.setColor(QPalette::LinkVisited, QColor(0x100, 0x100, 0x100));
-        mAttachmentsLabel->setPalette(newPal);
-
-        ui->mMainToolbar->addWidget(mAttachmentsLabel);
-        connect(mAttachmentsLabel, SIGNAL(linkActivated(QString)), this, SLOT(showAttachments()));
-        updateAttachmentsLabel(PTask());
     }
 
 #ifdef TARGET_OSX
@@ -648,12 +629,6 @@ void MainWindow::taskIndexChanged(const QModelIndex& current, const QModelIndex&
             ui->mStartOrStopTrackingAction->setText(tr("Start tracking"));
     }
 
-    if (t)
-    {
-        mAttachmentsAction->setToolTip(tr("Attachments for ") + t->title());
-        updateAttachmentsLabel(t);
-    }
-
     if (current.isValid())
     {
         // Reset search position
@@ -783,18 +758,6 @@ void MainWindow::prepareRecentTasksMenu(QMenu* submenu)
         QAction* action = submenu->addAction(t->title(), this, SLOT(startTrackingRecent()));
         action->setProperty("taskid", QVariant(static_cast<qulonglong>(t->id())));
     }
-}
-
-void MainWindow::updateAttachmentsLabel(PTask t)
-{
-    QString text = "<a href=\"localfile\" style=\"color: #3966A0\">" + tr("No attachments") + "</a>";
-
-    if (t)
-    {
-        if (t->getAttachmentCount())
-            text = "<a href=\"localfile\" style=\"color: #3966A0\">" + QString::number(t->getAttachmentCount()) + " " + tr("attachments") + "</a>";
-    }
-    mAttachmentsLabel->setText(text);
 }
 
 void MainWindow::setupMainUi()
@@ -1437,9 +1400,6 @@ void MainWindow::showAttachments()
 
     // Refresh current item in task tree to ensure attachment icon is shown/hidden
     mTaskTreeModel->dataChanged(taskIndex, taskIndex);
-
-    // Refresh attachments link
-    updateAttachmentsLabel(t);
 }
 
 void MainWindow::checkForUpdates()

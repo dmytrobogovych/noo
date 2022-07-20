@@ -7,6 +7,7 @@ NodePropertiesWidget::NodePropertiesWidget(QWidget *parent) :
     ui(new Ui::NodePropertiesWidget)
 {
     ui->setupUi(this);
+    ui->mFileListView->setParentWidget(this);
 }
 
 NodePropertiesWidget::~NodePropertiesWidget()

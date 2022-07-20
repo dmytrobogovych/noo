@@ -74,9 +74,6 @@ private:
     // Attachments action
     QAction* mAttachmentsAction = nullptr;
 
-    // Attachments label
-    QLabel* mAttachmentsLabel = nullptr;
-
     // Delegate to draw task items in custom way
     TaskItemDelegate mTaskItemDelegate;
 
@@ -142,7 +139,6 @@ private:
     void installDockMenu();
     void startTracking(PTask t);
     void prepareRecentTasksMenu(QMenu* submenu);
-    void updateAttachmentsLabel(PTask t);
 
     // Builds main UI layut
     void setupMainUi();
