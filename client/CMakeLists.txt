@@ -27,7 +27,7 @@ set (CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run uic automatically when needed.
 set (CMAKE_AUTOUIC ON)
 
-set (APP_SKIP_BUILD_NUMBER OFF CACHE BOOL "Skip Litt build number increase.")
+set (APP_SKIP_BUILD_NUMBER OFF CACHE BOOL "Skip Noo build number increase.")
 
 # App version is expected as APP_VERSION variable
 #if (NOT APP_VERSION)
@@ -272,7 +272,7 @@ if (TARGET_OSX)
     set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE_LONG_VERSION_STRING "${APP_VERSION}")
 
     set_target_properties( ${EXE_NAME} PROPERTIES   MACOSX_BUNDLE TRUE
-                                                    MACOSX_BUNDLE_GUI_IDENTIFIER "com.satorilight.litt"
+                                                    MACOSX_BUNDLE_GUI_IDENTIFIER "com.satorilight.noo"
                                                     RESOURCE "${RESOURCE_FILES}")
 endif()
 

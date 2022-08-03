@@ -28,7 +28,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Litt discovered idle interval at %TIME%.
+    <string>Noo discovered idle interval at %TIME%.
 Should app to continue work tracking?</string>
    </property>
    <property name="scaledContents">

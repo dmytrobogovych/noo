@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string notr="true">Litt</string>
+   <string notr="true">Noo</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="sizePolicy">
@@ -583,10 +583,10 @@
      <normaloff>:/assets/images/buttons/format-justify-fill.png</normaloff>:/assets/images/buttons/format-justify-fill.png</iconset>
    </property>
    <property name="text">
-    <string>Show Litt window</string>
+    <string>Show Noo window</string>
    </property>
    <property name="toolTip">
-    <string>Bring Litt window to foreground</string>
+    <string>Bring Noo window to foreground</string>
    </property>
   </action>
   <action name="mFocusTaskTreeAction">

@@ -12,7 +12,7 @@ set (QT_USE_QTNETWORK true)
 set (QT_USE_QTWEBKIT true)
 
 set (FERVOR_APP_VERSION "${APP_VERSION}")
-set (FERVOR_APP_NAME "Litt")
+set (FERVOR_APP_NAME "Noo")
 
 # Instruct CMake to run moc automatically when needed.
 set (CMAKE_AUTOMOC ON)

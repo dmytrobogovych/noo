@@ -2,31 +2,31 @@
 #define __APP_CONFIG_H
 
 // Application name
-#define APPNAME "noo"
+#define APPNAME             "noo"
 
 // Company name
-#define COMPANY "voipobjects.com"
+#define COMPANY             "satorilight.com"
 
 // Default database name
-#define DATABASENAME "database.db"
+#define DATABASENAME        "database.noo"
 
 // Log file name
-#define LOGNAME "noo-log.txt"
+#define LOGNAME             "noo-log.txt"
 
 // About text
-#define ABOUTTEXT "Tiny outliner with time tracking capabilities"
+#define ABOUTTEXT           "Tiny outliner with time tracking capabilities"
 
 // Text for message box with "not implemented" notification
-#define NOTIMPLEMENTEDTEXT "Not implemented in this version"
+#define NOTIMPLEMENTEDTEXT  "Not implemented in this version"
 
 // Settings file name
-#define SETTINGS_FILENAME "noo.ini"
+#define SETTINGS_FILENAME   "noo.ini"
 
 // No password string
-#define NOPASSWORDSTRING ""
+#define NOPASSWORDSTRING    ""
 
 // Mime type of task items
-#define NODE_MIME_TYPE "application/noo-node"
+#define NODE_MIME_TYPE      "application/noo-node"
 
 // Exit code to signal about problems with database
 #define EXITCODE_NO_DATABASE (1)
@@ -39,7 +39,7 @@
 
 #define APP_VERSION_MAJOR 0
 #define APP_VERSION_MINOR 9
-#define APP_VERSION_SUFFIX 4
+#define APP_VERSION_SUFFIX 5
 
 //#ifdef TARGET_OSX
 #define ICONS                   ":/assets/images"

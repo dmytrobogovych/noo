@@ -31,8 +31,8 @@
     </font>
    </property>
    <property name="text">
-    <string>Litt discovered user activity after idle interval. 
-Should Litt start tracking on %TASK%?</string>
+    <string>Noo discovered user activity after idle interval. 
+Should Noo start tracking on %TASK%?</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
