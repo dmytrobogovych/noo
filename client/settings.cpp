@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QRect>
+#include <QDebug>
 
 Settings::Settings()
 {
@@ -27,7 +28,8 @@ void Settings::save()
     auto path = helper::path::pathToSettings();
     QSettings settings(path, QSettings::IniFormat);
     settings.clear();
-    for (const QString& e: data().keys())
+
+    for (const QString& e: mData.keys())
     {
         settings.setValue(e, data().value(e));
     }
@@ -41,6 +43,8 @@ void Settings::load()
 
     // Path to settings file
     QString path = helper::path::pathToSettings();
+
+    qDebug() << "Settings file path: " << path;
 
     // Check if directory exists at all
     QString dir = QFileInfo(path).absoluteDir().path();

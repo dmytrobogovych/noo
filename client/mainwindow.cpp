@@ -1556,7 +1556,13 @@ void MainWindow::showMainWindow()
 void MainWindow::setupAppMenu()
 {
 #if defined(TARGET_LINUX)
-    appmenu::install(QCoreApplication::applicationFilePath().toStdString());
+    auto exe_path = QFileInfo(QCoreApplication::arguments().front()).absoluteFilePath();
+    const char* appimage = std::getenv("APPIMAGE");
+    if (appimage != nullptr)
+        exe_path = appimage;
+
+    qDebug() << "Found exe path: " << exe_path;
+    appmenu::install(exe_path.toStdString());
 #endif
 }
 

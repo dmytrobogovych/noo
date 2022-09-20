@@ -10,9 +10,8 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    helper::theme::applyCurrent(Settings::instance());
-
     app.setApplicationName(APPNAME);
+    helper::theme::applyCurrent(Settings::instance());
     auto& settings = Settings::instance();
     QFont f;
     if (settings.data().count(KEY_APP_FONT) > 0)
