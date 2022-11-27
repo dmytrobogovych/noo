@@ -6,9 +6,14 @@
 #include <QDir>
 #include "settings.h"
 #include "helper.h"
+#include "runguard.h"
 
 int main(int argc, char *argv[])
 {
+    RunGuard guard("Noo app - runguard");
+    if ( !guard.tryToRun() )
+        return 0;
+
     QApplication app(argc, argv);
     app.setApplicationName(APPNAME);
     helper::theme::applyCurrent(Settings::instance());
