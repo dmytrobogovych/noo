@@ -15,7 +15,7 @@
 #include <QSettings>
 #include <QQueue>
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_DARWIN) && !defined(Q_OS_ANDROID)
+#if defined(KEYCHAIN_DBUS)
 
 #include <QDBusPendingCallWatcher>
 
@@ -49,7 +49,7 @@ public:
     Mode mode;
     QByteArray data;
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_DARWIN) && !defined(Q_OS_ANDROID)
+#if defined(KEYCHAIN_DBUS)
     org::kde::KWallet* iface;
     int walletHandle;
 
@@ -91,20 +91,20 @@ class ReadPasswordJobPrivate : public JobPrivate {
     Q_OBJECT
 public:
     explicit ReadPasswordJobPrivate( const QString &service_, ReadPasswordJob* qq );
-    void scheduledStart();
+    void scheduledStart() override;
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_DARWIN) && !defined(Q_OS_ANDROID)
-    void fallbackOnError(const QDBusError& err);
+#if defined(KEYCHAIN_DBUS)
+    void fallbackOnError(const QDBusError& err) override;
 
 private Q_SLOTS:
-    void kwalletOpenFinished( QDBusPendingCallWatcher* watcher );
+    void kwalletOpenFinished( QDBusPendingCallWatcher* watcher ) override;
     void kwalletEntryTypeFinished( QDBusPendingCallWatcher* watcher );
-    void kwalletFinished( QDBusPendingCallWatcher* watcher );
+    void kwalletFinished( QDBusPendingCallWatcher* watcher ) override;
 #else //moc's too dumb to respect above macros, so just define empty slot implementations
 private Q_SLOTS:
-    void kwalletOpenFinished( QDBusPendingCallWatcher* ) {}
+    void kwalletOpenFinished( QDBusPendingCallWatcher* ) override {}
     void kwalletEntryTypeFinished( QDBusPendingCallWatcher* ) {}
-    void kwalletFinished( QDBusPendingCallWatcher* ) {}
+    void kwalletFinished( QDBusPendingCallWatcher* ) override {}
 #endif
 
     friend class ReadPasswordJob;
@@ -114,10 +114,10 @@ class WritePasswordJobPrivate : public JobPrivate {
     Q_OBJECT
 public:
     explicit WritePasswordJobPrivate( const QString &service_, WritePasswordJob* qq );
-    void scheduledStart();
+    void scheduledStart() override;
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_DARWIN) && !defined(Q_OS_ANDROID)
-    void fallbackOnError(const QDBusError& err);
+#if defined(KEYCHAIN_DBUS)
+    void fallbackOnError(const QDBusError& err) override;
 #endif
 
     friend class WritePasswordJob;
@@ -128,10 +128,10 @@ class DeletePasswordJobPrivate : public JobPrivate {
 public:
     explicit DeletePasswordJobPrivate( const QString &service_, DeletePasswordJob* qq );
 
-    void scheduledStart();
+    void scheduledStart() override;
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_DARWIN) && !defined(Q_OS_ANDROID)
-    void fallbackOnError(const QDBusError& err);
+#if defined(KEYCHAIN_DBUS)
+    void fallbackOnError(const QDBusError& err) override;
 #endif
 
 protected:

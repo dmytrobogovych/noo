@@ -24,20 +24,20 @@ void ReadPasswordJobPrivate::scheduledStart() {
     PCREDENTIALW cred;
 
     if (!CredReadW(name, CRED_TYPE_GENERIC, 0, &cred)) {
-        Error error;
+        Error err;
         QString msg;
         switch(GetLastError()) {
         case ERROR_NOT_FOUND:
-            error = EntryNotFound;
+            err = EntryNotFound;
             msg = tr("Password entry not found");
             break;
         default:
-            error = OtherError;
+            err = OtherError;
             msg = tr("Could not decrypt data");
             break;
         }
 
-        q->emitFinishedWithError( error, msg );
+        q->emitFinishedWithError( err, msg );
         return;
     }
 
@@ -96,20 +96,20 @@ void DeletePasswordJobPrivate::scheduledStart() {
     LPCWSTR name = (LPCWSTR)key.utf16();
 
     if (!CredDeleteW(name, CRED_TYPE_GENERIC, 0)) {
-        Error error;
+        Error err;
         QString msg;
         switch(GetLastError()) {
         case ERROR_NOT_FOUND:
-            error = EntryNotFound;
+            err = EntryNotFound;
             msg = tr("Password entry not found");
             break;
         default:
-            error = OtherError;
+            err = OtherError;
             msg = tr("Could not decrypt data");
             break;
         }
 
-        q->emitFinishedWithError( error, msg );
+        q->emitFinishedWithError( err, msg );
     } else {
         q->emitFinished();
     }
@@ -129,10 +129,10 @@ void ReadPasswordJobPrivate::scheduledStart() {
     blob_in.cbData = encrypted.size();
 
     const BOOL ret = CryptUnprotectData( &blob_in,
-                                        NULL,
-                                         NULL,
-                                         NULL,
-                                         NULL,
+                                         nullptr,
+                                         nullptr,
+                                         nullptr,
+                                         nullptr,
                                          0,
                                          &blob_out );
     if ( !ret ) {
@@ -153,9 +153,9 @@ void WritePasswordJobPrivate::scheduledStart() {
     blob_in.cbData = data.size();
     const BOOL res = CryptProtectData( &blob_in,
                                        L"QKeychain-encrypted data",
-                                       NULL,
-                                       NULL,
-                                       NULL,
+                                       nullptr,
+                                       nullptr,
+                                       nullptr,
                                        0,
                                        &blob_out );
     if ( !res ) {
@@ -186,3 +186,8 @@ void DeletePasswordJobPrivate::scheduledStart() {
     }
 }
 #endif
+
+bool QKeychain::isAvailable()
+{
+    return true;
+}

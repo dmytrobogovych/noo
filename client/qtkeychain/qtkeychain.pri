@@ -2,23 +2,27 @@
 # This file is provided as is without any warranty.
 # It can break at anytime or be removed without notice.
 
-QT5KEYCHAIN_PWD = $$PWD
+lessThan(QT_MAJOR_VERSION, 5) {
+    error("qtkeychain requires Qt 5 or later")
+}
+
+QTKEYCHAIN_PWD = $$PWD
 
 CONFIG += depend_includepath
 DEFINES += QTKEYCHAIN_NO_EXPORT
 
 INCLUDEPATH += \
     $$PWD/.. \
-    $$QT5KEYCHAIN_PWD
+    $$QTKEYCHAIN_PWD
 
 HEADERS += \
-    $$QT5KEYCHAIN_PWD/keychain_p.h \
-    $$QT5KEYCHAIN_PWD/keychain.h
+    $$QTKEYCHAIN_PWD/keychain_p.h \
+    $$QTKEYCHAIN_PWD/keychain.h
 
 SOURCES += \
-    $$QT5KEYCHAIN_PWD/keychain.cpp
+    $$QTKEYCHAIN_PWD/keychain.cpp
 
-unix:!macx:!ios {
+unix:!android:!macx:!ios {
     # Remove the following LIBSECRET_SUPPORT line
     # to build without libsecret support.
     DEFINES += LIBSECRET_SUPPORT
@@ -37,19 +41,34 @@ unix:!macx:!ios {
     }
 
     # Generate D-Bus interface:
+    DEFINES += KEYCHAIN_DBUS
     QT += dbus
     kwallet_interface.files = $$PWD/org.kde.KWallet.xml
     DBUS_INTERFACES += kwallet_interface
 
     HEADERS += \
-        $$QT5KEYCHAIN_PWD/gnomekeyring_p.h \
-        $$QT5KEYCHAIN_PWD/plaintextstore_p.h \
-        $$QT5KEYCHAIN_PWD/libsecret_p.h
+        $$QTKEYCHAIN_PWD/gnomekeyring_p.h \
+        $$QTKEYCHAIN_PWD/plaintextstore_p.h \
+        $$QTKEYCHAIN_PWD/libsecret_p.h
     SOURCES += \
-        $$QT5KEYCHAIN_PWD/keychain_unix.cpp \
-        $$QT5KEYCHAIN_PWD/plaintextstore.cpp \
-        $$QT5KEYCHAIN_PWD/gnomekeyring.cpp \
-        $$QT5KEYCHAIN_PWD/libsecret.cpp
+        $$QTKEYCHAIN_PWD/keychain_unix.cpp \
+        $$QTKEYCHAIN_PWD/plaintextstore.cpp \
+        $$QTKEYCHAIN_PWD/gnomekeyring.cpp \
+        $$QTKEYCHAIN_PWD/libsecret.cpp
+}
+
+android {
+    lessThan(QT_MAJOR_VERSION, 6) {
+        QT += androidextras
+    }
+
+    HEADERS += \
+        $$QTKEYCHAIN_PWD/androidkeystore_p.h \
+        $$QTKEYCHAIN_PWD/plaintextstore_p.h
+    SOURCES += \
+        $$QTKEYCHAIN_PWD/androidkeystore.cpp \
+        $$QTKEYCHAIN_PWD/keychain_android.cpp \
+        $$QTKEYCHAIN_PWD/plaintextstore.cpp
 }
 
 win32 {
@@ -59,25 +78,20 @@ win32 {
     DEFINES += USE_CREDENTIAL_STORE
     contains(DEFINES, USE_CREDENTIAL_STORE) {
         !build_pass:message("Windows Credential Store support: on")
-        LIBS += -lAdvapi32
+        LIBS += -ladvapi32
     } else {
         !build_pass:message("Windows Credential Store support: off")
-        LIBS += -lCrypt32
-        HEADERS += $$QT5KEYCHAIN_PWD/plaintextstore_p.h
-        SOURCES += $$QT5KEYCHAIN_PWD/plaintextstore.cpp
+        LIBS += -lcrypt32
+        HEADERS += $$QTKEYCHAIN_PWD/plaintextstore_p.h
+        SOURCES += $$QTKEYCHAIN_PWD/plaintextstore.cpp
     }
-    HEADERS += $$QT5KEYCHAIN_PWD/libsecret_p.h
+    HEADERS += $$QTKEYCHAIN_PWD/libsecret_p.h
     SOURCES += \
-        $$QT5KEYCHAIN_PWD/keychain_win.cpp \
-        $$QT5KEYCHAIN_PWD/libsecret.cpp
+        $$QTKEYCHAIN_PWD/keychain_win.cpp \
+        $$QTKEYCHAIN_PWD/libsecret.cpp
 }
 
-macx:!ios {
-    LIBS += "-framework Security" "-framework Foundation"
-    SOURCES += $$QT5KEYCHAIN_PWD/keychain_mac.cpp
-}
-
-ios {
-    LIBS += "-framework Security" "-framework Foundation"
-    OBJECTIVE_SOURCES += $$QT5KEYCHAIN_PWD/keychain_ios.mm
+macx|ios {
+    LIBS += -framework Security -framework Foundation
+    OBJECTIVE_SOURCES += $$QTKEYCHAIN_PWD/keychain_apple.mm
 }
