@@ -37,7 +37,6 @@
 # include "platforms/linux/autostart.h"
 #endif
 
-#include <QDesktopWidget>
 #include <QDebug>
 #include <iostream>
 
@@ -58,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setUpdatesEnabled(true);
 
     // Other initialization will run in next event loop iteration
-    QApplication::postEvent(this, new ClientEvent<UiInitId>());
+    QApplication::postEvent(this, new ClientEvent(UiInitId));
 }
 
 MainWindow::~MainWindow()
@@ -121,7 +120,7 @@ void MainWindow::connectUiToDatabase()
 
     // Load recent tasks
     QString recent = SETTINGS.data()[KEY_RECENT_TASKS].toString();
-    QStringList recentList = recent.split(";", QString::SkipEmptyParts);
+    QStringList recentList = recent.split(";", Qt::SkipEmptyParts);
     for (QString& s: recentList)
     {
         Task::Id id = s.toULongLong();
@@ -779,7 +778,7 @@ void MainWindow::setupMainUi()
     FvUpdater::sharedUpdater()->SetFeedURL("http://satorilight.com/LittAppCast.xml");
 #endif
     initClient();
-    QApplication::postEvent(this, new ClientEvent<AttachDatabaseId>());
+    QApplication::postEvent(this, new ClientEvent(AttachDatabaseId));
 }
 
 void MainWindow::buildPasswordView()
@@ -1016,7 +1015,7 @@ void MainWindow::updateData()
 
         if (saveToDb)
             mLogger->log("Flushing timeline to DB start");
-        mCurrentTask->timeline()->flush(saveToDb, QDateTime::currentDateTimeUtc().toTime_t());
+        mCurrentTask->timeline()->flush(saveToDb, QDateTime::currentDateTimeUtc().toSecsSinceEpoch());
         if (saveToDb)
         {
             mLastTimelineFlush = QDateTime::currentDateTimeUtc();
@@ -1191,7 +1190,7 @@ int MainWindow::showTrayWindow(QDialog* dlg)
 
     int w = dlg->geometry().width();
     int h = dlg->geometry().height();
-    QRect rec = QApplication::desktop()->screenGeometry();
+    QRect rec = QGuiApplication::primaryScreen()->availableGeometry();
     int desktopHeight = rec.height();
     int desktopWidth = rec.width();
 
@@ -1371,7 +1370,7 @@ void MainWindow::showTimeReport()
 
 void MainWindow::criticalAlertFinished(int /*status*/)
 {
-    QApplication::postEvent(this, new ClientEvent<ClientCloseId>());
+    QApplication::postEvent(this, new ClientEvent(ClientCloseId));
 }
 
 void MainWindow::warningAlertFinished(int /*status*/)
@@ -1412,7 +1411,7 @@ void MainWindow::checkForUpdates()
 void MainWindow::systemSleep()
 {
     //qDebug() << "System goes to sleep";
-    stopTracking(TSR_Automatic, QDateTime::currentDateTimeUtc().toTime_t());
+    stopTracking(TSR_Automatic, QDateTime::currentDateTimeUtc().toSecsSinceEpoch());
 }
 
 void MainWindow::systemResume()
@@ -1484,11 +1483,11 @@ void MainWindow::findRequested()
     }
 
     //ui->mFindEdit->setVisible(false);
-    QTextCursor c = ui->mNoteEdit->document()->find(pattern, mFindStartIndex, nullptr);
+    QTextCursor c = ui->mNoteEdit->document()->find(pattern, mFindStartIndex);
     if (c.isNull())
     {
         mFindStartIndex = 0;
-        c = ui->mNoteEdit->document()->find(pattern, mFindStartIndex, nullptr);
+        c = ui->mNoteEdit->document()->find(pattern, mFindStartIndex);
     }
     if (!c.isNull())
     {
@@ -1575,7 +1574,7 @@ void MainWindow::continueOnIdle()
 void MainWindow::breakOnIdle(const QDateTime& stopTime)
 {
     // Stop tracking
-    stopTracking(TSR_Manual, stopTime.toUTC().toTime_t());
+    stopTracking(TSR_Manual, stopTime.toUTC().toSecsSinceEpoch());
     showTimeForSelectedTask();
 }
 

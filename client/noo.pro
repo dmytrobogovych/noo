@@ -174,11 +174,11 @@ macx {
         platforms/osx/sleeptracker_osx.mm
 }
 
-!include("fervor/Fervor.pri") {
-	error("Unable to include Fervor autoupdater.")
-}
+#!include("fervor/Fervor.pri") {
+#	error("Unable to include Fervor autoupdater.")
+#}
 
-!include("qtkeychain/qt5keychain.pri") {
+!include("qtkeychain/qtkeychain.pri") {
         error("Unable to include QTKeyChain library.")
 }
 

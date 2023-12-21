@@ -9,6 +9,8 @@
 #include <QKeyEvent>
 #include <QTextStream>
 #include <QApplication>
+#include <QFile>
+#include <QStandardPaths>
 #include <sstream>
 
 
@@ -209,7 +211,7 @@ time_t chrono::strToTime(const std::string& s)
 QString path::pathToSettings()
 {
 #if QT_VERSION >= 0x050000
-    QString folder = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString folder = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
 #else
     QString folder = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #endif
@@ -220,7 +222,7 @@ QString path::pathToSettings()
 QString path::pathToDatabase()
 {
 #if QT_VERSION >= 0x050000
-    QString folder = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString folder = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 #else
     QString folder = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #endif
@@ -256,7 +258,7 @@ QString path::pathToDatabaseTemplate()
 QString path::pathToLog()
 {
 #if QT_VERSION >= 0x050000
-    QString folder = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString folder = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 #else
     QString folder = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #endif

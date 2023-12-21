@@ -268,14 +268,14 @@ int TimeTreeModel::rowCount(const QModelIndex &parent) const
     return result;
 }
 
-int TimeTreeModel::columnCount(const QModelIndex &parent) const
+int TimeTreeModel::columnCount(const QModelIndex &/*parent*/) const
 {
     return 1;
 }
 
 static QString monthToString(int month)
 {
-    return QDate::longMonthName(month);
+    return QLocale().monthName(month, QLocale::FormatType::LongFormat);
 }
 
 QVariant TimeTreeModel::data(const QModelIndex &index, int role) const

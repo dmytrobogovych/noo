@@ -606,10 +606,14 @@ int TimeLine::getTime(int year, int month, int day, std::vector<TimeRecord>* int
     QDate d(year, month, day);
 
     // Find range of related records [lowest, higher)
-    TimeArray::iterator lowest = std::lower_bound(mData.begin(), mData.end(), d, [] (const TimeRecord& tr, const QDate& d)
-                                                                                 {
-                                                                                    return tr.endTime() < QDateTime(d).toTime_t();
-                                                                                 });
+    TimeArray::iterator lowest = std::lower_bound(mData.begin(),
+                                                  mData.end(),
+                                                  d,
+                                                  [] (const TimeRecord& tr, const QDate& d)
+    {
+        return tr.endTime() < QDateTime(d, QTime()).toSecsSinceEpoch();
+    });
+
     //TimeArray::iterator higher = std::upper_bound(mData.begin(), mData.end(), d, [] (const QDate& d, const TimeRecord& tr) { return tr.startTime().toLocalTime().date() < d;});
 
     for (;lowest != mData.end();/*&& lowest != higher;*/ lowest++)
