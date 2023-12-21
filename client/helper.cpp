@@ -138,6 +138,15 @@ bool date::operator >= (const date& rhs)
     return std::tie(mYear, mMonth, mDay) >= std::tie(rhs.mYear, rhs.mMonth, rhs.mDay);
 }
 
+std::string date::toString() const
+{
+    char buffer[32];
+    sprintf(buffer, "%02d:%02d:%02d", mDay, mMonth, mYear);
+
+    return buffer;
+}
+
+
 time::time(int h, int m, int s)
     :mHour(h), mMinute(m), mSecond(s)
 {}

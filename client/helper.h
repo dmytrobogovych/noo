@@ -39,6 +39,8 @@ namespace helper
         bool operator > (const date& rhs);
         bool operator == (const date& rhs);
         bool operator >= (const date& rhs);
+
+        std::string toString() const;
     };
 
     struct time

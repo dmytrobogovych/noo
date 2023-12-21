@@ -3,7 +3,7 @@
 #include "helper.h"
 
 #include <QVariant>
-#include <assert.h>
+#include <iostream>
 
 #if defined(TARGET_OSX) || defined(TARGET_LINUX)
 # include <uuid/uuid.h>
@@ -720,6 +720,16 @@ int TimeLine::month()
 
         if (date::fromTimestamp(lowIter->endTime(), date::To_LocalTime).mMonth >= this_month.mMonth)
         {
+            // For tests only
+            // auto date_start = date::fromTimestamp(lowIter->startTime(), date::To_LocalTime);
+            // auto time_start = time::fromTimestamp(lowIter->startTime(), date::To_LocalTime);
+
+            // auto date_end = date::fromTimestamp(lowIter->endTime(), date::To_LocalTime);
+            // auto time_end = time::fromTimestamp(lowIter->endTime(), date::To_LocalTime);
+            // std::cout << date_start.toString() << " " << time_start.toString() << " - "
+            //           << date_end.toString() << " " << time_end.toString()
+            //          << " id: " << lowIter->id() << std::endl;
+
             // GMT time!
             time_t month_begin = this_month.toTimestamp();
             time_t month_end = month_begin + date::daysInMonth(this_month.mYear, this_month.mMonth) * 86400 - 1;

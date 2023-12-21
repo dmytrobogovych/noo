@@ -228,7 +228,6 @@ bool Storage::open()
         mDatabase->exec("pragma locking_mode=EXCLUSIVE");
         mDatabase->exec("pragma journal_mode=MEMORY");
         mDatabase->exec("pragma temp_store=MEMORY");
-
     }
     catch(std::exception& e)
     {
